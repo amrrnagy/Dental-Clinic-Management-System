@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Dashboards.PatientDashboardController">
+
+    <VBox alignment="TOP_CENTER" spacing="25" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
+
+        <Label style="-fx-font-size: 28pt; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Patient Portal" />
+        <Text style="-fx-font-size: 14pt;" text="Welcome to our Portal !" />
+
+        <GridPane alignment="CENTER" hgap="40" vgap="20">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" prefWidth="250" />
+                <ColumnConstraints halignment="CENTER" prefWidth="250" />
+            </columnConstraints>
+
+            <VBox alignment="CENTER" spacing="10" style="-fx-border-color: #4CAF50; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #e8f5e9;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label style="-fx-font-size: 14pt; -fx-font-weight: bold;" text="My Schedule" />
+                <Text text="View upcoming appointments." />
+                <Button onAction="#handleViewAppointments" prefWidth="200" style="-fx-background-color: #66bb6a; -fx-text-fill: white;" text="View Appointments" />
+            </VBox>
+
+            <VBox alignment="CENTER" spacing="10" style="-fx-border-color: #4CAF50; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #e8f5e9;" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label style="-fx-font-size: 14pt; -fx-font-weight: bold;" text="My Prescriptions" />
+                <Text text="Review all current and past prescriptions." />
+                <Button onAction="#handleViewPrescriptions" prefWidth="200" style="-fx-background-color: #66bb6a; -fx-text-fill: white;" text="View Prescriptions" />
+            </VBox>
+         <rowConstraints>
+            <RowConstraints />
+         </rowConstraints>
+
+        </GridPane>
+
+        <Region VBox.vgrow="ALWAYS" />
+        <Button onAction="#handleLogout" prefWidth="150" style="-fx-background-color: #e57373; -fx-text-fill: white;" text="Exit Portal" />
+    </VBox>
+</AnchorPane>

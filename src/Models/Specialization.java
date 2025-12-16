@@ -1,0 +1,12 @@
+package Models;
+
+public enum Specialization {
+    GENERAL_DENTISTRY,
+    ORTHODONTICS,
+    PERIODONTICS,
+    ENDODONTICS,
+    PROSTHODONTICS,
+    PEDIATRIC_DENTISTRY,
+    ORAL_SURGERY,
+    OTHER
+}

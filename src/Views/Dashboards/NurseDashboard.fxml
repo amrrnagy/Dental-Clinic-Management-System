@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controllers.Dashboards.NurseDashboardController"
+            prefHeight="500.0" prefWidth="700.0">
+
+    <VBox alignment="TOP_CENTER" spacing="25" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20">
+
+        <Label text="Nurse/Staff Portal" style="-fx-font-size: 28pt; -fx-font-weight: bold; -fx-text-fill: #3f51b5;" />
+        <Text text="Welcome, [Nurse Name Placeholder]" style="-fx-font-size: 14pt;"/>
+
+        <GridPane hgap="40" vgap="20" alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" prefWidth="250"/>
+                <ColumnConstraints halignment="CENTER" prefWidth="250"/>
+            </columnConstraints>
+
+            <VBox alignment="CENTER" spacing="10" style="-fx-border-color: #3f51b5; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #e8eaf6;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="Appointments" style="-fx-font-size: 16pt; -fx-font-weight: bold;"/>
+                <Text text="View all appointments and set new ones." />
+                <Button text="Manage Appointments" onAction="#handleManageAppointments" prefWidth="200" style="-fx-background-color: #5c6bc0; -fx-text-fill: white;"/>
+            </VBox>
+
+            <VBox alignment="CENTER" spacing="10" style="-fx-border-color: #3f51b5; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #e8eaf6;" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="Payment Processing" style="-fx-font-size: 16pt; -fx-font-weight: bold;"/>
+                <Text text="Process payments and update patient balances." />
+                <Button text="Process Payment" onAction="#handleProcessPayment" prefWidth="200" style="-fx-background-color: #5c6bc0; -fx-text-fill: white;"/>
+            </VBox>
+        </GridPane>
+
+        <Region VBox.vgrow="ALWAYS" />
+
+        <Button text="Log Out" onAction="#handleLogout" prefWidth="150" style="-fx-background-color: #e57373; -fx-text-fill: white;" />
+    </VBox>
+</AnchorPane>

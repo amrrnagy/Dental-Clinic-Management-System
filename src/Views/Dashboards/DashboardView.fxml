@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controllers.Dashboards.DashboardController"
+            prefHeight="450.0" prefWidth="550.0">
+
+    <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
+        <padding>
+            <Insets top="40" right="40" bottom="40" left="40"/>
+        </padding>
+
+        <Label text="Dental Clinic Access Portal" style="-fx-font-size: 24pt; -fx-font-weight: bold; -fx-text-fill: #1976D2;" />
+
+        <VBox alignment="TOP_CENTER" spacing="15" style="-fx-border-color: lightgray; -fx-padding: 30; -fx-background-color: #f5f5f5;">
+            <Label text="Sign In" style="-fx-font-size: 18pt; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="15" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" prefWidth="100"/>
+                    <ColumnConstraints prefWidth="250"/>
+                </columnConstraints>
+
+                <Label text="Role:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <ComboBox fx:id="cmbRole" promptText="Select Role" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="txtUsername" promptText="Enter username" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <PasswordField fx:id="txtPassword" promptText="Enter password" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            </GridPane>
+
+            <Label fx:id="lblErrorMessage" style="-fx-text-fill: red; -fx-font-size: 11pt;"/>
+
+            <Button text="Sign In" onAction="#handleSignIn" prefWidth="150" style="-fx-background-color: #1976D2; -fx-text-fill: white;"/>
+        </VBox>
+
+    </VBox>
+</AnchorPane>

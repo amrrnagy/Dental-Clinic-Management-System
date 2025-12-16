@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="600.0" prefWidth="800.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.AddDoctorController">
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
+        <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Doctor Management" />
+    </HBox>
+
+    <Separator />
+
+    <TitledPane collapsible="false" text="Add New Doctor">
+        <GridPane hgap="10" style="-fx-padding: 10;" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" prefWidth="200.0" />
+                <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" prefWidth="200.0" />
+            </columnConstraints>
+
+            <Label text="First Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="txtFirstName" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <Label text="Last Name:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+            <TextField fx:id="txtLastName" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+            <Label text="Specialization:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cmbSpecialization" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+
+            <Button onAction="#handleAddDoctor" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add Doctor" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+         <ComboBox fx:id="cmbGender" prefHeight="26.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         <Label text="Gender" GridPane.rowIndex="2" />
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
+    </TitledPane>
+
+    <Text style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Current Doctors" />
+
+    <TableView fx:id="tblDoctors" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colID" prefWidth="50.0" text="ID" />
+            <TableColumn fx:id="colFirstName" prefWidth="120.0" text="First Name" />
+            <TableColumn fx:id="colLastName" prefWidth="120.0" text="Last Name" />
+            <TableColumn fx:id="colSpecialization" prefWidth="150.0" text="Specialization" />
+        </columns>
+    </TableView>
+
+</VBox>

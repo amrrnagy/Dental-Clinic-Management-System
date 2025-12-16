@@ -20,7 +20,7 @@ public class PatientDashboardController implements Initializable {
     // Store the authenticated patient object for context-aware filtering
     private Patient authenticatedPatient;
 
-    private static final String ROLE_SELECTION_PATH = "/Views/Dashboards/DashboardView.fxml"; // Path corrected to match usage
+    private static final String ROLE_SELECTION_PATH = "/Views/Dashboards/LoginView.fxml"; // Path corrected to match usage
 
     // Placeholder paths for patient-specific detail views
     private static final String PATIENT_APPOINTMENTS_PATH = "/Views/PatientAppointmentsView.fxml";
@@ -32,7 +32,7 @@ public class PatientDashboardController implements Initializable {
     }
 
     /**
-     * VITAL METHOD: Called by the DashboardController (via FXMLLoader) after successful login
+     * VITAL METHOD: Called by the LoginController (via FXMLLoader) after successful login
      * to inject the authenticated Patient object.
      */
     public void setAuthenticatedPatient(Patient patient) {

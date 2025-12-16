@@ -47,7 +47,7 @@ public class AppointmentViewController implements Initializable {
     // --- Define Dynamic Navigation Paths ---
     private static final String DOCTOR_DASHBOARD_PATH = "/Views/Dashboards/DoctorDashboard.fxml";
     private static final String NURSE_DASHBOARD_PATH = "/Views/Dashboards/NurseDashboard.fxml";
-    private static final String SIGN_IN_PATH = "/Views/Dashboards/DashboardView.fxml";
+    private static final String SIGN_IN_PATH = "/Views/Dashboards/LoginView.fxml";
 
 
     @Override

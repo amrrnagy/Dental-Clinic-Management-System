@@ -2,6 +2,7 @@ package Controllers.Dashboards;
 
 import Models.ClinicManager; // Import the manager
 import Models.Patient;      // Import the Patient entity
+import Models.UserRole;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,7 @@ public class LoginController implements Initializable {
     @FXML private TextField txtUsername;
     @FXML private PasswordField txtPassword;
     @FXML private Label lblErrorMessage;
-    @FXML private ComboBox<String> cmbRole;
+    @FXML private ComboBox<UserRole> cmbRole;
 
     // FXML paths for the subsequent role-specific dashboards/menus
     private static final String DOCTOR_VIEW_PATH = "/Views/Dashboards/DoctorDashboard.fxml";
@@ -49,8 +50,8 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cmbRole.getItems().addAll("Doctor", "Nurse", "Patient");
-        cmbRole.setValue("Doctor");
+        cmbRole.getItems().addAll(UserRole.values());
+        cmbRole.setValue(UserRole.DOCTOR);
         lblErrorMessage.setText("");
     }
 
@@ -60,7 +61,7 @@ public class LoginController implements Initializable {
     private void handleSignIn(ActionEvent event) {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
-        String role = cmbRole.getValue();
+        UserRole role = cmbRole.getValue();
 
         lblErrorMessage.setText("");
 
@@ -75,19 +76,19 @@ public class LoginController implements Initializable {
         Patient authenticatedPatient = null; // Variable to hold the Patient object
 
         // 1. Doctor Authentication
-        if ("Doctor".equals(role) && username.equals(DOCTOR_USER) && password.equals(DOCTOR_PASS)) {
+        if (UserRole.DOCTOR.equals(role) && username.equals(DOCTOR_USER) && password.equals(DOCTOR_PASS)) {
             isAuthenticated = true;
             targetPath = DOCTOR_VIEW_PATH;
             windowTitle = MAIN_TITLE + " - Doctor Portal";
 
             // 2. Nurse Authentication
-        } else if ("Nurse".equals(role) && username.equals(NURSE_USER) && password.equals(NURSE_PASS)) {
+        } else if (UserRole.NURSE.equals(role) && username.equals(NURSE_USER) && password.equals(NURSE_PASS)) {
             isAuthenticated = true;
             targetPath = NURSE_VIEW_PATH;
             windowTitle = MAIN_TITLE + " - Staff/Scheduling Portal";
 
             // 3. Patient Authentication (New Logic)
-        } else if ("Patient".equals(role) && username.equals(PATIENT_USER) && password.equals(PATIENT_PASS)) {
+        } else if (UserRole.PATIENT.equals(role) && username.equals(PATIENT_USER) && password.equals(PATIENT_PASS)) {
             isAuthenticated = true;
             targetPath = PATIENT_VIEW_PATH;
             windowTitle = MAIN_TITLE + " - Patient Portal";

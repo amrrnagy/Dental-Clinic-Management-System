@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PaymentController implements Initializable {
+public class AddPaymentController implements Initializable {
 
     @FXML private ComboBox<Patient> cmbPatient;
     @FXML private TextField txtAmount;

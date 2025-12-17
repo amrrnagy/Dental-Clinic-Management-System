@@ -20,17 +20,16 @@
         <Label text="Filter by Status:" />
         <ComboBox fx:id="cmbStatusFilter" promptText="All Statuses" />
         <Button onAction="#handleRefreshList" text="Refresh List" />
-        <Button onAction="#handleNewAppointment" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="New Appointment" />
     </HBox>
 
     <Separator />
 
     <TableView fx:id="tblAppointments" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="colDateTime" prefWidth="150.0" text="Date &amp; Time" />
+            <TableColumn fx:id="colDateTime" prefWidth="120.0" text="Date &amp; Time" />
             <TableColumn fx:id="colPatient" prefWidth="150.0" text="Patient Name" />
-            <TableColumn fx:id="colDoctor" prefWidth="150.0" text="Doctor Name" />
-            <TableColumn fx:id="colReason" prefWidth="200.0" text="Reason" />
+            <TableColumn fx:id="colDoctor" prefWidth="130.0" text="Doctor Name" />
+            <TableColumn fx:id="colReason" prefWidth="145.0" text="Reason" />
             <TableColumn fx:id="colStatus" prefWidth="100.0" text="Status" />
             <TableColumn fx:id="colActions" prefWidth="100.0" text="Actions" />
         </columns>

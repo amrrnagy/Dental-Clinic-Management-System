@@ -1,7 +1,8 @@
 package Models;
 
 public class Nurse extends Person{
-    public Nurse(String firstName, String lastName, Gender gender) {
-        super(firstName, lastName, gender);
+    public Nurse(String firstName, String lastName, Gender gender,
+                 String email, String username, String password) {
+        super(firstName, lastName, gender, username, password, UserRole.NURSE);
     }
 }

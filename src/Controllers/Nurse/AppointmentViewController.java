@@ -17,11 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
 import java.util.ResourceBundle;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class AppointmentViewController implements Initializable {
@@ -30,162 +26,75 @@ public class AppointmentViewController implements Initializable {
     @FXML private ComboBox<String> cmbStatusFilter;
 
     // Table Columns
-    @FXML private TableColumn<Appointment, LocalDateTime> colDateTime;
+    @FXML private TableColumn<Appointment, String> colDateTime;
     @FXML private TableColumn<Appointment, String> colPatient;
     @FXML private TableColumn<Appointment, String> colDoctor;
     @FXML private TableColumn<Appointment, String> colReason;
-    @FXML private TableColumn<Appointment, AppointmentStatus> colStatus;
-    @FXML private TableColumn<Appointment, Void> colActions;
-
-    // --- NEW: Role Context Field ---
-    private UserRole userRole = null;
-
-    private final ClinicManager clinicManager = ClinicManager.getInstance();
-    private ObservableList<Appointment> masterAppointmentList;
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-    // --- Define Dynamic Navigation Paths ---
-    private static final String DOCTOR_DASHBOARD_PATH = "/Views/Dashboards/DoctorDashboard.fxml";
-    private static final String NURSE_DASHBOARD_PATH = "/Views/Dashboards/NurseDashboard.fxml";
-    private static final String SIGN_IN_PATH = "/Views/Dashboards/DashboardView.fxml";
-
+    @FXML private TableColumn<Appointment, String> colStatus;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumns();
-        setupStatusFilter();
-        loadAppointments(null);
+        setupFilterOptions();
+
+        // Initial data load from ClinicManager
+        tblAppointments.setItems(ClinicManager.getAllAppointments());
     }
-
-    /**
-     * VITAL METHOD: Called by the dashboard controllers to set the user's role.
-     */
-    public void setAccessingUserRole(UserRole role) {
-        this.userRole = role;
-    }
-
-
-    private void navigateTo(ActionEvent event, String fxmlPath, String title) {
-        try {
-            Parent view = FXMLLoader.load(getClass().getResource(fxmlPath));
-            Scene scene = new Scene(view);
-
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.setTitle(title);
-            window.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Could not load FXML file: " + fxmlPath);
-        }
-    }
-
-    /**
-     * Handles the action to go back to the appropriate dashboard based on the stored role.
-     */
-    @FXML
-    private void handleBackToDashboard(ActionEvent event) {
-        String targetPath;
-        String title;
-
-        // Determine the correct dashboard path
-        if (userRole == UserRole.DOCTOR) {
-            targetPath = DOCTOR_DASHBOARD_PATH;
-            title = "Doctor Portal";
-        } else if (userRole == UserRole.NURSE) {
-            targetPath = NURSE_DASHBOARD_PATH;
-            title = "Nurse/Staff Portal";
-        } else {
-            // Default: If role is lost or not set, send to sign-in screen
-            targetPath = SIGN_IN_PATH;
-            title = "Dental Clinic Management System";
-        }
-
-        navigateTo(event, targetPath, title);
-    }
-
 
     private void setupTableColumns() {
+        // Simple property factories for basic strings
+        colDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTimeString"));
         colReason.setCellValueFactory(new PropertyValueFactory<>("reason"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        colDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-        colDateTime.setCellFactory(column -> new TableCell<Appointment, LocalDateTime>() {
-            @Override
-            protected void updateItem(LocalDateTime item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty ? null : DATE_TIME_FORMATTER.format(item));
-            }
-        });
-
-        // Custom mapping for Patient Name
+        // Custom mapping to show Patient Names instead of IDs
         colPatient.setCellValueFactory(cellData -> {
-            String patientIdStr = cellData.getValue().getPatientId();
-            Patient p = clinicManager.findPatientById(patientIdStr);
-            return new ReadOnlyStringWrapper(p != null ? p.getFullName() : "Unknown Patient");
+            String pId = cellData.getValue().getPatientId();
+            Patient p = ClinicManager.getInstance().findPatientById(pId);
+            return new ReadOnlyStringWrapper(p != null ? p.getFullName() : "Unknown");
         });
 
-        // Custom mapping for Doctor Name
+        // Custom mapping to show Doctor Names instead of IDs
         colDoctor.setCellValueFactory(cellData -> {
-            String doctorIdStr = cellData.getValue().getDoctorId();
-            Doctor d = clinicManager.findDoctorById(doctorIdStr);
-            return new ReadOnlyStringWrapper(d != null ? d.getFullName() : "Unknown Doctor");
+            String dId = cellData.getValue().getDoctorId();
+            Doctor d = ClinicManager.getInstance().findDoctorById(dId);
+            return new ReadOnlyStringWrapper(d != null ? d.getFullName() : "Unknown");
         });
-
-        // Setup Action Buttons (e.g., Complete, Cancel)
-        // Omitted for brevity.
     }
 
-    private void setupStatusFilter() {
-        cmbStatusFilter.getItems().add("ALL");
-        for (AppointmentStatus status : AppointmentStatus.values()) {
-            cmbStatusFilter.getItems().add(status.name());
-        }
+    private void setupFilterOptions() {
+        cmbStatusFilter.getItems().addAll("ALL", "SCHEDULED", "COMPLETED", "CANCELLED");
         cmbStatusFilter.setValue("ALL");
 
+        // Filter logic using streams on the global list
         cmbStatusFilter.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                loadAppointments(newVal.equals("ALL") ? null : AppointmentStatus.valueOf(newVal));
+            if (newVal == null || newVal.equals("ALL")) {
+                tblAppointments.setItems(ClinicManager.getAllAppointments());
+            } else {
+                ObservableList<Appointment> filtered = ClinicManager.getAllAppointments().stream()
+                        .filter(a -> a.getStatus().toString().equals(newVal))
+                        .collect(Collectors.toCollection(FXCollections::observableArrayList));
+                tblAppointments.setItems(filtered);
             }
         });
     }
 
-    private void loadAppointments(AppointmentStatus filterStatus) {
-        // Fetch the master list of appointments
-        List<Appointment> filteredList = clinicManager.getAllAppointments().stream()
-                .sorted(Comparator.comparing(Appointment::getDateTime).reversed())
-                .collect(Collectors.toList());
-
-        // Apply filter if necessary
-        if (filterStatus != null) {
-            filteredList = filteredList.stream()
-                    .filter(a -> a.getStatus() == filterStatus)
-                    .collect(Collectors.toList());
-        }
-
-        masterAppointmentList = FXCollections.observableArrayList(filteredList);
-        tblAppointments.setItems(masterAppointmentList);
+    @FXML
+    private void handleRefreshList(ActionEvent event) {
+        // Force the table to refresh its view of the static list
+        tblAppointments.refresh();
     }
 
     @FXML
-    private void handleRefreshList() {
-        String selectedStatus = cmbStatusFilter.getValue();
-        loadAppointments(selectedStatus.equals("ALL") ? null : AppointmentStatus.valueOf(selectedStatus));
-    }
-
-    @FXML
-    private void handleNewAppointment(ActionEvent event) {
-        // Navigate to the Appointment Scheduler screen
+    private void handleBackToDashboard(ActionEvent event) {
         try {
-            Parent schedulerView = FXMLLoader.load(getClass().getResource("/Views/Patient/AddAppointment.fxml"));
-            Scene scene = new Scene(schedulerView);
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.setTitle("Schedule New Appointment");
-            window.show();
+            Parent root = FXMLLoader.load(getClass().getResource("/Views/Nurse/NurseDashboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Nurse Dashboard");
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle error loading FXML
         }
     }
 }

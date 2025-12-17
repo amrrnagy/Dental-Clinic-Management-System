@@ -214,11 +214,11 @@ public class ClinicManager {
 
     // --- Getters for all lists ---
 
-    public List<Patient> getAllPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 
-    public List<Doctor> getAllDoctors() {
+    public List<Doctor> getDoctors() {
         return doctors;
     }
 

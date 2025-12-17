@@ -4,14 +4,20 @@ public abstract class Person {
     private final String firstName;
     private final String lastName;
     private final Gender gender;
-    private String phone;
-    private String email;
+    private final String username;
+    private final String password;
+    private final UserRole role;
 
 
-    public Person(String firstName, String lastName, Gender gender) {
+    public Person(String firstName, String lastName, Gender gender,
+                  String username, String password, UserRole role) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     public String getFirstName() { return firstName; }
@@ -19,17 +25,10 @@ public abstract class Person {
 
     public Gender getGender() { return gender; }
 
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public UserRole getRole() { return role; }
 
     public String getFullName() { return firstName + " " + lastName; }
-
-    @Override
-    public String toString() {
-        return String.format("%s{id=%s, name=%s %s, phone=%s, email=%s}",
-                this.getClass().getSimpleName(), firstName, lastName, gender, phone, email);
-    }
 }

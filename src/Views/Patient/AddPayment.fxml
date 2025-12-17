@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controllers.Patient.AddPaymentController"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="Controllers.Patient.AddPaymentController"
+      spacing="15"
+      prefHeight="500.0"
+      prefWidth="600.0"
+      style="-fx-padding: 20;">
 
-</AnchorPane>
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button text="← Back to Dashboard" onAction="#handleBackToDashboard" style="-fx-font-weight: bold;"/>
+        <Text text="Process Payment" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <GridPane hgap="10" vgap="15">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" prefWidth="300.0" />
+        </columnConstraints>
+
+        <Label text="Patient:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <ComboBox fx:id="cmbPatient" promptText="Select Patient" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+        <Label text="Amount Due:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <TextField fx:id="txtAmount" promptText="e.g., 75.50" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+        <Label text="Payment Method:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <ComboBox fx:id="cmbMethod" promptText="Select Method" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+        <Label text="Related Appointment ID (Optional):" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <TextField fx:id="txtAppointmentId" promptText="Optional UUID or reference" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+        <Button text="Process Payment" onAction="#handleProcessPayment"
+                GridPane.columnIndex="1" GridPane.rowIndex="4"
+                GridPane.halignment="RIGHT"
+                style="-fx-background-color: #007bff; -fx-text-fill: white;"/>
+    </GridPane>
+
+    <Text text="Patient Balance:" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <Label fx:id="lblBalance" text="Current Balance: $0.00" style="-fx-font-size: 16px;"/>
+
+    <VBox VBox.vgrow="ALWAYS" />
+
+</VBox>

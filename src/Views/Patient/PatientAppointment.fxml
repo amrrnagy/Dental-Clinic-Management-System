@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controllers.Patient.PatientAppointmentController"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox prefHeight="465.0" prefWidth="788.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.PatientAppointmentController">
 
-</AnchorPane>
+    <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Appointment List" />
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
+        <Separator orientation="VERTICAL" />
+        <Label text="Filter by Status:" />
+        <ComboBox fx:id="cmbStatusFilter" promptText="All Statuses" />
+        <Button onAction="#handleRefreshList" text="Refresh List" />
+        <Button onAction="#handleNewAppointment" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="New Appointment" />
+      <Button layoutX="466.0" layoutY="10.0" onAction="#handleNewAppointment" style="-fx-background-color: #af4c4c; -fx-text-fill: white;" text="Cancel Appointment" />
+    </HBox>
+
+    <Separator />
+
+    <TableView fx:id="tblAppointments" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colDateTime" prefWidth="150.0" text="Date &amp; Time" />
+            <TableColumn fx:id="colDoctor" prefWidth="150.0" text="Doctor Name" />
+            <TableColumn fx:id="colReason" prefWidth="200.0" text="Reason" />
+            <TableColumn fx:id="colStatus" prefWidth="120.0" text="Status" />
+            <TableColumn fx:id="colActions" prefWidth="130.0" text="Actions" />
+        </columns>
+    </TableView>
+
+</VBox>

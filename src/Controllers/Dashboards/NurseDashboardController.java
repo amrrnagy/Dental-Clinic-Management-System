@@ -18,7 +18,7 @@ public class NurseDashboardController implements Initializable {
 
     // Paths to Nurse/Staff specific views
     private static final String APPOINTMENT_MANAGEMENT_PATH = "/Views/Nurse/AppointmentView.fxml";
-    private static final String PAYMENT_PROCESSING_PATH = "/Views/PaymentProcessingView.fxml";
+    private static final String PAYMENT_PROCESSING_PATH = "/Views/PaymentView.fxml";
     private static final String ROLE_SELECTION_PATH = "/Views/LoginView.fxml"; // Back to sign-in
 
     @Override

@@ -199,7 +199,7 @@ public class AddAppointmentController implements Initializable {
      */
     @FXML
     private void handleBackToDashboard(ActionEvent event) {
-        navigateTo(event, "/Views/Dashboards/LoginView.fxml", "Dental Clinic Management System");
+        navigateTo(event, "/Views/Dashboards/DashboardView.fxml", "Dental Clinic Management System");
     }
 
     /**

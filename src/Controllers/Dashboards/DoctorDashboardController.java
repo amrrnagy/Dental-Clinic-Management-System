@@ -17,8 +17,8 @@ import java.util.ResourceBundle;
 public class DoctorDashboardController implements Initializable {
 
     // Paths to the Doctor's specific views
-    private static final String APPOINTMENT_VIEW_PATH = "/Views/Nurse/AppointmentView.fxml"; // Doctor needs to see appointments
-    private static final String PRESCRIPTION_CREATION_PATH = "/Views/PrescriptionCreationView.fxml";
+    private static final String APPOINTMENT_VIEW_PATH = "/Views/Doctor/DoctorAppointment.fxml"; // Doctor needs to see appointments
+    private static final String PRESCRIPTION_CREATION_PATH = "/Views/Doctor/AddPrescription.fxml";
     private static final String ROLE_SELECTION_PATH = "/Views/Dashboards/LoginView.fxml"; // Back to sign-in
 
     @Override

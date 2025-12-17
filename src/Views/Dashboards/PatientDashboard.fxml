@@ -28,9 +28,9 @@
                 <Text text="Review all current and past prescriptions." />
                 <Button onAction="#handleViewPrescriptions" prefWidth="200" style="-fx-background-color: #66bb6a; -fx-text-fill: white;" text="View Prescriptions" />
             </VBox>
-         <rowConstraints>
-            <RowConstraints />
-         </rowConstraints>
+            <rowConstraints>
+                <RowConstraints />
+            </rowConstraints>
 
         </GridPane>
 

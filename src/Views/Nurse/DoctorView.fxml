@@ -8,7 +8,7 @@
 
     <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="560.0" spacing="30.0">
         <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
-        <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Patients" wrappingWidth="91.21875" />
+        <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Doctors" wrappingWidth="91.21875" />
     </HBox>
     <HBox alignment="CENTER" prefHeight="46.0" prefWidth="560.0" spacing="40.0">
         <children>
@@ -21,7 +21,7 @@
         <children>
             <TableView prefHeight="238.0" prefWidth="588.0">
                 <columns>
-                    <TableColumn fx:id="colDoctorId" prefWidth="75.0" text="Patient ID" />
+                    <TableColumn fx:id="colDoctorId" prefWidth="75.0" text="Doctor ID" />
                     <TableColumn fx:id="colFirstName" prefWidth="75.0" text="First Name" />
                     <TableColumn fx:id="colLastName" text="Last Name" />
                     <TableColumn fx:id="colGender" prefWidth="75.0" text="Gender" />

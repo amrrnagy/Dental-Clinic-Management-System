@@ -13,10 +13,11 @@ public class Appointment implements Comparable<Appointment> {
     private final String patientId;
     private final String doctorId;
     private LocalDateTime dateTime;
+    private AppointmentSlot slot;
     private AppointmentStatus status;
     private String reason;
 
-    public Appointment(String patientId, String doctorId, LocalDateTime dateTime) {
+    public Appointment(String patientId, String doctorId, LocalDateTime dateTime, AppointmentSlot slot) {
         if (patientId == null || doctorId == null || dateTime == null) {
             throw new IllegalArgumentException("patientId, doctorId and dateTime are required");
         }
@@ -24,6 +25,7 @@ public class Appointment implements Comparable<Appointment> {
         this.patientId = patientId;
         this.doctorId = doctorId;
         this.dateTime = dateTime;
+        this.slot = slot;
         this.status = AppointmentStatus.SCHEDULED;
         this.reason = "";
     }
@@ -34,6 +36,9 @@ public class Appointment implements Comparable<Appointment> {
 
     public String getReason() { return reason; }
     public void setReason(String reason) { this.reason = reason; }
+
+    public void setSlot(AppointmentSlot slot) { this.slot = slot; }
+    public AppointmentSlot getSlot() { return slot; }
 
     public LocalDateTime getDateTime() { return dateTime; }
     public void setDateTime(LocalDateTime dateTime) {

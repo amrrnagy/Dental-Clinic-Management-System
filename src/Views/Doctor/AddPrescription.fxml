@@ -1,14 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controllers.Doctor.AddPrescriptionController"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox prefHeight="360.0" prefWidth="363.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Doctor.AddPrescriptionController">
 
-</AnchorPane>
+    <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="179.0" spacing="20">
+        <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
+      <Label text="Add Prescription">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+    </HBox>
+
+    <Separator />
+    <GridPane hgap="10" prefHeight="234.0" prefWidth="322.0" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.20001220703125" minWidth="10.0" prefWidth="58.20001220703125" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="336.79998779296875" minWidth="10.0" prefWidth="186.19998779296876" />
+        </columnConstraints>
+
+        <Label prefHeight="18.0" prefWidth="47.0" text="Patient:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font></Label>
+
+        <Button onAction="#handleAddPrescription" prefHeight="34.0" prefWidth="49.0" style="-fx-background-color: #4caf4e; -fx-text-fill: white;" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+        <ComboBox fx:id="cmbPatient" prefHeight="26.0" prefWidth="185.0" promptText="Select a Patient" GridPane.columnIndex="1" />
+      <Label prefHeight="18.0" prefWidth="79.0" text="Medication:" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label prefHeight="18.0" prefWidth="79.0" text="Dosage:" GridPane.rowIndex="2">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label prefHeight="18.0" prefWidth="79.0" text="Frequency:" GridPane.rowIndex="3">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label prefHeight="18.0" prefWidth="79.0" text="Days:" GridPane.rowIndex="4">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtMed" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <ComboBox fx:id="cmbDosage" prefWidth="150.0" promptText="Select Dosage" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ComboBox fx:id="cmbFreq" prefWidth="150.0" promptText="Select Frequency" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="txtDays" prefHeight="26.0" prefWidth="201.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label prefHeight="18.0" prefWidth="79.0" text="Notes:" GridPane.rowIndex="5">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNotes" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <rowConstraints>
+            <RowConstraints />
+         <RowConstraints maxHeight="32.00000991821288" minHeight="-Infinity" prefHeight="24.799993896484374" />
+         <RowConstraints maxHeight="25.600012207031256" minHeight="-Infinity" prefHeight="24.00000610351563" />
+         <RowConstraints minHeight="-Infinity" prefHeight="30.0" />
+         <RowConstraints maxHeight="30.400000000000006" minHeight="-Infinity" prefHeight="29.600012207031256" />
+            <RowConstraints maxHeight="30.400000000000006" minHeight="-Infinity" prefHeight="29.600012207031256" />
+            <RowConstraints maxHeight="5.5999755859375" minHeight="0.0" prefHeight="0.79998779296875" />
+         <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+         <RowConstraints maxHeight="25.599999999999994" minHeight="25.599999999999994" prefHeight="25.599999999999994" />
+        </rowConstraints>
+
+    </GridPane>
+
+</VBox>

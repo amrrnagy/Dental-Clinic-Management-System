@@ -164,7 +164,7 @@ public class ClinicManager {
         // 3. Create and add Appointment
         try {
             // The Appointment constructor handles validation
-            Appointment newAppointment = new Appointment(patientId, doctorId, dateTime);
+            Appointment newAppointment = new Appointment(patientId, doctorId, dateTime, slot);
             appointments.add(newAppointment);
             return newAppointment;
 

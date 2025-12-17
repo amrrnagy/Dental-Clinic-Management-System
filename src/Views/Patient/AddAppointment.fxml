@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="418.0" prefWidth="496.0" spacing="20" style="-fx-padding: 25;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.AddAppointmentController">
+<VBox prefHeight="418.0" prefWidth="530.0" spacing="20" style="-fx-padding: 25;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.AddAppointmentController">
 
     <HBox alignment="CENTER_LEFT" spacing="20">
         <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
@@ -28,7 +28,7 @@
         <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
         <DatePicker fx:id="dpDate" promptText="Select Date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-        <Label text="Time (HH:MM):" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <Label text="Time Slot:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
         <Label text="Reason:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
         <TextArea fx:id="txtReason" prefHeight="70" GridPane.columnIndex="1" GridPane.rowIndex="5" />

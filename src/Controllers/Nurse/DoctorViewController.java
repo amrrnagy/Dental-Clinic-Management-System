@@ -2,6 +2,7 @@ package Controllers.Nurse;
 
 import Models.ClinicManager;
 import Models.Doctor;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +37,7 @@ public class DoctorViewController implements Initializable {
 
         // Link the table to the shared list in ClinicManager
         // This will display doctors seeded in the seedInitialData() method
-        tblDoctors.setItems(ClinicManager.getDoctors());
+        tblDoctors.setItems((ObservableList<Doctor>) ClinicManager.getInstance().getDoctors());
     }
 
     private void setupTableColumns() {

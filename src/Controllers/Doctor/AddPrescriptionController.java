@@ -1,6 +1,7 @@
 package Controllers.Doctor;
 
 import Models.*;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,16 +21,15 @@ public class AddPrescriptionController implements Initializable {
     @FXML private ComboBox<Patient> cmbPatient;
     @FXML private ComboBox<String> cmbDosage;
     @FXML private ComboBox<String> cmbFreq;
+    @FXML private ComboBox<Integer> cmbDays;
     @FXML private TextField txtMed;
-    @FXML private TextField txtDays;
     @FXML private TextField txtNotes;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Populate patient list from ClinicManager
-        cmbPatient.setItems(ClinicManager.getPatients());
+        // Cast to ObservableList for ComboBox compatibility
+        cmbPatient.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getPatients()));
 
-        // Initialize dropdown options
         cmbDosage.getItems().addAll("50mg", "100mg", "250mg", "500mg");
         cmbFreq.getItems().addAll("Once daily", "Twice daily", "Thrice daily", "As needed");
     }
@@ -40,7 +40,7 @@ public class AddPrescriptionController implements Initializable {
         String medication = txtMed.getText();
         String dosage = cmbDosage.getValue();
         String frequency = cmbFreq.getValue();
-        String days = txtDays.getText();
+        int days = cmbDays.getValue();
         String notes = txtNotes.getText();
 
         if (selectedPatient == null || medication.isEmpty() || dosage == null) {
@@ -48,23 +48,45 @@ public class AddPrescriptionController implements Initializable {
             return;
         }
 
-        // Get prescribing doctor from current session
-        Doctor prescribingDoctor = (Doctor) ClinicManager.getCurrentUser();
+        // Get the current Doctor from the ClinicManager session
+        // Note: This assumes your UserRole can be cast to Doctor
+        Doctor prescribingDoctor = (Doctor) ClinicManager.getInstance().getCurrentUser();
 
-        // Create new prescription and add to patient's list
-        Prescription newPrescription = new Prescription(
-                medication, dosage, frequency, days, notes, prescribingDoctor
-        );
+        if (prescribingDoctor == null) {
+            showAlert(Alert.AlertType.ERROR, "Session Error", "Could not identify prescribing doctor.");
+            return;
+        }
 
-        selectedPatient.getMyPrescriptions().add(newPrescription);
+        try {
+            // 1. Create the main Prescription container
+            // We pass null for appointmentId if it's not linked to a specific visit
+            Prescription newPrescription = new Prescription(
+                    null,
+                    selectedPatient.getId().toString(),
+                    prescribingDoctor.getId().toString()
+            );
 
-        showAlert(Alert.AlertType.INFORMATION, "Success", "Prescription added for " + selectedPatient.getFullName());
-        clearFields();
+            newPrescription.setNotes(notes);
+
+            // 2. Create the PrescriptionItem (Medication details)
+            // Assuming your PrescriptionItem constructor takes (name, dosage, frequency, duration)
+            PrescriptionItem item = new PrescriptionItem(medication, dosage, frequency, days);
+            newPrescription.addItem(item);
+
+            // 3. Save to the Patient's record
+            selectedPatient.getPrescriptions().add(newPrescription);
+
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Prescription added for " + selectedPatient.getFullName());
+            clearFields();
+
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to create prescription: " + e.getMessage());
+        }
     }
 
     private void clearFields() {
         txtMed.clear();
-        txtDays.clear();
+        cmbDays.getSelectionModel().clearSelection();
         txtNotes.clear();
         cmbPatient.getSelectionModel().clearSelection();
         cmbDosage.getSelectionModel().clearSelection();

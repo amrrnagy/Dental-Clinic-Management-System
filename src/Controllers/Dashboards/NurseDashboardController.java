@@ -1,79 +1,51 @@
 package Controllers.Dashboards;
 
+import Models.ClinicManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class NurseDashboardController implements Initializable {
+public class NurseDashboardController {
 
-    // Paths to Nurse/Staff specific views
-    private static final String APPOINTMENT_MANAGEMENT_PATH = "/Views/Nurse/AppointmentView.fxml";
-    private static final String PAYMENT_PROCESSING_PATH = "/Views/PaymentView.fxml";
-    private static final String ROLE_SELECTION_PATH = "/Views/LoginView.fxml"; // Back to sign-in
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialization logic for the Nurse Dashboard
-    }
-
-    /**
-     * Handles navigation to the central Appointment List view, which allows
-     * viewing all appointments and navigating to the scheduler to set new ones.
-     */
     @FXML
-    private void handleManageAppointments(ActionEvent event) {
-        navigateTo(event, APPOINTMENT_MANAGEMENT_PATH, "Appointment Scheduling & Management");
+    private void handleGoToPatientView(ActionEvent event) {
+        switchScene(event, "/Views/PatientView.fxml"); // [cite: 38]
     }
 
-    /**
-     * Handles navigation to the dedicated Payment Processing screen.
-     */
     @FXML
-    private void handleProcessPayment(ActionEvent event) {
-        navigateTo(event, PAYMENT_PROCESSING_PATH, "Process Patient Payment");
+    private void handleGoToDoctorView(ActionEvent event) {
+        switchScene(event, "/Views/DoctorView.fxml"); // [cite: 41]
     }
 
-    /**
-     * Logs the nurse out and returns to the main sign-in screen.
-     */
+    @FXML
+    private void handleGoToAppointmentView(ActionEvent event) {
+        switchScene(event, "/Views/AppointmentView.fxml"); // [cite: 44]
+    }
+
+    @FXML
+    private void handleGoToPaymentView(ActionEvent event) {
+        switchScene(event, "/Views/PaymentView.fxml"); // [cite: 47]
+    }
+
     @FXML
     private void handleLogout(ActionEvent event) {
-        navigateTo(event, ROLE_SELECTION_PATH, "Dental Clinic Management System");
+        ClinicManager.getInstance().setCurrentUser(null); //
+        switchScene(event, "/Views/LoginView.fxml"); // [cite: 48]
     }
 
-
-    // --- Navigation Utility ---
-
-    private void navigateTo(ActionEvent event, String fxmlPath, String title) {
+    private void switchScene(ActionEvent event, String fxmlPath) {
         try {
-            Parent view = FXMLLoader.load(getClass().getResource(fxmlPath));
-            Scene scene = new Scene(view);
-
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.setTitle(title);
-            window.show();
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not load FXML file: " + fxmlPath + ". Please ensure the file exists.");
         }
-    }
-
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

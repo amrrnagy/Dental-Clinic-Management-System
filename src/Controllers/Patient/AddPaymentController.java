@@ -38,7 +38,7 @@ public class AddPaymentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Populate ComboBoxes
-        cmbPatient.getItems().addAll(clinicManager.getAllPatients());
+        cmbPatient.getItems().addAll(clinicManager.getPatients());
         cmbMethod.getItems().addAll(PaymentMethod.values());
 
         // Set ComboBox to display full name and add listener

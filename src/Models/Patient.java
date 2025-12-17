@@ -32,6 +32,8 @@ public class Patient extends Person implements Comparable<Patient> {
     public double getBalance() { return balance; }
     public void setBalance(double balance) { this.balance = balance; }
 
+    public List<Prescription> getPrescriptions() { return prescriptions; }
+
     public String getPhone() { return phone; }
 
     public void applyPayment(double amount) {

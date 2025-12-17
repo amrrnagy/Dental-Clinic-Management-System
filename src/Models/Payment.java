@@ -53,8 +53,8 @@ public class Payment implements Payable{
         return paymentID.equals(payment.paymentID);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(paymentID);
+
+    public Patient getPayer() {
+        return ClinicManager.getInstance().findPatientById(patientId);
     }
 }

@@ -60,13 +60,13 @@
       <TextField fx:id="txtMed" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <ComboBox fx:id="cmbDosage" prefWidth="150.0" promptText="Select Dosage" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <ComboBox fx:id="cmbFreq" prefWidth="150.0" promptText="Select Frequency" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <TextField fx:id="txtDays" prefHeight="26.0" prefWidth="201.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <Label prefHeight="18.0" prefWidth="79.0" text="Notes:" GridPane.rowIndex="5">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
       <TextField fx:id="txtNotes" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <ComboBox fx:id="cmbDays" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         <rowConstraints>
             <RowConstraints />
          <RowConstraints maxHeight="32.00000991821288" minHeight="-Infinity" prefHeight="24.799993896484374" />

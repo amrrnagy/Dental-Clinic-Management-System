@@ -2,6 +2,7 @@ package Controllers.Nurse;
 
 import Models.ClinicManager;
 import Models.Patient;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +37,7 @@ public class PatientViewController implements Initializable {
 
         // Populate table from the singleton manager
         // Using getPatients() ensures we see the seeded data like "Jane Doe"
-        tblPatients.setItems(ClinicManager.getPatients());
+        tblPatients.setItems((ObservableList<Patient>) ClinicManager.getInstance().getPatients());
     }
 
     private void setupTableColumns() {

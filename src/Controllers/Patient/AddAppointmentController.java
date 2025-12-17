@@ -37,8 +37,8 @@ public class AddAppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Populate ComboBoxes
-        cmbPatient.getItems().addAll(clinicManager.getAllPatients());
-        cmbDoctor.getItems().addAll(clinicManager.getAllDoctors());
+        cmbPatient.getItems().addAll(clinicManager.getPatients());
+        cmbDoctor.getItems().addAll(clinicManager.getDoctors());
 
         // Set ComboBox display for Patient
         cmbPatient.setCellFactory(lv -> new ListCell<Patient>() {

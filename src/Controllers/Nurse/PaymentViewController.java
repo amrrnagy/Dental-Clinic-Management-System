@@ -41,10 +41,10 @@ public class PaymentViewController implements Initializable {
         setupTable();
 
         // Populate ComboBox with patients from ClinicManager
-        cmbPatient.setItems(ClinicManager.getPatients());
+        cmbPatient.setItems((ObservableList<Patient>) ClinicManager.getInstance().getPatients());
 
         // Show all payments initially
-        tblPayments.setItems(ClinicManager.getPayments());
+        tblPayments.setItems((ObservableList<Payment>) ClinicManager.getInstance().getPayments());
 
         // Listener to filter table when a patient is selected
         cmbPatient.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
@@ -58,15 +58,11 @@ public class PaymentViewController implements Initializable {
         colPaymentId.setCellValueFactory(new PropertyValueFactory<>("paymentId"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("date"));
-
-        // Using custom logic to get IDs from nested objects if necessary
-        colPatientId.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleStringWrapper(cellData.getValue().getPayer().getId()));
     }
 
     private void filterPaymentsByPatient(Patient patient) {
         // Filter the master list from ClinicManager
-        ObservableList<Payment> filteredList = ClinicManager.getPayments().stream()
+        ObservableList<Payment> filteredList = ClinicManager.getInstance().getPayments().stream()
                 .filter(p -> p.getPayer().getId().equals(patient.getId()))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -80,7 +76,7 @@ public class PaymentViewController implements Initializable {
     @FXML
     private void handleReset(ActionEvent event) {
         cmbPatient.getSelectionModel().clearSelection();
-        tblPayments.setItems(ClinicManager.getPayments());
+        tblPayments.setItems((ObservableList<Payment>) ClinicManager.getInstance().getPayments());
         lblBalance.setText("Current Balance: $0.00");
     }
 

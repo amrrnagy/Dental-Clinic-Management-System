@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="310.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Dashboards.DoctorDashboardController">
+<AnchorPane prefHeight="315.0" prefWidth="544.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Dashboards.DoctorDashboardController">
 
     <VBox alignment="TOP_CENTER" layoutX="34.0" layoutY="20.0" prefWidth="578.0" spacing="25" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.799999999999955" AnchorPane.topAnchor="20.0">
 
@@ -25,7 +25,7 @@
             <VBox alignment="CENTER" spacing="10" style="-fx-border-color: #00796b; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #e0f2f1;" GridPane.columnIndex="1" GridPane.rowIndex="0">
                 <Label style="-fx-font-size: 16pt; -fx-font-weight: bold;" text="Prescription" />
                 <Text text="Issue new prescriptions for patients." />
-                <Button onAction="#handleCreatePrescription" prefWidth="200" style="-fx-background-color: #00897b; -fx-text-fill: white;" text="Manage Prescriptions" />
+                <Button onAction="#handlePrescriptionView" prefWidth="200" style="-fx-background-color: #00897b; -fx-text-fill: white;" text="Manage Prescriptions" />
             </VBox>
          <VBox alignment="CENTER" spacing="10" style="-fx-border-color: #00796b; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #e0f2f1;">
             <children>

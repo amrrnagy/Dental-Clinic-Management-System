@@ -7,7 +7,7 @@
 <VBox prefHeight="168.0" prefWidth="376.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.CancelAppointmentController">
 
     <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="179.0" spacing="20">
-        <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
+        <Button onAction="#handleBackToDashboard" prefHeight="25.0" prefWidth="146.0" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
     </HBox>
 
     <Separator />
@@ -22,8 +22,8 @@
                 <Font name="System Bold" size="12.0" />
             </font></Label>
 
-        <Button onAction="#handleRemovePatient" style="-fx-background-color: #f32121; -fx-text-fill: white;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-        <ComboBox fx:id="cmbPatient" prefHeight="26.0" prefWidth="227.0" promptText="Select an Appointment to Cancel" GridPane.columnIndex="1" />
+        <Button onAction="#handleRemovePatient" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: #f32121; -fx-text-fill: white;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+        <ComboBox fx:id="cmbPatient" prefHeight="25.0" prefWidth="234.0" promptText="Select an Appointment to Cancel" GridPane.columnIndex="1" />
         <rowConstraints>
             <RowConstraints />
             <RowConstraints />

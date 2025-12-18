@@ -45,9 +45,6 @@ public class PatientDashboardController {
         switchScene(event, "/Views/LoginView.fxml");
     }
 
-    /**
-     * Helper method to handle screen transitions.
-     */
     private void switchScene(ActionEvent event, String fxmlPath) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));

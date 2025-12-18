@@ -12,8 +12,8 @@
     </HBox>
    <HBox alignment="CENTER" prefHeight="46.0" prefWidth="560.0" spacing="40.0">
       <children>
-         <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="61.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add" />
-         <Button layoutX="260.0" layoutY="15.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="61.0" style="-fx-background-color: #af4c4c; -fx-text-fill: white;" text="Remove" />
+         <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="91.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add" />
+         <Button layoutX="260.0" layoutY="15.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="90.0" style="-fx-background-color: #af4c4c; -fx-text-fill: white;" text="Remove" />
       </children>
    </HBox>
 

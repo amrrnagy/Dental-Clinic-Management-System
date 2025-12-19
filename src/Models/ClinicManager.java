@@ -148,13 +148,12 @@ public class ClinicManager {
     public void addPatient(Patient patient) {
         this.patients.add(patient);
     }
+    public void removePatient(Patient patient) {this.patients.remove(patient); }
 
+    public void addDoctor(Doctor doctor) {this.doctors.add(doctor); }
+    public void removeDoctor(Doctor doctor) {this.doctors.remove(doctor); }
 
     public void processPayment(String string, double amount, PaymentMethod method, String appointmentId) {
         this.payments.add(new Payment(string, appointmentId, amount, method));
-    }
-
-    public void addDoctor(String fName, String lName, Gender gender, String user, String pass, Specialization spec) {
-        this.doctors.add(new Doctor(fName, lName, gender, user, pass, spec));
     }
 }

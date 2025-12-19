@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox prefHeight="398.0" prefWidth="600.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.DoctorViewController">
+<VBox prefHeight="398.0" prefWidth="600.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.DoctorViewController">
 
     <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="560.0" spacing="30.0">
         <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
@@ -12,22 +17,39 @@
     </HBox>
     <HBox alignment="CENTER" prefHeight="46.0" prefWidth="560.0" spacing="40.0">
         <children>
-            <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="85.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add" />
-            <Button layoutX="260.0" layoutY="15.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="73.0" style="-fx-background-color: #af4c4c; -fx-text-fill: white;" text="Remove" />
+         <Label text="Add a Doctor:">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+            <Button mnemonicParsing="false" onAction="#handleAdd" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add" />
+         <Label text="Select a Doctor to Remove:">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+            <Button layoutX="260.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRemove" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #af4c4c; -fx-text-fill: white;" text="Remove" />
         </children>
     </HBox>
+   <HBox fx:id="errorContainer" alignment="CENTER" prefHeight="25.0" prefWidth="560.0">
+      <children>
+         <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+      </children>
+   </HBox>
 
     <VBox VBox.vgrow="ALWAYS">
         <children>
-            <TableView prefHeight="238.0" prefWidth="588.0">
+            <TableView fx:id="tblDoctors" prefHeight="238.0" prefWidth="588.0">
                 <columns>
                     <TableColumn fx:id="colDoctorId" prefWidth="75.0" text="Doctor ID" />
-                    <TableColumn fx:id="colFirstName" prefWidth="75.0" text="First Name" />
-                    <TableColumn fx:id="colLastName" text="Last Name" />
+                    <TableColumn fx:id="colName" prefWidth="110.0" text="Name" />
                     <TableColumn fx:id="colGender" prefWidth="75.0" text="Gender" />
-                    <TableColumn fx:id="colPhone" prefWidth="75.0" text="Phone" />
-                    <TableColumn fx:id="colUsername" prefWidth="75.0" text="username" />
-                    <TableColumn fx:id="colPassword" prefWidth="101.0" text="password" />
+                    <TableColumn fx:id="colUsername" prefWidth="100.0" text="username" />
+                    <TableColumn fx:id="colPassword" text="password" />
+                    <TableColumn fx:id="colSpecialization" prefWidth="120.0" text="Specialization" />
                 </columns>
             </TableView>
         </children></VBox>

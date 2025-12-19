@@ -10,12 +10,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <VBox prefHeight="352.0" prefWidth="475.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.AddDoctorController">
 
     <HBox alignment="CENTER_LEFT" spacing="20">
-        <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
+        <Button onAction="#handleBack" style="-fx-font-weight: bold;" text="← Back" />
 
         <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Add Doctor" />
     </HBox>
@@ -38,12 +39,17 @@
         <Label text="Username:" GridPane.rowIndex="4" />
         <TextField fx:id="txtUsername" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-        <Button fx:id="btnAddDoctor" onAction="#handleAddDoctor" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Add Doctor" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+        <Button fx:id="btnAddDoctor" onAction="#handleAddDoctor" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
         <ComboBox fx:id="cmbGender" prefHeight="26.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Label text="Gender:" GridPane.rowIndex="2" />
         <Label text="Password:" GridPane.rowIndex="5" />
         <TextField fx:id="txtPassword" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <ComboBox fx:id="cmbSpecialization" prefHeight="26.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label fx:id="lblError" GridPane.rowIndex="6">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
         <rowConstraints>
             <RowConstraints />
             <RowConstraints />

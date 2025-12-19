@@ -38,15 +38,15 @@ public class PatientViewController {
 
     public void initialize() {
         setupTableColumns();
-        tblPatients.setItems(
-                FXCollections.observableArrayList(ClinicManager.getInstance().getPatients())
-        );
+        tblPatients.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getPatients()));
 
+        errorContainer.managedProperty().bind(errorContainer.visibleProperty());
+        errorContainer.setVisible(false);
     }
 
     private void setupTableColumns() {
         colPatientId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("FullName"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -57,8 +57,7 @@ public class PatientViewController {
 
     @FXML
     private void handleAdd(ActionEvent event) {
-
-        loadScene(event, "/Views/Nurse/AddPatient.fxml", "Add New Patient");
+        loadScene(event, "/Views/Nurse/AddPatient.fxml");
     }
 
     @FXML
@@ -68,9 +67,11 @@ public class PatientViewController {
         if (selectedPatient != null) {
             tblPatients.getItems().remove(selectedPatient);
             ClinicManager.getInstance().removePatient(selectedPatient);
+
             lblError.setText("Patient " + selectedPatient.getFullName() + " has been successfully removed.");
             lblError.setStyle("-fx-text-fill: green;");
             errorContainer.setVisible(true);
+
             PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
             visiblePause.setOnFinished(e -> {
                 lblError.setText("");
@@ -94,10 +95,10 @@ public class PatientViewController {
 
     @FXML
     private void handleBackToDashboard(ActionEvent event) {
-        loadScene(event, "/Views/Dashboards/NurseDashboard.fxml", "Nurse Dashboard");
+        loadScene(event, "/Views/Dashboards/NurseDashboard.fxml");
     }
 
-    private void loadScene(ActionEvent event, String path, String title) {
+    private void loadScene(ActionEvent event, String path) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(path)));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

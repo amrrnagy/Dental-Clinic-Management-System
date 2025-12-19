@@ -1,6 +1,7 @@
 package Models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class Appointment implements Comparable<Appointment> {
@@ -12,11 +13,18 @@ public class Appointment implements Comparable<Appointment> {
     private final AppointmentSlot slot;
     private AppointmentStatus status;
 
+    public static int nextId = 1;
+
     public Appointment(String patientId, String doctorId, LocalDateTime dateTime, AppointmentSlot slot) {
         if (patientId == null || doctorId == null || dateTime == null) {
             throw new IllegalArgumentException("patientId, doctorId and dateTime are required");
         }
-        this.id = UUID.randomUUID().toString();
+
+        this.id = String.format("APT-%d-%02d-%03d",
+                dateTime.getYear(),
+                dateTime.getMonthValue(),
+                nextId++);
+
         this.patientId = patientId;
         this.doctorId = doctorId;
         this.dateTime = dateTime;
@@ -28,9 +36,14 @@ public class Appointment implements Comparable<Appointment> {
     public String getPatientId() { return patientId; }
     public String getDoctorId() { return doctorId; }
 
+    public static void minusNextID() {
+        if(nextId > 1)
+            nextId--;
+    }
     public AppointmentSlot getSlot() { return slot; }
 
     public LocalDateTime getDateTime() { return dateTime; }
+
     public AppointmentStatus getStatus() { return status; }
     public void setStatus(AppointmentStatus status) { this.status = status == null ? AppointmentStatus.SCHEDULED : status; }
 
@@ -46,8 +59,8 @@ public class Appointment implements Comparable<Appointment> {
 
     @Override
     public String toString() {
-        return String.format("Appointment{id=%s, patientId=%s, doctorId=%s, at=%s, duration=%d, status=%s}",
-                id, patientId, doctorId, dateTime, status);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, hh:mm a");
+        return this.dateTime.format(formatter);
     }
 
     @Override

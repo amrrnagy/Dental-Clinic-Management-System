@@ -60,6 +60,8 @@ public class ClinicManager {
                 "010", "pat2", "ppass2");
 
         pat1.setBalance(150.00);
+        pat2.setBalance(340.00);
+
         patients.add(pat1);
         patients.add(pat2);
 
@@ -72,12 +74,22 @@ public class ClinicManager {
         nurses.add(nur2);
 
         // Initial appointment
-        scheduleAppointment(
+        Appointment app1 = scheduleAppointment(
                 pat1.getId(),
-                doc1.getId(),
+                doc2.getId(),
                 java.time.LocalDate.now().plusDays(1),
                 AppointmentSlot.SLOT_10_00_AM
         );
+        Appointment app2 = scheduleAppointment(
+                pat2.getId(),
+                doc1.getId(),
+                java.time.LocalDate.now().plusDays(2),
+                AppointmentSlot.SLOT_3_00_PM
+        );
+
+        // Initial Payment
+        processPayment("PAT1", app1.getId(), 200, PaymentMethod.CASH);
+        processPayment("PAT2", app2.getId(), 300, PaymentMethod.CARD);
     }
 
     // Instance Methods
@@ -100,7 +112,7 @@ public class ClinicManager {
                                            java.time.LocalDate date, AppointmentSlot slot) {
 
         LocalDateTime dateTime = LocalDateTime.of(date, slot.getStartTime());
-        LocalDateTime endTime = dateTime.plusMinutes(60);
+        LocalDateTime endTime = dateTime.plusHours(1);
 
         if (findPatientById(patientId) == null || findDoctorById(doctorId) == null) {
             return null;
@@ -148,12 +160,12 @@ public class ClinicManager {
     public void addPatient(Patient patient) {
         this.patients.add(patient);
     }
-    public void removePatient(Patient patient) {this.patients.remove(patient); }
+    public void removePatient(Patient patient) { this.patients.remove(patient); }
 
     public void addDoctor(Doctor doctor) {this.doctors.add(doctor); }
     public void removeDoctor(Doctor doctor) {this.doctors.remove(doctor); }
 
-    public void processPayment(String string, double amount, PaymentMethod method, String appointmentId) {
-        this.payments.add(new Payment(string, appointmentId, amount, method));
+    public void processPayment(String patientId,String appointmentId, double amount, PaymentMethod method) {
+        this.payments.add(new Payment(patientId, appointmentId, amount, method));
     }
 }

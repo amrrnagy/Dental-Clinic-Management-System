@@ -1,8 +1,6 @@
 package Controllers.Nurse;
 
-import Models.ClinicManager;
-import Models.Payment;
-import Models.Patient;
+import Models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,10 +16,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class PaymentViewController implements Initializable {
+public class PaymentViewController{
 
     @FXML private ComboBox<Patient> cmbPatient;
     @FXML private Label lblBalance;
@@ -32,19 +33,13 @@ public class PaymentViewController implements Initializable {
     @FXML private TableColumn<Payment, String> colPatientId;
     @FXML private TableColumn<Payment, String> colAppointmentId;
     @FXML private TableColumn<Payment, Double> colAmount;
-    @FXML private TableColumn<Payment, String> colMethod;
-    @FXML private TableColumn<Payment, String> colTime;
-    @FXML private TableColumn<Payment, String> colNotes;
+    @FXML private TableColumn<Payment, PaymentMethod> colMethod;
+    @FXML private TableColumn<Payment, LocalDateTime> colTime;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
         setupTable();
-
-        // Populate ComboBox with patients from ClinicManager
-        cmbPatient.setItems((ObservableList<Patient>) ClinicManager.getInstance().getPatients());
-
-        // Show all payments initially
-        tblPayments.setItems((ObservableList<Payment>) ClinicManager.getInstance().getPayments());
+        cmbPatient.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getPatients()));
+        tblPayments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getPayments()));
 
         // Listener to filter table when a patient is selected
         cmbPatient.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
@@ -55,38 +50,51 @@ public class PaymentViewController implements Initializable {
     }
 
     private void setupTable() {
-        colPaymentId.setCellValueFactory(new PropertyValueFactory<>("paymentId"));
+        colPaymentId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colPatientId.setCellValueFactory(new PropertyValueFactory<>("patientId"));
+        colAppointmentId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        colTime.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colMethod.setCellValueFactory(new PropertyValueFactory<>("method"));
+        colTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy - hh:mm a");
+
+        colTime.setCellFactory(_ -> new TableCell<>() {
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.format(formatter));
+                }
+            }
+        });
     }
 
     private void filterPaymentsByPatient(Patient patient) {
-        // Filter the master list from ClinicManager
         ObservableList<Payment> filteredList = ClinicManager.getInstance().getPayments().stream()
                 .filter(p -> p.getPayer().getId().equals(patient.getId()))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
 
         tblPayments.setItems(filteredList);
-
-        // Update Balance Label
-        double totalPaid = filteredList.stream().mapToDouble(Payment::getAmount).sum();
-        lblBalance.setText(String.format("Total Payments by %s: $%.2f", patient.getFirstName(), totalPaid));
+        lblBalance.setText(String.format("%s's Balance: $%.2f", patient.getFirstName(), patient.getBalance()));
     }
 
     @FXML
     private void handleReset(ActionEvent event) {
         cmbPatient.getSelectionModel().clearSelection();
-        tblPayments.setItems((ObservableList<Payment>) ClinicManager.getInstance().getPayments());
-        lblBalance.setText("Current Balance: $0.00");
+        tblPayments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getPayments()));
+        lblBalance.setText("No Patient is selected");
     }
 
     @FXML
     private void handleBackToDashboard(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Views/Nurse/NurseDashboard.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Dashboards/NurseDashboard.fxml")));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Nurse Portal");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

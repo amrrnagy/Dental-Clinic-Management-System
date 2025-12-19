@@ -31,17 +31,13 @@
          <Button layoutX="260.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRemove" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #af4c4c; -fx-text-fill: white;" text="Remove" />
       </children>
    </HBox>
-   <HBox alignment="CENTER" prefHeight="46.0" prefWidth="560.0" spacing="40.0">
+   <HBox fx:id="errorContainer" alignment="CENTER" prefHeight="21.0" prefWidth="582.0">
       <children>
-         <HBox fx:id="errorContainer" alignment="CENTER" prefHeight="21.0" prefWidth="582.0">
-            <children>
-               <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               </Label>
-            </children>
-         </HBox>
+         <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
       </children>
    </HBox>
 

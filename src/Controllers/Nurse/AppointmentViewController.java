@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -25,11 +28,10 @@ public class AppointmentViewController implements Initializable {
     @FXML private TableView<Appointment> tblAppointments;
     @FXML private ComboBox<String> cmbStatusFilter;
 
-    // Table Columns
-    @FXML private TableColumn<Appointment, String> colDateTime;
+    @FXML private TableColumn<Appointment, String> colAppointmentId;
     @FXML private TableColumn<Appointment, String> colPatient;
     @FXML private TableColumn<Appointment, String> colDoctor;
-    @FXML private TableColumn<Appointment, String> colReason;
+    @FXML private TableColumn<Appointment, LocalDateTime> colDateTime;
     @FXML private TableColumn<Appointment, String> colStatus;
 
     @Override
@@ -38,13 +40,13 @@ public class AppointmentViewController implements Initializable {
         setupFilterOptions();
 
         // Initial data load from ClinicManager
-        tblAppointments.setItems((ObservableList<Appointment>) ClinicManager.getInstance().getAppointments());
+        tblAppointments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getAppointments()));
     }
 
     private void setupTableColumns() {
-        // Simple property factories for basic strings
-        colDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTimeString"));
-        colReason.setCellValueFactory(new PropertyValueFactory<>("reason"));
+
+        colAppointmentId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         // Custom mapping to show Patient Names instead of IDs
@@ -60,16 +62,30 @@ public class AppointmentViewController implements Initializable {
             Doctor d = ClinicManager.getInstance().findDoctorById(dId);
             return new ReadOnlyStringWrapper(d != null ? d.getFullName() : "Unknown");
         });
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy - hh:mm a");
+
+        colDateTime.setCellFactory(_ -> new TableCell<>() {
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.format(formatter));
+                }
+            }
+        });
     }
 
     private void setupFilterOptions() {
         cmbStatusFilter.getItems().addAll("ALL", "SCHEDULED", "COMPLETED", "CANCELLED");
         cmbStatusFilter.setValue("ALL");
 
-        // Filter logic using streams on the global list
-        cmbStatusFilter.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+        cmbStatusFilter.getSelectionModel().selectedItemProperty().addListener((_, oldVal, newVal) -> {
             if (newVal == null || newVal.equals("ALL")) {
-                tblAppointments.setItems((ObservableList<Appointment>) ClinicManager.getInstance().getAppointments());
+                tblAppointments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getAppointments()));
             } else {
                 ObservableList<Appointment> filtered = ClinicManager.getInstance().getAppointments().stream()
                         .filter(a -> a.getStatus().toString().equals(newVal))
@@ -80,18 +96,16 @@ public class AppointmentViewController implements Initializable {
     }
 
     @FXML
-    private void handleRefreshList(ActionEvent event) {
-        // Force the table to refresh its view of the static list
-        tblAppointments.refresh();
+    private void handleReset(ActionEvent event) {
+        cmbStatusFilter.setValue("ALL");
     }
 
     @FXML
     private void handleBackToDashboard(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Views/Nurse/NurseDashboard.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Dashboards/NurseDashboard.fxml")));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Nurse Dashboard");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class App extends Application {
 
     @Override
@@ -15,12 +17,10 @@ public class App extends Application {
         stage.setScene(scene);
 
         // Set window icon
-       // Image icon = new Image("file:D:\\Amr\\Desktop\\tooth.png");
-      //  stage.getIcons().add(icon);
-
-      //  stage.getIcons().add(icon);
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tooth.png")));
+        stage.getIcons().add(icon);
         stage.setTitle("The Clinic");
-       stage.show();
+        stage.show();
     }
 
     @SuppressWarnings({"unused", "UnnecessaryModifier"})

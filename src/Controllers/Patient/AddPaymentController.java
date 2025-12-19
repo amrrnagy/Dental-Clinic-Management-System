@@ -5,7 +5,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,10 +12,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.Objects;
 
-public class AddPaymentController implements Initializable {
+public class AddPaymentController{
 
     @FXML private ComboBox<Patient> cmbPatient;
     @FXML private TextField txtAmount;
@@ -35,8 +33,7 @@ public class AddPaymentController implements Initializable {
         }
     };
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize() {
         // Populate ComboBoxes
         cmbPatient.getItems().addAll(clinicManager.getPatients());
         cmbMethod.getItems().addAll(PaymentMethod.values());
@@ -85,10 +82,10 @@ public class AddPaymentController implements Initializable {
         try {
             // Call the core business logic
             clinicManager.processPayment(
-                    selectedPatient.getId().toString(),
+                    selectedPatient.getId(),
+                    appointmentId,
                     amount,
-                    method,
-                    appointmentId
+                    method
             );
 
             showAlert(Alert.AlertType.INFORMATION, "Success",
@@ -107,16 +104,15 @@ public class AddPaymentController implements Initializable {
     // --- Navigation and Utility ---
     @FXML
     private void handleBackToDashboard(ActionEvent event) {
-        navigateTo(event, "/Views/Dashboards/DashboardView.fxml", "Dental Clinic Management System");
+        navigateTo(event, "/Views/Dashboards/PatientView.fxml");
     }
 
-    private void navigateTo(ActionEvent event, String fxmlPath, String title) {
+    private void navigateTo(ActionEvent event, String fxmlPath) {
         try {
-            Parent view = FXMLLoader.load(getClass().getResource(fxmlPath));
+            Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
             Scene scene = new Scene(view);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(scene);
-            window.setTitle(title);
             window.show();
         } catch (IOException e) {
             e.printStackTrace();

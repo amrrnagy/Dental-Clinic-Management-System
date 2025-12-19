@@ -6,12 +6,12 @@ public class Patient extends Person implements Comparable<Patient> {
     private final  String medicalHistory;
     private double balance;
 
-    private static int nextID = 1;
+    private static int nextId = 1;
 
     public Patient(String firstName, String lastName, Gender gender, String phone,
                    String username, String password) {
         super(firstName, lastName, gender, username, password, UserRole.PATIENT);
-        this.id = "PAT" + nextID++;
+        this.id = "PAT" + nextId++;
         this.phone = phone;
         this.medicalHistory = "";
         this.balance = 0.0;
@@ -19,6 +19,10 @@ public class Patient extends Person implements Comparable<Patient> {
 
     public String getId() {
         return id;
+    }
+    public static void minusNextID() {
+        if(nextId > 1)
+            nextId--;
     }
 
     public String getMedicalHistory() { return medicalHistory; }
@@ -45,5 +49,10 @@ public class Patient extends Person implements Comparable<Patient> {
     @Override
     public boolean equals(Object o) {
         return super.equals(o);
+    }
+
+    @Override
+    public String toString() {
+        return this.getId() + ": " + this.getFullName();
     }
 }

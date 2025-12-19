@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="398.0" prefWidth="600.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.PaymentViewController">
+<VBox prefHeight="398.0" prefWidth="619.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.PaymentViewController">
 
     <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="560.0" spacing="30.0">
         <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
@@ -26,21 +26,21 @@
    </HBox>
 
     <Text style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Patient Balance:" />
-    <Label fx:id="lblBalance" style="-fx-font-size: 16px;" text=" Current Balance: $0.00" />
+    <Label fx:id="lblBalance" style="-fx-font-size: 16px;" text="No Patient is selected" />
 
     <VBox VBox.vgrow="ALWAYS">
       <children>
-         <TableView prefHeight="238.0" prefWidth="588.0">
+         <TableView fx:id="tblPayments" prefHeight="238.0" prefWidth="588.0">
            <columns>
-             <TableColumn fx:id="colPaymentId" prefWidth="75.0" text="Payment ID" />
-             <TableColumn fx:id="colPatientId" prefWidth="75.0" text="Patient ID" />
-               <TableColumn fx:id="colAppointmentId" prefWidth="100.0" text="Appointment ID" />
-               <TableColumn fx:id="colAmount" prefWidth="75.0" text="Amount" />
+             <TableColumn fx:id="colPaymentId" prefWidth="110.0" text="Payment ID" />
+             <TableColumn fx:id="colPatientId" prefWidth="65.0" text="Patient ID" />
+               <TableColumn fx:id="colAppointmentId" prefWidth="110.0" text="Appointment ID" />
+               <TableColumn fx:id="colAmount" prefWidth="65.0" text="Amount" />
                <TableColumn fx:id="colMethod" prefWidth="75.0" text="Method" />
-               <TableColumn fx:id="colTime" prefWidth="75.0" text="Time" />
-               <TableColumn fx:id="colNotes" prefWidth="82.0" text="Notes" />
+               <TableColumn fx:id="colTime" prefWidth="145.0" text="Time" />
            </columns>
          </TableView>
       </children></VBox>
+   <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleReset" text="Reset" />
 
 </VBox>

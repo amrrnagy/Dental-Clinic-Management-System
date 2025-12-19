@@ -16,10 +16,10 @@ import java.util.Objects;
 
 public class LoginController {
 
-    @FXML private ComboBox<UserRole> cmbRole; //
-    @FXML private TextField txtUsername;     // [cite: 18]
-    @FXML private PasswordField txtPassword; // [cite: 18]
-    @FXML private Label lblErrorMessage;     // [cite: 19]
+    @FXML private ComboBox<UserRole> cmbRole;
+    @FXML private TextField txtUsername;
+    @FXML private PasswordField txtPassword;
+    @FXML private Label lblErrorMessage;
 
     @FXML
     public void initialize() {

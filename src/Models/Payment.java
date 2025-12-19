@@ -11,19 +11,34 @@ public class Payment implements Payable{
     private final PaymentMethod method;
     private final LocalDateTime dateTime;
 
+    public static int nextId = 1;
+
     public Payment(String patientId, String appointmentId, double amount, PaymentMethod method) {
         if (patientId == null) throw new IllegalArgumentException("patientId required");
-        this.paymentID = UUID.randomUUID().toString();
+
+        LocalDateTime now = LocalDateTime.now();
+
+        this.paymentID = String.format("PAY-%d-%02d-%03d",
+                now.getYear(),
+                now.getMonthValue(),
+                nextId++);
+
         this.patientId = patientId;
         this.appointmentId = appointmentId;
         this.amount = amount;
         this.method = method == null ? PaymentMethod.CASH : method;
-        this.dateTime = LocalDateTime.now();
+        this.dateTime = now;
     }
 
     public String getId() { return paymentID; }
     public String getPatientId() { return patientId; }
     public String getAppointmentId() { return appointmentId; }
+
+    public static void minusNextID() {
+        if(nextId > 1)
+            nextId--;
+    }
+
     public double getAmount() { return amount; }
     public PaymentMethod getMethod() { return method; }
     public LocalDateTime getDateTime() { return dateTime; }

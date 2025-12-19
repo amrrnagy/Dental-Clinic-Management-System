@@ -6,11 +6,9 @@ import Models.Gender;
 import Models.Specialization;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,9 +21,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 public class DoctorViewController  {
 
@@ -58,7 +54,7 @@ public class DoctorViewController  {
 
     @FXML
     private void handleAdd(ActionEvent event) {
-        loadScene(event, "/Views/Nurse/AddDoctor.fxml", "Add New Doctor");
+        loadScene(event, "/Views/Nurse/AddDoctor.fxml");
     }
 
     @FXML
@@ -74,8 +70,10 @@ public class DoctorViewController  {
             errorContainer.setVisible(true);
 
             PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
-            visiblePause.setOnFinished(_ -> lblError.setText(""));
-            visiblePause.setOnFinished(_ -> errorContainer.setVisible(false));
+            visiblePause.setOnFinished(e -> {
+                lblError.setText("");
+                errorContainer.setVisible(false);
+            });
             visiblePause.play();
 
         } else {
@@ -84,18 +82,20 @@ public class DoctorViewController  {
             errorContainer.setVisible(true);
 
             PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
-            visiblePause.setOnFinished(_ -> lblError.setText(""));
-            visiblePause.setOnFinished(_ -> errorContainer.setVisible(false));
+            visiblePause.setOnFinished(e -> {
+                lblError.setText("");
+                errorContainer.setVisible(false);
+            });
             visiblePause.play();
         }
     }
 
     @FXML
     private void handleBackToDashboard(ActionEvent event) {
-        loadScene(event, "/Views/Dashboards/NurseDashboard.fxml", "Nurse Dashboard");
+        loadScene(event, "/Views/Dashboards/NurseDashboard.fxml");
     }
 
-    private void loadScene(ActionEvent event, String path, String title) {
+    private void loadScene(ActionEvent event, String path) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(path)));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -5,36 +5,31 @@ import javafx.collections.ObservableList;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ClinicManager {
 
-    // --- 1. Singleton Instance ---
     private static ClinicManager instance;
 
-    // --- 2. Data Collections (Instance Fields) ---
     private final List<Patient> patients;
     private final List<Doctor> doctors;
+    private final List<Nurse> nurses;
     private final List<Appointment> appointments;
     private final List<Payment> payments;
+    private final List<Prescription> prescriptions;
 
     private Person currentUser;
 
-    /**
-     * Private constructor initializes instance data.
-     */
     private ClinicManager() {
         this.patients = new ArrayList<>();
         this.doctors = new ArrayList<>();
+        this.nurses = new ArrayList<>();
         this.appointments = new ArrayList<>();
         this.payments = new ArrayList<>();
+        this.prescriptions = new ArrayList<>();
         this.currentUser = null;
         loadInitialData();
     }
 
-    /**
-     * Global access point for the Singleton.
-     */
     public static ClinicManager getInstance() {
         if (instance == null) {
             instance = new ClinicManager();
@@ -42,17 +37,12 @@ public class ClinicManager {
         return instance;
     }
 
-    // --- 3. Session Management ---
-
     public void setCurrentUser(Person person) {
         this.currentUser = person;
     }
-
     public Person getCurrentUser() {
         return currentUser;
     }
-
-    // --- 4. Data Initialization ---
 
     private void loadInitialData() {
         // Add Doctors
@@ -73,16 +63,24 @@ public class ClinicManager {
         patients.add(pat1);
         patients.add(pat2);
 
+        // Add 2 Nurses (Hana & Jana)
+        Nurse nur1 = new Nurse("Jana", "Ashraf", Gender.FEMALE,
+                "jana", "jana");
+        Nurse nur2 = new Nurse("Hana", "Nagy", Gender.FEMALE,
+                "hana", "hana");
+        nurses.add(nur1);
+        nurses.add(nur2);
+
         // Initial appointment
         scheduleAppointment(
-                pat1.getId().toString(),
-                doc1.getId().toString(),
+                pat1.getId(),
+                doc1.getId(),
                 java.time.LocalDate.now().plusDays(1),
                 AppointmentSlot.SLOT_10_00_AM
         );
     }
 
-    // --- 5. Search & Logic Methods (Instance Methods) ---
+    // Instance Methods
 
     public Patient findPatientById(String id) {
         return patients.stream()
@@ -131,37 +129,32 @@ public class ClinicManager {
                 });
     }
 
-    // --- 6. Getters (Instance Methods) ---
-
+    // Getters
     public List<Patient> getPatients() {
         return this.patients;
     }
-
     public List<Doctor> getDoctors() {
         return this.doctors;
     }
-
-    public List<Appointment> getAllAppointments() {
+    public List<Nurse> getNurses() { return nurses; }
+    public List<Appointment> getAppointments() {
         return this.appointments;
     }
-
-    public List<Payment> getAllPayments() {
+    public List<Payment> getPayments() {
         return this.payments;
     }
+    public List<Prescription> getPrescriptions() { return this.prescriptions; }
 
     public void addPatient(Patient patient) {
         this.patients.add(patient);
     }
 
-    public List<Payment> getPayments() {
-        return this.payments;
-    }
 
     public void processPayment(String string, double amount, PaymentMethod method, String appointmentId) {
         this.payments.add(new Payment(string, appointmentId, amount, method));
     }
 
-    public void addDoctor(String fName, String lName, String s, String user, String pass, String spec) {
-        this.doctors.add(new Doctor(fName, lName, s, user, pass, spec));
+    public void addDoctor(String fName, String lName, Gender gender, String user, String pass, Specialization spec) {
+        this.doctors.add(new Doctor(fName, lName, gender, user, pass, spec));
     }
 }

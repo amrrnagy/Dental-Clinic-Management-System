@@ -23,12 +23,12 @@ public abstract class Person {
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
 
+    public String getFullName() { return firstName + " " + lastName; }
+
     public Gender getGender() { return gender; }
 
     public String getUsername() { return username; }
     public String getPassword() { return password; }
 
     public UserRole getRole() { return role; }
-
-    public String getFullName() { return firstName + " " + lastName; }
 }

@@ -1,28 +1,23 @@
 package Models;
 
-import java.util.List;
-
-/**
- * Patient entity. Implements Comparable so patients can be sorted by lastName, then firstName.
- */
 public class Patient extends Person implements Comparable<Patient> {
-    private final int id;
+    private final String id;
     private final String phone;
     private String medicalHistory;
     private double balance;
+
     private static int nextID = 1;
-    private List<Prescription> prescriptions;
 
     public Patient(String firstName, String lastName, Gender gender, String phone,
                    String username, String password) {
         super(firstName, lastName, gender, username, password, UserRole.PATIENT);
-        this.id = nextID++;
+        this.id = "PAT" + nextID++;
         this.phone = phone;
         this.medicalHistory = "";
         this.balance = 0.0;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -31,8 +26,6 @@ public class Patient extends Person implements Comparable<Patient> {
 
     public double getBalance() { return balance; }
     public void setBalance(double balance) { this.balance = balance; }
-
-    public List<Prescription> getPrescriptions() { return prescriptions; }
 
     public String getPhone() { return phone; }
 

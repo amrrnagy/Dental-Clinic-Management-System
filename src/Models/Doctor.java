@@ -1,8 +1,8 @@
 package Models;
 
 public class Doctor extends Person implements Comparable<Doctor> {
+    private final String id;
     private final Specialization specialization;
-    private final int id;
     private int consultationFee;
 
     private static int nextID = 1;
@@ -11,12 +11,12 @@ public class Doctor extends Person implements Comparable<Doctor> {
                   String username, String password, Specialization specialization) {
 
         super(firstName, lastName, gender, username, password, UserRole.DOCTOR);
-        this.id = nextID++;
+        this.id = "DOC" + nextID++;
         this.consultationFee = 150;
         this.specialization = specialization == null ? Specialization.OTHER : specialization;
     }
 
-    public Integer getId() { return id; }
+    public String getId() { return id; }
 
     public Specialization getSpecialization() { return specialization; }
 

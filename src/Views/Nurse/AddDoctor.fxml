@@ -34,7 +34,6 @@
         <TextField fx:id="txtLastName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
         <Label text="Specialization:" GridPane.rowIndex="3" />
-        <TextField fx:id="txtSpecialization" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
         <Label text="Username:" GridPane.rowIndex="4" />
         <TextField fx:id="txtUsername" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -44,6 +43,7 @@
         <Label text="Gender:" GridPane.rowIndex="2" />
         <Label text="Password:" GridPane.rowIndex="5" />
         <TextField fx:id="txtPassword" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <ComboBox fx:id="cmbSpecialization" prefHeight="26.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <rowConstraints>
             <RowConstraints />
             <RowConstraints />

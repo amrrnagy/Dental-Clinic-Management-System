@@ -14,11 +14,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AddPrescriptionController implements Initializable {
 
     @FXML private ComboBox<Patient> cmbPatient;
+    @FXML private ComboBox<Appointment> cmbAppointment;
     @FXML private ComboBox<String> cmbDosage;
     @FXML private ComboBox<String> cmbFreq;
     @FXML private ComboBox<Integer> cmbDays;
@@ -37,6 +39,7 @@ public class AddPrescriptionController implements Initializable {
     @FXML
     private void handleAddPrescription(ActionEvent event) {
         Patient selectedPatient = cmbPatient.getValue();
+        Appointment appointment = cmbAppointment.getValue();
         String medication = txtMed.getText();
         String dosage = cmbDosage.getValue();
         String frequency = cmbFreq.getValue();
@@ -61,12 +64,11 @@ public class AddPrescriptionController implements Initializable {
             // 1. Create the main Prescription container
             // We pass null for appointmentId if it's not linked to a specific visit
             Prescription newPrescription = new Prescription(
-                    null,
-                    selectedPatient.getId().toString(),
-                    prescribingDoctor.getId().toString()
+                    appointment.getId(),
+                    selectedPatient.getId(),
+                    prescribingDoctor.getId(),
+                    notes
             );
-
-            newPrescription.setNotes(notes);
 
             // 2. Create the PrescriptionItem (Medication details)
             // Assuming your PrescriptionItem constructor takes (name, dosage, frequency, duration)
@@ -74,7 +76,7 @@ public class AddPrescriptionController implements Initializable {
             newPrescription.addItem(item);
 
             // 3. Save to the Patient's record
-            selectedPatient.getPrescriptions().add(newPrescription);
+            ClinicManager.getInstance().getPrescriptions().add(newPrescription);
 
             showAlert(Alert.AlertType.INFORMATION, "Success", "Prescription added for " + selectedPatient.getFullName());
             clearFields();
@@ -96,7 +98,7 @@ public class AddPrescriptionController implements Initializable {
     @FXML
     private void handleBackToDashboard(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Views/Dashboards/DoctorDashboard.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Dashboards/DoctorDashboard.fxml")));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Doctor Dashboard");

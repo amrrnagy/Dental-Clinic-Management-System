@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoginController {
 
@@ -63,24 +64,24 @@ public class LoginController {
                     .filter(p -> p.getUsername().equals(username) && p.getPassword().equals(password))
                     .findFirst().orElse(null);
         }
-        // Nurse check (usually a hardcoded admin or single instance in simple systems)
-        // For this demo, let's assume a nurse exists with "nurse"/"pass"
-        else if (role == UserRole.NURSE && username.equals("nurse") && password.equals("pass")) {
-            return new Models.Nurse("Head", "Nurse", Models.Gender.FEMALE, "nurse@clinic.com", "nurse", "pass");
+        // Nurse check
+        else if (role == UserRole.NURSE) {
+            return manager.getNurses().stream()
+                    .filter(p -> p.getUsername().equals(username) && p.getPassword().equals(password))
+                    .findFirst().orElse(null);
         }
         return null;
     }
 
     private void navigateToDashboard(ActionEvent event, UserRole role) {
-        String fxmlFile = "";
-        switch (role) {
-            case PATIENT: fxmlFile = "/Views/PatientDashboard.fxml"; break; // [cite: 21]
-            case DOCTOR:  fxmlFile = "/Views/DoctorDashboard.fxml"; break;  // [cite: 56]
-            case NURSE:   fxmlFile = "/Views/NurseDashboard.fxml"; break;   // [cite: 34]
-        }
+        String fxmlFile = switch (role) {
+            case PATIENT -> "/Views/Dashboards/PatientDashboard.fxml"; // [cite: 21]
+            case DOCTOR -> "/Views/Dashboards/DoctorDashboard.fxml";  // [cite: 56]
+            case NURSE -> "/Views/Dashboards/NurseDashboard.fxml";   // [cite: 34]
+        };
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

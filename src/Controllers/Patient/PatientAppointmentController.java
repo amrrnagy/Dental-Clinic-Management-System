@@ -47,7 +47,7 @@ public class PatientAppointmentController {
 
         // Filter the global appointment list for the logged-in patient
         ObservableList<Appointment> patientApps = FXCollections.observableArrayList(
-                ClinicManager.getInstance().getAllAppointments().stream()
+                ClinicManager.getInstance().getAppointments().stream()
                         .filter(a -> a.getPatientId().equals(currentPatient.getId().toString()))
                         .collect(Collectors.toList())
         );

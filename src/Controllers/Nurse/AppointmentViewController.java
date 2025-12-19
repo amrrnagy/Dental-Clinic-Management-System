@@ -38,7 +38,7 @@ public class AppointmentViewController implements Initializable {
         setupFilterOptions();
 
         // Initial data load from ClinicManager
-        tblAppointments.setItems((ObservableList<Appointment>) ClinicManager.getInstance().getAllAppointments());
+        tblAppointments.setItems((ObservableList<Appointment>) ClinicManager.getInstance().getAppointments());
     }
 
     private void setupTableColumns() {
@@ -69,9 +69,9 @@ public class AppointmentViewController implements Initializable {
         // Filter logic using streams on the global list
         cmbStatusFilter.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal == null || newVal.equals("ALL")) {
-                tblAppointments.setItems((ObservableList<Appointment>) ClinicManager.getInstance().getAllAppointments());
+                tblAppointments.setItems((ObservableList<Appointment>) ClinicManager.getInstance().getAppointments());
             } else {
-                ObservableList<Appointment> filtered = ClinicManager.getInstance().getAllAppointments().stream()
+                ObservableList<Appointment> filtered = ClinicManager.getInstance().getAppointments().stream()
                         .filter(a -> a.getStatus().toString().equals(newVal))
                         .collect(Collectors.toCollection(FXCollections::observableArrayList));
                 tblAppointments.setItems(filtered);

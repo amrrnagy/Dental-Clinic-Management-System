@@ -2,6 +2,7 @@ package Controllers.Nurse;
 
 import Models.ClinicManager;
 import Models.Patient;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,7 @@ public class RemovePatientController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Link the ComboBox directly to the static list in ClinicManager
         // This ensures the list is always up-to-date
-        cmbPatient.setItems(ClinicManager.getPatients());
+        cmbPatient.setItems((ObservableList<Patient>) ClinicManager.getInstance().getPatients());
     }
 
     @FXML
@@ -35,7 +36,7 @@ public class RemovePatientController implements Initializable {
 
         if (selectedPatient != null) {
             // Remove from the master list in ClinicManager
-            ClinicManager.getPatients().remove(selectedPatient);
+            ClinicManager.getInstance().getPatients().remove(selectedPatient);
 
             showAlert(Alert.AlertType.INFORMATION, "Success",
                     "Patient " + selectedPatient.getFullName() + " has been removed.");

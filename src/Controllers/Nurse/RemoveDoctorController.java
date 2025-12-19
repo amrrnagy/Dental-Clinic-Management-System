@@ -2,6 +2,7 @@ package Controllers.Nurse;
 
 import Models.ClinicManager;
 import Models.Doctor;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +26,7 @@ public class RemoveDoctorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Link ComboBox to the global static doctor list
-        cmbDoctor.setItems(ClinicManager.getDoctors());
+        cmbDoctor.setItems((ObservableList<Doctor>) ClinicManager.getInstance().getDoctors());
     }
 
     @FXML
@@ -34,7 +35,7 @@ public class RemoveDoctorController implements Initializable {
 
         if (selectedDoctor != null) {
             // Remove the doctor object from the manager's list
-            ClinicManager.getDoctors().remove(selectedDoctor);
+            ClinicManager.getInstance().getDoctors().remove(selectedDoctor);
 
             showAlert(Alert.AlertType.INFORMATION, "Doctor Removed",
                     "Dr. " + selectedDoctor.getFullName() + " has been successfully removed.");

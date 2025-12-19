@@ -5,17 +5,25 @@ import Models.Gender;
 import Models.Specialization;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.Objects;
 
 public class AddDoctorController {
 
-    @FXML private TextField txtFirstName; // [cite: 119]
-    @FXML private TextField txtLastName; // [cite: 120]
-    @FXML private TextField txtSpecialization; // [cite: 120]
-    @FXML private TextField txtUsername; // [cite: 120]
-    @FXML private TextField txtPassword; // [cite: 121]
-    @FXML private ComboBox<Gender> cmbGender; // [cite: 121]
+    @FXML private TextField txtFirstName;
+    @FXML private TextField txtLastName;
+    @FXML private ComboBox<Specialization> cmbSpecialization;
+    @FXML private TextField txtUsername;
+    @FXML private TextField txtPassword;
+    @FXML private ComboBox<Gender> cmbGender;
 
     @FXML
     public void initialize() {
@@ -23,21 +31,27 @@ public class AddDoctorController {
     }
 
     @FXML
-    private void handleAddDoctor(ActionEvent event) {
-        // Use ClinicManager to persist the new Doctor
+    private void handleAddDoctor(ActionEvent event) throws IOException {
+
         ClinicManager.getInstance().addDoctor(
                 txtFirstName.getText(),
                 txtLastName.getText(),
-                cmbGender.getValue().toString(),
+                cmbGender.getValue(),
                 txtUsername.getText(),
                 txtPassword.getText(),
-                txtSpecialization.getText()
+                cmbSpecialization.getValue()
         );
         handleBackToDashboard(event);
     }
 
     @FXML
-    private void handleBackToDashboard(ActionEvent event) {
-        // Navigation logic omitted for brevity, similar to switchScene above [cite: 118]
+    private void handleBackToDashboard(ActionEvent event) throws IOException {
+        switchScene(event);
+    }
+
+    private void switchScene(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/DoctorView.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 }

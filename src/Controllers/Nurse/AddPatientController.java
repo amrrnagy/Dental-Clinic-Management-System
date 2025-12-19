@@ -72,9 +72,9 @@ public class AddPatientController  {
                 txtFirstName.getText(),
                 txtLastName.getText(),
                 cmbGender.getValue(),
+                txtPhone.getText(),
                 txtUsername.getText(),
-                txtPassword.getText(),
-                txtPhone.getText()
+                txtPassword.getText()
         );
 
         ClinicManager.getInstance().addPatient(newPatient);

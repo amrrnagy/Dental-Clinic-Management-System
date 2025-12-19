@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<VBox prefHeight="398.0" prefWidth="600.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.PatientViewController">
+<VBox prefHeight="398.0" prefWidth="600.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.PatientViewController">
 
     <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="560.0" spacing="30.0">
         <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
@@ -19,15 +22,15 @@
 
     <VBox VBox.vgrow="ALWAYS">
         <children>
-            <TableView prefHeight="238.0" prefWidth="588.0">
+            <TableView fx:id="tblPatients" prefHeight="238.0" prefWidth="588.0">
                 <columns>
-                    <TableColumn fx:id="colPatientId" prefWidth="75.0" text="Patient ID" />
-                    <TableColumn fx:id="colFirstName" prefWidth="75.0" text="First Name" />
-                    <TableColumn fx:id="colLastName" text="Last Name" />
-                    <TableColumn fx:id="colGender" prefWidth="75.0" text="Gender" />
-                    <TableColumn fx:id="colPhone" prefWidth="75.0" text="Phone" />
-                    <TableColumn fx:id="colUsername" prefWidth="75.0" text="username" />
-                    <TableColumn fx:id="colPassword" prefWidth="101.0" text="password" />
+                    <TableColumn fx:id="colPatientId" prefWidth="68.0" text="Patient ID" />
+                    <TableColumn fx:id="colName" prefWidth="82.0" text="Name" />
+                    <TableColumn fx:id="colGender" prefWidth="62.0" text="Gender" />
+                    <TableColumn fx:id="colPhone" text="Phone" />
+                    <TableColumn fx:id="colUsername" prefWidth="69.0" text="username" />
+                    <TableColumn fx:id="colPassword" prefWidth="76.0" text="password" />
+                    <TableColumn fx:id="colHistory" prefWidth="122.0" text="History" />
                 </columns>
             </TableView>
         </children></VBox>

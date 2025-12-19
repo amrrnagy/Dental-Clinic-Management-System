@@ -3,7 +3,7 @@ package Models;
 public class Patient extends Person implements Comparable<Patient> {
     private final String id;
     private final String phone;
-    private String medicalHistory;
+    private final  String medicalHistory;
     private double balance;
 
     private static int nextID = 1;
@@ -22,7 +22,6 @@ public class Patient extends Person implements Comparable<Patient> {
     }
 
     public String getMedicalHistory() { return medicalHistory; }
-    public void setMedicalHistory(String medicalHistory) { this.medicalHistory = medicalHistory; }
 
     public double getBalance() { return balance; }
     public void setBalance(double balance) { this.balance = balance; }

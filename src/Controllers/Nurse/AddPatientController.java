@@ -1,92 +1,96 @@
 package Controllers.Nurse;
 
 import Models.ClinicManager;
+import Models.Doctor;
 import Models.Gender;
 import Models.Patient;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
+import javafx.util.Duration;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
-public class AddPatientController implements Initializable {
+public class AddPatientController  {
 
-    // FXML fields matching your fx:id attributes
     @FXML private TextField txtFirstName;
     @FXML private TextField txtLastName;
     @FXML private TextField txtPhone;
     @FXML private TextField txtUsername;
     @FXML private TextField txtPassword;
     @FXML private ComboBox<Gender> cmbGender;
+    @FXML public Label lblError;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialize the Gender ComboBox
+@FXML
+    public void initialize() {
         cmbGender.getItems().addAll(Gender.values());
     }
 
-    @FXML
-    private void handleAddPatient(ActionEvent event) {
-        // 1. Collect data from fields
-        String fName = txtFirstName.getText();
-        String lName = txtLastName.getText();
-        String phone = txtPhone.getText();
-        Gender gender = cmbGender.getValue();
-        String user = txtUsername.getText();
-        String pass = txtPassword.getText();
 
-        // 2. Simple validation check
-        if (fName.isEmpty() || lName.isEmpty() || user.isEmpty() || pass.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Form Error!", "Please fill in all required fields.");
+    @FXML
+    private void handleAddPatient(ActionEvent event) throws IOException {
+        String errorMessage = "";
+        if (txtFirstName.getText().trim().isEmpty()) {
+            errorMessage = "First Name is required.";
+        }
+        else if (txtLastName.getText().trim().isEmpty()) {
+            errorMessage = "Last Name is required.";
+        }
+        else if (txtPhone.getText().trim().isEmpty()) {
+            errorMessage = "Phone is required.";
+        }
+        else if (!txtPhone.getText().trim().matches("\\d+")) {
+            errorMessage = "Phone must contain only numbers.";
+        }
+        else if (cmbGender.getValue() == null) {
+            errorMessage = "Please select a Gender.";
+        }
+        else if (txtUsername.getText().trim().isEmpty()) {
+            errorMessage = "Username is required.";
+        }
+        else if (txtPassword.getText().trim().isEmpty()) {
+            errorMessage = "Password is required.";
+        }
+
+        if (!errorMessage.isEmpty()) {
+            lblError.setText(errorMessage);
+            lblError.setStyle("-fx-text-fill: red;");
+
+            PauseTransition delay = new PauseTransition(Duration.seconds(3));
+            delay.setOnFinished(e -> lblError.setText(""));
+            delay.play();
             return;
         }
 
-        // 3. Use ClinicManager to create and add the patient
-        // Note: Update your addPatient method in ClinicManager to include Phone/Gender if needed
-        ClinicManager.getInstance().addPatient(new Patient(fName, lName, gender, phone, user, pass));
+        Patient newPatient = new Patient (
+                txtFirstName.getText(),
+                txtLastName.getText(),
+                cmbGender.getValue(),
+                txtUsername.getText(),
+                txtPassword.getText(),
+                txtPhone.getText()
+        );
 
-        // 4. Confirmation and Field Reset
-        showAlert(Alert.AlertType.INFORMATION, "Registration Successful!",
-                "Patient " + fName + " " + lName + " has been added to the system.");
-        clearFields();
-    }
-
-    private void clearFields() {
-        txtFirstName.clear();
-        txtLastName.clear();
-        txtPhone.clear();
-        txtUsername.clear();
-        txtPassword.clear();
-        cmbGender.getSelectionModel().clearSelection();
+        ClinicManager.getInstance().addPatient(newPatient);
+        handleBack(event);
     }
 
     @FXML
-    private void handleBackToDashboard(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Nurse/NurseDashboard.fxml")));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Nurse Dashboard");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void handleBack(ActionEvent event) throws IOException {
+        switchScene(event);
     }
 
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    private void switchScene(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Nurse/PatientView.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 }
+
+

@@ -15,22 +15,22 @@ public class NurseDashboardController {
 
     @FXML
     private void handleGoToPatientView(ActionEvent event) {
-        switchScene(event, "/Views/Nurse/PatientView.fxml"); // [cite: 38]
+        switchScene(event, "/Views/Nurse/PatientView.fxml");
     }
 
     @FXML
     private void handleGoToDoctorView(ActionEvent event) {
-        switchScene(event, "/Views/Nurse/DoctorView.fxml"); // [cite: 41]
+        switchScene(event, "/Views/Nurse/DoctorView.fxml");
     }
 
     @FXML
     private void handleGoToAppointmentView(ActionEvent event) {
-        switchScene(event, "/Views/Nurse/AppointmentView.fxml"); // [cite: 44]
+        switchScene(event, "/Views/Nurse/AppointmentView.fxml");
     }
 
     @FXML
     private void handleGoToPaymentView(ActionEvent event) {
-        switchScene(event, "/Views/Nurse/PaymentView.fxml"); // [cite: 47]
+        switchScene(event, "/Views/Nurse/PaymentView.fxml");
     }
 
     @FXML

@@ -27,7 +27,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class DoctorViewController implements Initializable {
+public class DoctorViewController  {
 
     @FXML private TableView<Doctor> tblDoctors;
     @FXML private TableColumn<Doctor, String> colDoctorId;
@@ -39,8 +39,7 @@ public class DoctorViewController implements Initializable {
     @FXML public Label lblError;
     @FXML private HBox errorContainer;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
         setupTableColumns();
         tblDoctors.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getDoctors()));
 
@@ -101,7 +100,6 @@ public class DoctorViewController implements Initializable {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(path)));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle(title);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -84,7 +84,7 @@ public class ClinicManager {
 
     public Patient findPatientById(String id) {
         return patients.stream()
-                .filter(p -> p.getId().toString().equals(id))
+                .filter(p -> p.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }

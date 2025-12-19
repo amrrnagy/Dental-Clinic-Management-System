@@ -1,30 +1,30 @@
 package Controllers.Nurse;
 
 import Models.ClinicManager;
+import Models.Doctor;
 import Models.Patient;
-import javafx.collections.ObservableList;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
-import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.util.Duration;
 
-public class PatientViewController implements Initializable {
+public class PatientViewController {
 
-    // Must match fx:id in FXML
     @FXML private TableView<Patient> tblPatients;
     @FXML private TableColumn<Patient, String> colPatientId;
     @FXML private TableColumn<Patient, String> colName;
@@ -32,11 +32,12 @@ public class PatientViewController implements Initializable {
     @FXML private TableColumn<Patient, String> colPhone;
     @FXML private TableColumn<Patient, String> colUsername;
     @FXML private TableColumn<Patient, String> colPassword;
-    @FXML private TableColumn<Patient, String> colHistory;
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        setupTableColumns();
+    @FXML public Label lblError;
+    @FXML private HBox errorContainer;
 
+
+    public void initialize() {
+        setupTableColumns();
         tblPatients.setItems(
                 FXCollections.observableArrayList(ClinicManager.getInstance().getPatients())
         );
@@ -44,25 +45,51 @@ public class PatientViewController implements Initializable {
     }
 
     private void setupTableColumns() {
-        // Mapping columns to Patient model fields
         colPatientId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("FullName"));
         colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
-        colHistory.setCellValueFactory(new PropertyValueFactory<>("MedicalHistory"));
+
 
     }
 
     @FXML
-    private void handleAddPatient(ActionEvent event) {
-        loadScene(event, "/Views/Nurse/AddPatientView.fxml", "Add Patient");
+    private void handleAdd(ActionEvent event) {
+
+        loadScene(event, "/Views/Nurse/AddPatient.fxml", "Add New Patient");
     }
 
     @FXML
-    private void handleRemovePatient(ActionEvent event) {
-        loadScene(event, "/Views/Nurse/RemovePatientView.fxml", "Remove Patient");
+    private void handleRemove(ActionEvent event) {
+        Patient selectedPatient = tblPatients.getSelectionModel().getSelectedItem();
+
+        if (selectedPatient != null) {
+            tblPatients.getItems().remove(selectedPatient);
+            ClinicManager.getInstance().removePatient(selectedPatient);
+            lblError.setText("Patient " + selectedPatient.getFullName() + " has been successfully removed.");
+            lblError.setStyle("-fx-text-fill: green;");
+            errorContainer.setVisible(true);
+            PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+            visiblePause.setOnFinished(e -> {
+                lblError.setText("");
+                errorContainer.setVisible(false);
+            });
+            visiblePause.play();
+
+        } else {
+            lblError.setText("No Patient selected to delete.");
+            lblError.setStyle("-fx-text-fill: red;");
+            errorContainer.setVisible(true);
+
+            PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+            visiblePause.setOnFinished(e -> {
+                lblError.setText("");
+                errorContainer.setVisible(false);
+            });
+            visiblePause.play();
+        }
     }
 
     @FXML
@@ -75,7 +102,6 @@ public class PatientViewController implements Initializable {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(path)));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle(title);
             stage.show();
         } catch (IOException e) {
             System.err.println("Error loading " + path);

@@ -29,13 +29,10 @@ public class PatientAppointmentController {
 
     @FXML
     public void initialize() {
-        // Configure table columns to match Appointment model fields [cite: 92]
         colDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-        colDoctor.setCellValueFactory(new PropertyValueFactory<>("doctorId")); // Simplified for ID
+        colDoctor.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
         colReason.setCellValueFactory(new PropertyValueFactory<>("reason"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        // Set up filter options [cite: 89]
         cmbStatusFilter.getItems().addAll("All Statuses", "SCHEDULED", "COMPLETED", "CANCELLED");
 
         loadAppointments();
@@ -44,8 +41,6 @@ public class PatientAppointmentController {
     private void loadAppointments() {
         Patient currentPatient = (Patient) ClinicManager.getInstance().getCurrentUser();
         if (currentPatient == null) return;
-
-        // Filter the global appointment list for the logged-in patient
         ObservableList<Appointment> patientApps = FXCollections.observableArrayList(
                 ClinicManager.getInstance().getAppointments().stream()
                         .filter(a -> a.getPatientId().equals(currentPatient.getId().toString()))

@@ -66,10 +66,10 @@ public class ClinicManager {
         patients.add(pat2);
 
         // Add 2 Nurses (Hana & Jana)
-        Nurse nur1 = new Nurse("Jana", "Ashraf", Gender.FEMALE,
-                "jana", "jana");
-        Nurse nur2 = new Nurse("Hana", "Nagy", Gender.FEMALE,
-                "hana", "hana");
+        Nurse nur1 = new Nurse("karim", "Ashraf", Gender.FEMALE,
+                "baiomy", "baiomy");
+        Nurse nur2 = new Nurse("nader", "Nagy", Gender.FEMALE,
+                "eslam", "eslam");
         nurses.add(nur1);
         nurses.add(nur2);
 

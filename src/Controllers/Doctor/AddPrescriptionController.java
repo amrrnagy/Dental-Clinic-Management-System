@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class AddPrescriptionController implements Initializable {
+public class AddPrescriptionController {
 
     @FXML private ComboBox<Patient> cmbPatient;
     @FXML private ComboBox<Appointment> cmbAppointment;
@@ -27,11 +27,9 @@ public class AddPrescriptionController implements Initializable {
     @FXML private TextField txtMed;
     @FXML private TextField txtNotes;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Cast to ObservableList for ComboBox compatibility
-        cmbPatient.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getPatients()));
 
+    public void initialize() {
+        cmbPatient.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getPatients()));
         cmbDosage.getItems().addAll("50mg", "100mg", "250mg", "500mg");
         cmbFreq.getItems().addAll("Once daily", "Twice daily", "Thrice daily", "As needed");
     }

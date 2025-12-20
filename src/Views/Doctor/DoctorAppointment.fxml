@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="451.0" prefWidth="742.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Doctor.DoctorAppointmentController">
+<VBox prefHeight="394.0" prefWidth="576.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Doctor.DoctorAppointmentController">
 
     <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Appointment List" />
 
@@ -19,19 +19,18 @@
         <Separator orientation="VERTICAL" />
         <Label text="Filter by Status:" />
         <ComboBox fx:id="cmbStatusFilter" promptText="All Statuses" />
-        <Button onAction="#handleRefreshList" text="Refresh List" />
     </HBox>
 
     <Separator />
 
     <TableView fx:id="tblAppointments" VBox.vgrow="ALWAYS">
         <columns>
+            <TableColumn fx:id="colAppointmentId" prefWidth="130.0" text="Appointment ID" />
             <TableColumn fx:id="colDateTime" prefWidth="150.0" text="Date &amp; Time" />
             <TableColumn fx:id="colPatient" prefWidth="150.0" text="Patient Name" />
-            <TableColumn fx:id="colReason" prefWidth="200.0" text="Reason" />
             <TableColumn fx:id="colStatus" prefWidth="100.0" text="Status" />
-            <TableColumn fx:id="colActions" prefWidth="100.0" text="Actions" />
         </columns>
     </TableView>
+     <Button onAction="#handleReset" text="Reset" />
 
 </VBox>

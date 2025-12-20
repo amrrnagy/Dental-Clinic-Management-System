@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,14 +15,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class AppointmentViewController implements Initializable {
+public class AppointmentViewController{
 
     @FXML private TableView<Appointment> tblAppointments;
     @FXML private ComboBox<String> cmbStatusFilter;
@@ -32,10 +29,9 @@ public class AppointmentViewController implements Initializable {
     @FXML private TableColumn<Appointment, String> colPatient;
     @FXML private TableColumn<Appointment, String> colDoctor;
     @FXML private TableColumn<Appointment, LocalDateTime> colDateTime;
-    @FXML private TableColumn<Appointment, String> colStatus;
+    @FXML private TableColumn<Appointment, AppointmentStatus> colStatus;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
         setupTableColumns();
         setupFilterOptions();
 
@@ -103,7 +99,7 @@ public class AppointmentViewController implements Initializable {
     @FXML
     private void handleBackToDashboard(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Dashboards/NurseDashboard.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Dashboards/DoctorDashboard.fxml")));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

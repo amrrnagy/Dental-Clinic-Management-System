@@ -108,6 +108,13 @@ public class ClinicManager {
                 .orElse(null);
     }
 
+    public Appointment findAppointmentById(String id) {
+        return appointments.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
     public Appointment scheduleAppointment(String patientId, String doctorId,
                                            java.time.LocalDate date, AppointmentSlot slot) {
 
@@ -164,6 +171,38 @@ public class ClinicManager {
 
     public void addDoctor(Doctor doctor) {this.doctors.add(doctor); }
     public void removeDoctor(Doctor doctor) {this.doctors.remove(doctor); }
+
+//    public Prescription addPrescription(String appointmentId, String patientId, String medication,
+//                                        String dosage, int frequency, int days, String notes) {
+//
+//        // 1. Validation: Ensure the appointment and patient actually exist
+//        if (findAppointmentById(appointmentId) == null || findPatientById(patientId) == null) {
+//            return null;
+//        }
+//
+//        // Check if a prescription already exists for this appointment
+//        if (hasPrescription(appointmentId)) return null;
+//
+//        try {
+//            // 3. Create the object (Assuming constructor matches these fields)
+//            Prescription newPrescription = new Prescription(
+//                    appointmentId, patientId, medication, dosage, frequency, days, notes
+//            );
+//
+//            // 4. Save to your list/database
+//            prescriptions.add(newPrescription);
+//
+//            return newPrescription;
+//        } catch (IllegalArgumentException e) {
+//            // Handle cases like negative days or empty medication names
+//            return null;
+//        }
+//    }
+
+//    private boolean hasPrescription(String appointmentId) {
+//        return prescriptions.stream()
+//                .anyMatch(p -> p.getAppointmentId().equals(appointmentId));
+//    }
 
     public void processPayment(String patientId,String appointmentId, double amount, PaymentMethod method) {
         this.payments.add(new Payment(patientId, appointmentId, amount, method));

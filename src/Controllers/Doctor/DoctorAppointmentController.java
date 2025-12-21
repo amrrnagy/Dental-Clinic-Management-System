@@ -30,12 +30,29 @@ public class DoctorAppointmentController{
     @FXML private TableColumn<Appointment, String> colPatient;
     @FXML private TableColumn<Appointment, AppointmentStatus> colStatus;
 
+    private Doctor currentDoctor;
+
     public void initialize() {
+
+        this.currentDoctor = (Doctor) ClinicManager.getInstance().getCurrentUser();
+
         setupTableColumns();
         setupFilterOptions();
 
-        // Initial data load from ClinicManager
-        tblAppointments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getAppointments()));
+        refreshTable();
+    }
+
+    private void refreshTable() {
+        String selectedStatus = cmbStatusFilter.getValue();
+
+        ObservableList<Appointment> filteredList = ClinicManager.getInstance().getAppointments().stream()
+                // Filter by Current Doctor ID
+                .filter(a -> a.getDoctorId().equals(currentDoctor.getId()))
+                // Filter by Status (if not "ALL")
+                .filter(a -> selectedStatus.equals("ALL") || a.getStatus().toString().equals(selectedStatus))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+
+        tblAppointments.setItems(filteredList);
     }
 
     private void setupTableColumns() {

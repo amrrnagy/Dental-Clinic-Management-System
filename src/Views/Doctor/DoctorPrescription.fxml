@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="453.0" prefWidth="700.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Doctor.DoctorPrescriptionController">
+<VBox prefHeight="406.0" prefWidth="750.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Doctor.DoctorPrescriptionController">
 
     <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="660.0" spacing="30.0">
         <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
@@ -26,7 +26,7 @@
             <RowConstraints maxHeight="23.599995040893553" minHeight="3.599996948242186" prefHeight="23.599995040893553" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="107.0" style="-fx-background-color: #4caf4e; -fx-text-fill: white;" text="Add Prescription" GridPane.columnIndex="2" />
+            <Button mnemonicParsing="false" onAction="#handleAddPrescription" prefHeight="39.0" prefWidth="107.0" style="-fx-background-color: #4caf4e; -fx-text-fill: white;" text="Add Prescription" GridPane.columnIndex="2" />
          </children>
       </GridPane>
     </HBox>
@@ -36,11 +36,11 @@
     <VBox prefHeight="374.0" prefWidth="660.0" VBox.vgrow="ALWAYS">
         <TableView fx:id="tblPrescriptions" prefHeight="350.0" prefWidth="660.0">
             <columns>
-                <TableColumn fx:id="colDoctor" prefWidth="140.0" text="Patient" />
-                <TableColumn fx:id="colDate" prefWidth="120.0" text="Date Issued" />
+                <TableColumn fx:id="colPatient" prefWidth="130.0" text="Patient" />
+                <TableColumn fx:id="colDate" prefWidth="140.0" text="Date Issued" />
                 <TableColumn fx:id="colMedication" prefWidth="110.0" text="Medication" />
                 <TableColumn fx:id="colDosage" prefWidth="100.0" text="Dosage" />
-                <TableColumn fx:id="colInstructions" prefWidth="190.0" text="Instructions" />
+                <TableColumn fx:id="colInstructions" prefWidth="225.0" text="Instructions" />
             </columns>
         </TableView>
     </VBox>

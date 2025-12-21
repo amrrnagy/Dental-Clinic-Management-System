@@ -1,9 +1,7 @@
 package Controllers.Patient;
 
-import Models.Appointment;
-import Models.AppointmentStatus;
-import Models.ClinicManager;
-import Models.Patient;
+import Models.*;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,7 +28,14 @@ public class PatientAppointmentController {
     @FXML
     public void initialize() {
         colDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-        colDoctor.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
+
+        // Custom mapping to show Doctor Names instead of IDs
+        colDoctor.setCellValueFactory(cellData -> {
+            String dId = cellData.getValue().getDoctorId();
+            Doctor d = ClinicManager.getInstance().findDoctorById(dId);
+            return new ReadOnlyStringWrapper(d != null ? d.getFullName() : "Unknown");
+        });
+
         colReason.setCellValueFactory(new PropertyValueFactory<>("reason"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         cmbStatusFilter.getItems().addAll("All Statuses", "SCHEDULED", "COMPLETED", "CANCELLED");
@@ -57,12 +62,12 @@ public class PatientAppointmentController {
 
     @FXML
     private void handleNewAppointment(ActionEvent event) throws IOException {
-        switchScene(event, "/Views/AddAppointment.fxml");
+        switchScene(event, "/Views/Patient/AddAppointment.fxml");
     }
 
     @FXML
     private void handleBackToDashboard(ActionEvent event) throws IOException {
-        switchScene(event, "/Views/PatientDashboard.fxml");
+        switchScene(event, "/Views/Dashboards/PatientDashboard.fxml");
     }
 
     private void switchScene(ActionEvent event, String fxmlPath) throws IOException {

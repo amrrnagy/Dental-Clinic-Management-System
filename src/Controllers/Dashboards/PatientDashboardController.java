@@ -18,7 +18,7 @@ public class PatientDashboardController {
      */
     @FXML
     private void handleViewAppointments(ActionEvent event) {
-        switchScene(event, "/Views/PatientAppointment.fxml");
+        switchScene(event, "/Views/Patient/PatientAppointment.fxml");
     }
 
     /**
@@ -26,7 +26,7 @@ public class PatientDashboardController {
      */
     @FXML
     private void handleViewPrescriptions(ActionEvent event) {
-        switchScene(event, "/Views/PrescriptionView.fxml");
+        switchScene(event, "/Views/Patient/PrescriptionView.fxml");
     }
 
     /**
@@ -34,7 +34,7 @@ public class PatientDashboardController {
      */
     @FXML
     private void handleAddPayment(ActionEvent event) {
-        switchScene(event, "/Views/AddPayment.fxml");
+        switchScene(event, "/Views/Patient/AddPayment.fxml");
     }
 
     /**

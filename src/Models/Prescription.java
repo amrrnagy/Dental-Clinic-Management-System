@@ -1,21 +1,17 @@
 package Models;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
 public class Prescription {
     private final String id;
     private final String appointmentId;
     private final String patientId;
     private final String doctorId;
-    private final LocalDate issuedDate;
-    private final List<PrescriptionItem> items;
-    private final String notes;
+    private final LocalDateTime issuedDate;
+    private final PrescriptionItem item;
 
-    public Prescription(String appointmentId, String patientId, String doctorId, String notes) {
+    public Prescription(String appointmentId, String patientId, String doctorId, PrescriptionItem item) {
 
         if (patientId == null || patientId.trim().isEmpty() || doctorId == null || doctorId.trim().isEmpty()) {
             throw new IllegalArgumentException("Patient ID and Doctor ID are required for a Prescription.");
@@ -25,9 +21,8 @@ public class Prescription {
         this.appointmentId = appointmentId;
         this.patientId = patientId;
         this.doctorId = doctorId;
-        this.notes = notes;
-        this.issuedDate = LocalDate.now();
-        this.items = new ArrayList<>();
+        this.issuedDate = LocalDateTime.now();
+        this.item = item;
     }
 
     public String getId() {
@@ -42,26 +37,17 @@ public class Prescription {
     public String getDoctorId() {
         return doctorId;
     }
-    public LocalDate getIssuedDate() {
+    public LocalDateTime getIssuedDate() {
         return issuedDate;
     }
-
-    public List<PrescriptionItem> getItems() {
-        return items;
-    }
-
-    public void addItems(PrescriptionItem item) { items.add(item); }
-
-    public String getNotes() {
-        return notes;
+    public PrescriptionItem getItem() {
+        return item;
     }
 
     @Override
     public String toString() {
         // Format inferred from Prescription.class: "APrescription{id=%s, patientId=%s, doctorId=%s, date=%s, items=%d}"
-        return String.format("Prescription{id=%s, patientId=%s, doctorId=%s, date=%s, items=%d, notes=%s}",
-                id, patientId, doctorId, issuedDate, items.size(),
-                notes != null ? notes : "N/A");
+        return id + ": " + patientId + ": " + issuedDate;
     }
 
     @Override

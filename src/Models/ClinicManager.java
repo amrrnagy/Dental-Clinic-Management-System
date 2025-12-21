@@ -65,7 +65,6 @@ public class ClinicManager {
         patients.add(pat1);
         patients.add(pat2);
 
-        // Add 2 Nurses (Hana & Jana)
         Nurse nur1 = new Nurse("karim", "Ashraf", Gender.FEMALE,
                 "baiomy", "baiomy");
         Nurse nur2 = new Nurse("nader", "Nagy", Gender.FEMALE,
@@ -175,7 +174,7 @@ public class ClinicManager {
 
     public void addDoctor(Doctor doctor) {this.doctors.add(doctor); }
     public void removeDoctor(Doctor doctor) {this.doctors.remove(doctor); }
-
+    public void cancelAppointment (Appointment appointment) {this.appointments.remove(appointment);}
     public Prescription addPrescription(String appointmentId, String patientId, String doctorId, PrescriptionItem item) {
 
         // 1. Validation: Ensure the appointment and patient actually exist

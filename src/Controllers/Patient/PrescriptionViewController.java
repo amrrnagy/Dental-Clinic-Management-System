@@ -65,9 +65,9 @@ public class PrescriptionViewController{
             return new ReadOnlyStringWrapper(item != null ? item.dose() : "");
         });
 
-        // Custom mapping to show Patient Names instead of IDs
+        // Custom mapping to show Doctors Names instead of IDs
         colDoctor.setCellValueFactory(cellData -> {
-            String dId = cellData.getValue().getPatientId();
+            String dId = cellData.getValue().getDoctorId();
             Doctor d = ClinicManager.getInstance().findDoctorById(dId);
             return new ReadOnlyStringWrapper(d != null ? d.getFullName() : "Unknown");
         });

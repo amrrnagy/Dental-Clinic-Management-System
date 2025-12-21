@@ -24,7 +24,6 @@ public class DoctorAppointmentController{
 
     @FXML private TableView<Appointment> tblAppointments;
     @FXML private ComboBox<String> cmbStatusFilter;
-
     @FXML private TableColumn<Appointment, String> colAppointmentId;
     @FXML private TableColumn<Appointment, LocalDateTime> colDateTime;
     @FXML private TableColumn<Appointment, String> colPatient;
@@ -90,9 +89,13 @@ public class DoctorAppointmentController{
 
         cmbStatusFilter.getSelectionModel().selectedItemProperty().addListener((_, oldVal, newVal) -> {
             if (newVal == null || newVal.equals("ALL")) {
-                tblAppointments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getAppointments()));
+                tblAppointments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getAppointments())
+                        .stream().filter(a -> a.getDoctorId().equals(currentDoctor.getId()))
+                        .collect(Collectors.toCollection(FXCollections::observableArrayList))
+                );
             } else {
                 ObservableList<Appointment> filtered = ClinicManager.getInstance().getAppointments().stream()
+                        .filter(a -> a.getDoctorId().equals(currentDoctor.getId()))
                         .filter(a -> a.getStatus().toString().equals(newVal))
                         .collect(Collectors.toCollection(FXCollections::observableArrayList));
                 tblAppointments.setItems(filtered);

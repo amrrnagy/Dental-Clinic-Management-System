@@ -65,6 +65,8 @@ public class DoctorViewController  {
             tblDoctors.getItems().remove(selectedDoctor);
             ClinicManager.getInstance().removeDoctor(selectedDoctor);
 
+            Doctor.minusNextID();
+
             lblError.setText("Dr. " + selectedDoctor.getFullName() + " has been successfully removed.");
             lblError.setStyle("-fx-text-fill: green;");
             errorContainer.setVisible(true);

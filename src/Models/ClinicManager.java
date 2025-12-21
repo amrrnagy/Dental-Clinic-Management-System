@@ -59,9 +59,6 @@ public class ClinicManager {
         Patient pat2 = new Patient("Jane", "Nagy", Gender.FEMALE,
                 "010", "pat2", "ppass2");
 
-        pat1.setBalance(150.00);
-        pat2.setBalance(340.00);
-
         patients.add(pat1);
         patients.add(pat2);
 
@@ -85,10 +82,16 @@ public class ClinicManager {
                 java.time.LocalDate.now().plusDays(2),
                 AppointmentSlot.SLOT_3_00_PM
         );
+        Appointment app3 = scheduleAppointment(
+                pat1.getId(),
+                doc1.getId(),
+                java.time.LocalDate.now().plusDays(6),
+                AppointmentSlot.SLOT_5_00_PM
+        );
 
         // Initial Payment
-        processPayment("PAT1", app1.getId(), 200, PaymentMethod.CASH);
-        processPayment("PAT2", app2.getId(), 300, PaymentMethod.CARD);
+        processPayment("PAT1", app1.getId(), 150, PaymentMethod.CASH);
+        processPayment("PAT2", app2.getId(), 150, PaymentMethod.CARD);
 
         PrescriptionItem item1 = new PrescriptionItem("Fenadone", "2mg", "Every 2 Hours", 4);
         Prescription pre1 = new Prescription(app1.getId(), pat1.getId(), doc1.getId(), item1);
@@ -135,6 +138,11 @@ public class ClinicManager {
         try {
             Appointment newAppointment = new Appointment(patientId, doctorId, dateTime, slot);
             appointments.add(newAppointment);
+
+            Patient currentPatient = findPatientById(patientId);
+            Doctor currentDoctor = findDoctorById(doctorId);
+            currentPatient.setBalance(currentPatient.getBalance() + currentDoctor.getConsultationFee());
+
             return newAppointment;
         } catch (IllegalArgumentException e) {
             return null;
@@ -208,5 +216,11 @@ public class ClinicManager {
 
     public void processPayment(String patientId,String appointmentId, double amount, PaymentMethod method) {
         this.payments.add(new Payment(patientId, appointmentId, amount, method));
+
+        Patient currentPatient = findPatientById(patientId);
+        currentPatient.setBalance(currentPatient.getBalance() - amount);
+
+        Appointment appointment = findAppointmentById(appointmentId);
+        appointment.setStatus(AppointmentStatus.PAID);
     }
 }

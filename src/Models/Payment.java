@@ -33,12 +33,6 @@ public class Payment implements Payable{
     public String getId() { return paymentID; }
     public String getPatientId() { return patientId; }
     public String getAppointmentId() { return appointmentId; }
-
-    public static void minusNextID() {
-        if(nextId > 1)
-            nextId--;
-    }
-
     public double getAmount() { return amount; }
     public PaymentMethod getMethod() { return method; }
     public LocalDateTime getDateTime() { return dateTime; }

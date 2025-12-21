@@ -1,9 +1,8 @@
 package Controllers.Patient;
 
-import Models.Appointment;
-import Models.AppointmentStatus;
-import Models.ClinicManager;
-import Models.Patient;
+import Models.*;
+import javafx.animation.PauseTransition;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +13,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -27,12 +29,23 @@ public class PatientAppointmentController {
     @FXML private TableColumn<Appointment, AppointmentStatus> colStatus;
     @FXML private ComboBox<String> cmbStatusFilter;
 
+    @FXML public Label lblError;
+    @FXML private HBox errorContainer;
+
     @FXML
     public void initialize() {
+        colAppointmentId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         colDoctor.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         cmbStatusFilter.getItems().addAll("All Statuses", "SCHEDULED", "COMPLETED", "CANCELLED");
+
+        // Custom mapping to show Doctor Names instead of IDs
+        colDoctor.setCellValueFactory(cellData -> {
+            String dId = cellData.getValue().getDoctorId();
+            Doctor d = ClinicManager.getInstance().findDoctorById(dId);
+            return new ReadOnlyStringWrapper(d != null ? d.getFullName() : "Unknown");
+        });
 
         loadAppointments();
     }
@@ -56,16 +69,45 @@ public class PatientAppointmentController {
 
     @FXML
     private void handleNewAppointment(ActionEvent event) throws IOException {
-        switchScene(event, "/Views/AddAppointment.fxml");
+        switchScene(event, "/Views/Patient/AddAppointment.fxml");
     }
 
     @FXML
     private void handleBackToDashboard(ActionEvent event) throws IOException {
-        switchScene(event, "/Views/PatientDashboard.fxml");
+        switchScene(event, "/Views/Dashboards/PatientDashboard.fxml");
     }
 
     @FXML
     private void handleCancelAppointment(ActionEvent event) throws IOException {
+        Appointment selectedAppointment = tblAppointments.getSelectionModel().getSelectedItem();
+
+        if (selectedAppointment != null) {
+            tblAppointments.getItems().remove(selectedAppointment);
+            ClinicManager.getInstance().cancelAppointment(selectedAppointment);
+
+            lblError.setText("Appointment " + selectedAppointment.toString() + " has been successfully cancelled.");
+            lblError.setStyle("-fx-text-fill: green;");
+            errorContainer.setVisible(true);
+
+            PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+            visiblePause.setOnFinished(e -> {
+                lblError.setText("");
+                errorContainer.setVisible(false);
+            });
+            visiblePause.play();
+
+        } else {
+            lblError.setText("No Appointment selected to cancel.");
+            lblError.setStyle("-fx-text-fill: red;");
+            errorContainer.setVisible(true);
+
+            PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+            visiblePause.setOnFinished(e -> {
+                lblError.setText("");
+                errorContainer.setVisible(false);
+            });
+            visiblePause.play();
+        }
 
     }
 

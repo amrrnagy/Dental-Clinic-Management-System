@@ -111,8 +111,6 @@ public class AddPrescriptionController{
         }
 
         // 3. Create and Save Prescription
-        // Adjust the constructor below to match your Models.Prescription class
-
         PrescriptionItem newPrescriptionItem = new PrescriptionItem(
                 medication,
                 dosage,

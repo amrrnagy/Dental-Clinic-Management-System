@@ -35,11 +35,6 @@ public class Appointment implements Comparable<Appointment> {
     public String getId() { return id; }
     public String getPatientId() { return patientId; }
     public String getDoctorId() { return doctorId; }
-
-    public static void minusNextID() {
-        if(nextId > 1)
-            nextId--;
-    }
     public AppointmentSlot getSlot() { return slot; }
 
     public LocalDateTime getDateTime() { return dateTime; }

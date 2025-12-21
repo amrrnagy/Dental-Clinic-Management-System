@@ -36,25 +36,28 @@
 
         <Label text="Specialization:" GridPane.rowIndex="3" />
 
-        <Label text="Username:" GridPane.rowIndex="4" />
-        <TextField fx:id="txtUsername" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Label text="Username:" GridPane.rowIndex="5" />
+        <TextField fx:id="txtUsername" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-        <Button fx:id="btnAddDoctor" onAction="#handleAddDoctor" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+        <Button fx:id="btnAddDoctor" onAction="#handleAddDoctor" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
         <ComboBox fx:id="cmbGender" prefHeight="26.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Label text="Gender:" GridPane.rowIndex="2" />
-        <Label text="Password:" GridPane.rowIndex="5" />
-        <TextField fx:id="txtPassword" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <Label text="Password:" GridPane.rowIndex="6" />
+        <TextField fx:id="txtPassword" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <ComboBox fx:id="cmbSpecialization" prefHeight="26.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Label fx:id="lblError" GridPane.rowIndex="6">
+      <Label fx:id="lblError" GridPane.rowIndex="7">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Label text="Consultation Fee:" GridPane.rowIndex="4" />
+      <TextField fx:id="txtFee" promptText="Default: $150" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         <rowConstraints>
             <RowConstraints />
             <RowConstraints />
             <RowConstraints />
             <RowConstraints minHeight="10.0" prefHeight="30.0" />
+         <RowConstraints minHeight="10.0" prefHeight="30.0" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" />

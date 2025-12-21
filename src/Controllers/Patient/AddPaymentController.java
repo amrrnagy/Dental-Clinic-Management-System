@@ -1,7 +1,6 @@
 package Controllers.Patient;
 
 import Models.*;
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,91 +15,108 @@ import java.util.Objects;
 
 public class AddPaymentController{
 
-    @FXML private ComboBox<Patient> cmbPatient;
-    @FXML private TextField txtAmount;
     @FXML private ComboBox<PaymentMethod> cmbMethod;
-    @FXML private TextField txtAppointmentId;
+    @FXML private ComboBox<Appointment> cmbAppointment;
+    @FXML private Label lblAmount;
     @FXML private Label lblBalance;
 
     private final ClinicManager clinicManager = ClinicManager.getInstance();
 
-    // Listener to update the balance label when a patient is selected
-    private final ChangeListener<Patient> patientChangeListener = (obs, oldVal, newVal) -> {
-        if (newVal != null) {
-            updateBalanceLabel(newVal);
-        } else {
-            lblBalance.setText("Current Balance: $0.00");
-        }
-    };
+    Patient currentPatient = (Patient) clinicManager.getCurrentUser();
+
 
     public void initialize() {
         // Populate ComboBoxes
-        cmbPatient.getItems().addAll(clinicManager.getPatients());
+        loadTable();
+
+        // Listener: When Appointment changes, update their fee
+        cmbAppointment.valueProperty().addListener((obs, oldVal, newVal) -> updateFee(newVal));
+
         cmbMethod.getItems().addAll(PaymentMethod.values());
+        updateBalanceLabel();
+    }
 
-        // Set ComboBox to display full name and add listener
-        cmbPatient.setCellFactory(lv -> new ListCell<Patient>() {
-            @Override
-            protected void updateItem(Patient item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty ? null : item.getFullName());
+    private boolean loadTable() {
+        var patientAppointments = clinicManager.getAppointments().stream()
+                .filter(a -> a.getPatientId().equals(currentPatient.getId()))
+                .filter(a -> a.getPatientId().equals(
+                        ((Patient) clinicManager.getCurrentUser()).getId()
+                ))
+                .filter(a -> !a.getStatus().equals(AppointmentStatus.PAID))
+                .toList();
+
+        if(patientAppointments.isEmpty())
+            return false;
+        else
+            cmbAppointment.getItems().addAll(patientAppointments);
+        return true;
+    }
+
+    private void Refresh() {
+        cmbAppointment.getItems().clear();
+        cmbAppointment.getSelectionModel().clearSelection();
+        cmbMethod.getSelectionModel().clearSelection();
+        lblAmount.setText("");
+
+        if(!loadTable()) {
+            showAlert(Alert.AlertType.INFORMATION, "No Appointments", "You have no unpaid appointments.");
+
+            try {
+                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Dashboards/PatientDashboard.fxml")));
+                Stage stage = (Stage) cmbAppointment.getScene().getWindow(); // Use the ComboBox to find the window
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
-        cmbPatient.valueProperty().addListener(patientChangeListener);
-
-        // Ensure the initial balance is set if the combo box has data
-        if (!cmbPatient.getItems().isEmpty()) {
-            updateBalanceLabel(cmbPatient.getItems().getFirst());
         }
     }
 
-    private void updateBalanceLabel(Patient patient) {
-        lblBalance.setText(String.format("Current Outstanding Balance: $%.2f", patient.getBalance()));
+    private void updateBalanceLabel() {
+        lblBalance.setText(String.format("Current Outstanding Balance: $%.2f", currentPatient.getBalance()));
+    }
+
+    private void updateFee(Appointment appointment) {
+        String doctorId = clinicManager.findAppointmentById(appointment.getId()).getDoctorId();
+        double fees = clinicManager.findDoctorById(doctorId).getConsultationFee();
+        lblAmount.setText(String.format("Fees are $%.2f", fees));
     }
 
     @FXML
     private void handleProcessPayment() {
-        Patient selectedPatient = cmbPatient.getValue();
+        String appointmentId = cmbAppointment.getValue().getId();
         PaymentMethod method = cmbMethod.getValue();
-        String amountText = txtAmount.getText();
-        String appointmentId = txtAppointmentId.getText().isEmpty() ? null : txtAppointmentId.getText();
 
-        if (selectedPatient == null || method == null || amountText.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Missing Fields", "Please select a patient, amount, and payment method.");
-            return;
-        }
+        Doctor currentDoctor = clinicManager.findDoctorById(clinicManager.findAppointmentById(appointmentId).getDoctorId());
+        double amount = currentDoctor.getConsultationFee();
 
-        double amount;
-        try {
-            amount = Double.parseDouble(amountText);
-            if (amount <= 0) throw new NumberFormatException();
-        } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Invalid Amount", "Please enter a positive numeric value for the amount.");
+        if (method == null) {
+            showAlert(Alert.AlertType.ERROR, "Missing Fields", "Please select a payment method.");
             return;
         }
 
         try {
             // Call the core business logic
             clinicManager.processPayment(
-                    selectedPatient.getId(),
+                    currentPatient.getId(),
                     appointmentId,
                     amount,
                     method
             );
 
             showAlert(Alert.AlertType.INFORMATION, "Success",
-                    String.format("Payment of $%.2f processed successfully for %s.", amount, selectedPatient.getFullName()));
+                    String.format("Payment of $%.2f processed successfully for %s.", amount, currentPatient.getFullName()));
 
             // Refresh the balance label immediately
-            updateBalanceLabel(selectedPatient);
-            txtAmount.clear();
-            txtAppointmentId.clear();
+            updateBalanceLabel();
+            Refresh();
 
         } catch (IllegalArgumentException e) {
             showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
         }
     }
 
+    // --- Navigation and Utility ---
     @FXML
     private void handleBackToDashboard(ActionEvent event) {
         navigateTo(event, "/Views/Dashboards/PatientDashboard.fxml");

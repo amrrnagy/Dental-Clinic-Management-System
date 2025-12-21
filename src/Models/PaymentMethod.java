@@ -5,5 +5,4 @@ public enum PaymentMethod {
     CARD,
     INSURANCE,
     MOBILE_PAYMENT,
-    BALANCE
 }

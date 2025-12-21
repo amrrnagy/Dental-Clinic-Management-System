@@ -4,7 +4,6 @@ import Models.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,18 +11,16 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.Objects;
 
 public class AddAppointmentController  {
 
-    @FXML private ComboBox<Patient> cmbPatient;
     @FXML private ComboBox<Doctor> cmbDoctor;
     @FXML private DatePicker dpDate;
     @FXML private TextArea txtReason;
@@ -34,17 +31,7 @@ public class AddAppointmentController  {
 
     public void initialize() {
 
-        cmbPatient.getItems().addAll(clinicManager.getPatients());
         cmbDoctor.getItems().addAll(clinicManager.getDoctors());
-
-        // Set ComboBox display for Patient
-        cmbPatient.setCellFactory(lv -> new ListCell<Patient>() {
-            @Override
-            protected void updateItem(Patient item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty ? null : item.getFullName() + " (ID: " + item.getId() + ")");
-            }
-        });
 
         // Set ComboBox display for Doctor
         cmbDoctor.setCellFactory(lv -> new ListCell<Doctor>() {
@@ -111,7 +98,7 @@ public class AddAppointmentController  {
      */
     private List<AppointmentSlot> getFilteredSlots(Doctor doctor, LocalDate date) {
         List<AppointmentSlot> availableSlots = new ArrayList<>();
-        String doctorId = doctor.getId().toString();
+        String doctorId = doctor.getId();
 
         // Iterate through all defined standard slots
         for (AppointmentSlot slot : AppointmentSlot.values()) {
@@ -133,21 +120,21 @@ public class AddAppointmentController  {
     // --- Existing handleScheduleAppointment method (Updated) ---
     @FXML
     private void handleScheduleAppointment() {
-        Patient selectedPatient = cmbPatient.getValue();
+        Patient currentPatient = (Patient) ClinicManager.getInstance().getCurrentUser();
         Doctor selectedDoctor = cmbDoctor.getValue();
         LocalDate date = dpDate.getValue();
         AppointmentSlot slot = cmbSlots.getValue();
 
         // 1. Input Validation (Duration is now implicitly fixed and doesn't need field check)
-        if (selectedPatient == null || selectedDoctor == null || date == null || slot == null) {
-            showAlert(Alert.AlertType.ERROR, "Missing Fields", "Please select a patient, doctor, date, and a valid time slot.");
+        if (selectedDoctor == null || date == null || slot == null) {
+            showAlert(Alert.AlertType.ERROR, "Missing Fields", "Please select a doctor, date, and a valid time slot.");
             return;
         }
 
         // 2. Schedule using the Manager's Core Logic
         Appointment newAppointment = clinicManager.scheduleAppointment(
-                selectedPatient.getId().toString(),
-                selectedDoctor.getId().toString(),
+                currentPatient.getId(),
+                selectedDoctor.getId(),
                 date, // Pass LocalDate
                 slot // Pass AppointmentSlot
         );
@@ -156,11 +143,10 @@ public class AddAppointmentController  {
         if (newAppointment != null) {
             LocalDateTime startDateTime = LocalDateTime.of(date, slot.getStartTime());
             showAlert(Alert.AlertType.INFORMATION, "Success",
-                    "Appointment successfully scheduled for " + selectedPatient.getFullName() +
+                    "Appointment successfully scheduled for " + currentPatient.getFullName() +
                             " with " + selectedDoctor.getFullName() + " at " +
-                            startDateTime.format(DATETIME_FORMATTER) + " (" + " minutes)"
+                            startDateTime.format(DATETIME_FORMATTER) + " (" + "minutes)"
             );
-            clearForm();
         } else {
             // Failure usually due to availability conflict or invalid data in ClinicManager
             showAlert(Alert.AlertType.WARNING, "Scheduling Conflict",
@@ -171,11 +157,9 @@ public class AddAppointmentController  {
 
 
     private void clearForm() {
-        cmbPatient.getSelectionModel().clearSelection();
         cmbDoctor.getSelectionModel().clearSelection();
         dpDate.setValue(null);
         cmbSlots.getSelectionModel().clearSelection();
-        txtReason.clear();
         cmbSlots.setDisable(true); // Disable slots until new selections are made
     }
 
@@ -195,23 +179,22 @@ public class AddAppointmentController  {
      * Handles the action to go back to the main dashboard.
      */
     @FXML
-    private void handleBackToDashboard(ActionEvent event) {
-        navigateTo(event, "/Views/Dashboards/DashboardView.fxml", "Dental Clinic Management System");
+    private void handleBack(ActionEvent event) {
+        navigateTo(event, "/Views/Patient/PatientAppointment.fxml");
     }
 
     /**
      * Reusable method to switch the current scene to a new FXML view.
      */
-    private void navigateTo(ActionEvent event, String fxmlPath, String title) {
+    private void navigateTo(ActionEvent event, String fxmlPath) {
         try {
             // Load FXML relative to the classpath
-            Parent view = FXMLLoader.load(getClass().getResource(fxmlPath));
+            Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
             Scene scene = new Scene(view);
 
             // Get the stage (window) from the source component
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(scene);
-            window.setTitle(title);
             window.show();
         } catch (IOException e) {
             e.printStackTrace();

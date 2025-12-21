@@ -24,6 +24,7 @@ public class AddDoctorController {
     @FXML private TextField txtFirstName;
     @FXML private TextField txtLastName;
     @FXML private ComboBox<Specialization> cmbSpecialization;
+    @FXML private TextField txtFee;
     @FXML private TextField txtUsername;
     @FXML private TextField txtPassword;
     @FXML private ComboBox<Gender> cmbGender;
@@ -46,6 +47,8 @@ public class AddDoctorController {
             errorMessage = "Last Name is required.";
         } else if (cmbGender.getValue() == null) {
             errorMessage = "Please select a Gender.";
+        } else if (!txtFee.getText().isEmpty() && !txtFee.getText().trim().matches("\\d+")) {
+            errorMessage = "Fees must be a number.";
         } else if (txtUsername.getText().trim().isEmpty()) {
             errorMessage = "Username is required.";
         } else if (txtPassword.getText().trim().isEmpty()) {
@@ -70,6 +73,9 @@ public class AddDoctorController {
                 txtPassword.getText(),
                 cmbSpecialization.getValue()
         );
+
+        if(!txtFee.getText().trim().isEmpty())
+            newDoctor.setConsultationFee(Integer.parseInt(txtFee.getText()));
 
         ClinicManager.getInstance().addDoctor(newDoctor);
         handleBack(event);

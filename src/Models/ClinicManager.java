@@ -91,9 +91,9 @@ public class ClinicManager {
         processPayment("PAT1", app1.getId(), 200, PaymentMethod.CASH);
         processPayment("PAT2", app2.getId(), 300, PaymentMethod.CARD);
 
-        Prescription pre1 = new Prescription(app1.getId(), pat1.getId(), doc1.getId(), "");
-        PrescriptionItem item1 = new PrescriptionItem("Fenadone", "2mg", "Twice", 4);
-        pre1.addItems(item1);
+        PrescriptionItem item1 = new PrescriptionItem("Fenadone", "2mg", "Every 2 Hours", 4);
+        Prescription pre1 = new Prescription(app1.getId(), pat1.getId(), doc1.getId(), item1);
+        prescriptions.add(pre1);
     }
 
     // Instance Methods
@@ -176,7 +176,7 @@ public class ClinicManager {
     public void addDoctor(Doctor doctor) {this.doctors.add(doctor); }
     public void removeDoctor(Doctor doctor) {this.doctors.remove(doctor); }
 
-    public Prescription addPrescription(String appointmentId, String patientId, String doctorId, ArrayList<PrescriptionItem> items, String notes) {
+    public Prescription addPrescription(String appointmentId, String patientId, String doctorId, PrescriptionItem item) {
 
         // 1. Validation: Ensure the appointment and patient actually exist
         if (findAppointmentById(appointmentId) == null || findPatientById(patientId) == null) {
@@ -189,11 +189,10 @@ public class ClinicManager {
         try {
             // 3. Create the object (Assuming constructor matches these fields)
             Prescription newPrescription = new Prescription(
-                    appointmentId, patientId, doctorId, notes
+                    appointmentId, patientId, doctorId, item
             );
 
             // 4. Save to your list/database
-            newPrescription.addItems(items.getFirst());
             prescriptions.add(newPrescription);
 
             return newPrescription;

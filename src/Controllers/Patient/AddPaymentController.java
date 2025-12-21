@@ -101,10 +101,9 @@ public class AddPaymentController{
         }
     }
 
-    // --- Navigation and Utility ---
     @FXML
     private void handleBackToDashboard(ActionEvent event) {
-        navigateTo(event, "/Views/Dashboards/PatientView.fxml");
+        navigateTo(event, "/Views/Dashboards/PatientDashboard.fxml");
     }
 
     private void navigateTo(ActionEvent event, String fxmlPath) {

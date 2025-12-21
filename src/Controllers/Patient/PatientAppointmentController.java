@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 public class PatientAppointmentController {
 
     @FXML private TableView<Appointment> tblAppointments;
+    @FXML private TableColumn<Appointment, String> colAppointmentId;
     @FXML private TableColumn<Appointment, String> colDateTime;
     @FXML private TableColumn<Appointment, String> colDoctor;
-    @FXML private TableColumn<Appointment, String> colReason;
     @FXML private TableColumn<Appointment, AppointmentStatus> colStatus;
     @FXML private ComboBox<String> cmbStatusFilter;
 
@@ -31,7 +31,6 @@ public class PatientAppointmentController {
     public void initialize() {
         colDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         colDoctor.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
-        colReason.setCellValueFactory(new PropertyValueFactory<>("reason"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         cmbStatusFilter.getItems().addAll("All Statuses", "SCHEDULED", "COMPLETED", "CANCELLED");
 
@@ -43,7 +42,7 @@ public class PatientAppointmentController {
         if (currentPatient == null) return;
         ObservableList<Appointment> patientApps = FXCollections.observableArrayList(
                 ClinicManager.getInstance().getAppointments().stream()
-                        .filter(a -> a.getPatientId().equals(currentPatient.getId().toString()))
+                        .filter(a -> a.getPatientId().equals(currentPatient.getId()))
                         .collect(Collectors.toList())
         );
 
@@ -51,7 +50,7 @@ public class PatientAppointmentController {
     }
 
     @FXML
-    private void handleRefreshList() {
+    private void handleReset() {
         loadAppointments();
     }
 
@@ -63,6 +62,11 @@ public class PatientAppointmentController {
     @FXML
     private void handleBackToDashboard(ActionEvent event) throws IOException {
         switchScene(event, "/Views/PatientDashboard.fxml");
+    }
+
+    @FXML
+    private void handleCancelAppointment(ActionEvent event) throws IOException {
+
     }
 
     private void switchScene(ActionEvent event, String fxmlPath) throws IOException {

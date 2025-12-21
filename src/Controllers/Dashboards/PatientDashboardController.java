@@ -13,33 +13,22 @@ import java.util.Objects;
 
 public class PatientDashboardController {
 
-    /**
-     * Navigates to the Patient's appointment list view.
-     */
+
     @FXML
     private void handleViewAppointments(ActionEvent event) {
-        switchScene(event, "/Views/PatientAppointment.fxml");
+        switchScene(event, "/Views/Patient/PatientAppointment.fxml");
     }
 
-    /**
-     * Navigates to the Patient's prescription history view.
-     */
     @FXML
     private void handleViewPrescriptions(ActionEvent event) {
-        switchScene(event, "/Views/PrescriptionView.fxml");
+        switchScene(event, "/Views/Patient/PrescriptionView.fxml");
     }
 
-    /**
-     * Navigates to the payment processing screen.
-     */
     @FXML
     private void handleAddPayment(ActionEvent event) {
-        switchScene(event, "/Views/AddPayment.fxml");
+        switchScene(event, "/Views/Patient/AddPayment.fxml");
     }
 
-    /**
-     * Clears the current session and returns to the login screen.
-     */
     @FXML
     private void handleLogout(ActionEvent event) {
         ClinicManager.getInstance().setCurrentUser(null);

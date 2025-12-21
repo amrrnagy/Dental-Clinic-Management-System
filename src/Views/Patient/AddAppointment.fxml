@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<VBox prefHeight="418.0" prefWidth="530.0" spacing="20" style="-fx-padding: 25;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.AddAppointmentController">
+<VBox prefHeight="336.0" prefWidth="536.0" spacing="20" style="-fx-padding: 25;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.AddAppointmentController">
 
     <HBox alignment="CENTER_LEFT" spacing="20">
         <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
@@ -19,20 +27,14 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
         </columnConstraints>
 
-        <Label text="Patient:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <ComboBox fx:id="cmbPatient" promptText="Select Patient" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
         <Label text="Doctor:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <ComboBox fx:id="cmbDoctor" promptText="Select Doctor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <ComboBox fx:id="cmbDoctor" prefHeight="25.0" prefWidth="174.0" promptText="Select Doctor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
         <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
         <DatePicker fx:id="dpDate" promptText="Select Date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
         <Label text="Time Slot:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-
-        <Label text="Reason:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-        <TextArea fx:id="txtReason" prefHeight="70" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <ComboBox fx:id="cmbSlots" prefWidth="150.0" promptText="Select Slots" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <ComboBox fx:id="cmbSlots" prefHeight="25.0" prefWidth="174.0" promptText="Select Slots" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <rowConstraints>
             <RowConstraints />
             <RowConstraints />
@@ -45,7 +47,7 @@
     </GridPane>
 
     <HBox alignment="CENTER_RIGHT" spacing="10">
-        <Button fx:id="btnSchedule" onAction="#handleScheduleAppointment" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Schedule Appointment" />
+        <Button fx:id="btnSchedule" onAction="#handleScheduleAppointment" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Schedule Appointment" />
     </HBox>
 
 </VBox>

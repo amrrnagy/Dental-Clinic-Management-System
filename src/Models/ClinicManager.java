@@ -45,7 +45,6 @@ public class ClinicManager {
     }
 
     private void loadInitialData() {
-        // Add Doctors
         Doctor doc1 = new Doctor("Alice", "Hany", Gender.MALE,
                 "doc1", "dpass1", Specialization.GENERAL_DENTISTRY);
         Doctor doc2 = new Doctor("Wesam", "Carter", Gender.FEMALE,
@@ -65,7 +64,6 @@ public class ClinicManager {
         patients.add(pat1);
         patients.add(pat2);
 
-        // Add 2 Nurses (Hana & Jana)
         Nurse nur1 = new Nurse("karim", "Ashraf", Gender.FEMALE,
                 "baiomy", "baiomy");
         Nurse nur2 = new Nurse("nader", "Nagy", Gender.FEMALE,
@@ -73,7 +71,6 @@ public class ClinicManager {
         nurses.add(nur1);
         nurses.add(nur2);
 
-        // Initial appointment
         Appointment app1 = scheduleAppointment(
                 pat1.getId(),
                 doc2.getId(),
@@ -175,7 +172,7 @@ public class ClinicManager {
 
     public void addDoctor(Doctor doctor) {this.doctors.add(doctor); }
     public void removeDoctor(Doctor doctor) {this.doctors.remove(doctor); }
-
+    public void cancelAppointment(Appointment appointment){ this.appointments.remove(appointment);}
     public Prescription addPrescription(String appointmentId, String patientId, String doctorId, ArrayList<PrescriptionItem> items, String notes) {
 
         // 1. Validation: Ensure the appointment and patient actually exist

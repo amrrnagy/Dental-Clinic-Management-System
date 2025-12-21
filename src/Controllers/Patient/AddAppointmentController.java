@@ -21,22 +21,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AddAppointmentController implements Initializable {
+public class AddAppointmentController  {
 
-    // Existing FXML Fields
     @FXML private ComboBox<Patient> cmbPatient;
     @FXML private ComboBox<Doctor> cmbDoctor;
     @FXML private DatePicker dpDate;
     @FXML private TextArea txtReason;
     @FXML private ComboBox<AppointmentSlot> cmbSlots;
-
     private final ClinicManager clinicManager = ClinicManager.getInstance();
     private static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // Populate ComboBoxes
+    public void initialize() {
+
         cmbPatient.getItems().addAll(clinicManager.getPatients());
         cmbDoctor.getItems().addAll(clinicManager.getDoctors());
 

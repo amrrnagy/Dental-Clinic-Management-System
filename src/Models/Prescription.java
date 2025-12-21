@@ -21,7 +21,7 @@ public class Prescription {
             throw new IllegalArgumentException("Patient ID and Doctor ID are required for a Prescription.");
         }
 
-        this.id = UUID.randomUUID().toString();
+        this.id = "PRE" + appointmentId.substring(3);
         this.appointmentId = appointmentId;
         this.patientId = patientId;
         this.doctorId = doctorId;
@@ -47,21 +47,13 @@ public class Prescription {
     }
 
     public List<PrescriptionItem> getItems() {
-        return new ArrayList<>(items);
+        return items;
     }
+
+    public void addItems(PrescriptionItem item) { items.add(item); }
 
     public String getNotes() {
         return notes;
-    }
-
-    public void addItem(PrescriptionItem item) {
-        if (item != null) {
-            this.items.add(item);
-        }
-    }
-
-    public void removeItem(PrescriptionItem item) {
-        this.items.remove(item);
     }
 
     @Override

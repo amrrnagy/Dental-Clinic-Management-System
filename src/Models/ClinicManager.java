@@ -90,6 +90,10 @@ public class ClinicManager {
         // Initial Payment
         processPayment("PAT1", app1.getId(), 200, PaymentMethod.CASH);
         processPayment("PAT2", app2.getId(), 300, PaymentMethod.CARD);
+
+        Prescription pre1 = new Prescription(app1.getId(), pat1.getId(), doc1.getId(), "");
+        PrescriptionItem item1 = new PrescriptionItem("Fenadone", "2mg", "Twice", 4);
+        pre1.addItems(item1);
     }
 
     // Instance Methods
@@ -172,37 +176,37 @@ public class ClinicManager {
     public void addDoctor(Doctor doctor) {this.doctors.add(doctor); }
     public void removeDoctor(Doctor doctor) {this.doctors.remove(doctor); }
 
-//    public Prescription addPrescription(String appointmentId, String patientId, String medication,
-//                                        String dosage, int frequency, int days, String notes) {
-//
-//        // 1. Validation: Ensure the appointment and patient actually exist
-//        if (findAppointmentById(appointmentId) == null || findPatientById(patientId) == null) {
-//            return null;
-//        }
-//
-//        // Check if a prescription already exists for this appointment
-//        if (hasPrescription(appointmentId)) return null;
-//
-//        try {
-//            // 3. Create the object (Assuming constructor matches these fields)
-//            Prescription newPrescription = new Prescription(
-//                    appointmentId, patientId, medication, dosage, frequency, days, notes
-//            );
-//
-//            // 4. Save to your list/database
-//            prescriptions.add(newPrescription);
-//
-//            return newPrescription;
-//        } catch (IllegalArgumentException e) {
-//            // Handle cases like negative days or empty medication names
-//            return null;
-//        }
-//    }
+    public Prescription addPrescription(String appointmentId, String patientId, String doctorId, ArrayList<PrescriptionItem> items, String notes) {
 
-//    private boolean hasPrescription(String appointmentId) {
-//        return prescriptions.stream()
-//                .anyMatch(p -> p.getAppointmentId().equals(appointmentId));
-//    }
+        // 1. Validation: Ensure the appointment and patient actually exist
+        if (findAppointmentById(appointmentId) == null || findPatientById(patientId) == null) {
+            return null;
+        }
+
+        // Check if a prescription already exists for this appointment
+        if (hasPrescription(appointmentId)) return null;
+
+        try {
+            // 3. Create the object (Assuming constructor matches these fields)
+            Prescription newPrescription = new Prescription(
+                    appointmentId, patientId, doctorId, notes
+            );
+
+            // 4. Save to your list/database
+            newPrescription.addItems(items.getFirst());
+            prescriptions.add(newPrescription);
+
+            return newPrescription;
+        } catch (IllegalArgumentException e) {
+            // Handle cases like negative days or empty medication names
+            return null;
+        }
+    }
+
+    private boolean hasPrescription(String appointmentId) {
+        return prescriptions.stream()
+                .anyMatch(p -> p.getAppointmentId().equals(appointmentId));
+    }
 
     public void processPayment(String patientId,String appointmentId, double amount, PaymentMethod method) {
         this.payments.add(new Payment(patientId, appointmentId, amount, method));

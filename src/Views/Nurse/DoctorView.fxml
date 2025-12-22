@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="398.0" prefWidth="600.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.DoctorViewController">
+<VBox prefHeight="500.0" prefWidth="800.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.DoctorViewController">
 
     <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="560.0" spacing="30.0">
         <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
@@ -42,14 +42,14 @@
 
     <VBox VBox.vgrow="ALWAYS">
         <children>
-            <TableView fx:id="tblDoctors" prefHeight="238.0" prefWidth="588.0">
+            <TableView fx:id="tblDoctors" prefHeight="293.0" prefWidth="760.0">
                 <columns>
-                    <TableColumn fx:id="colDoctorId" prefWidth="75.0" text="Doctor ID" />
-                    <TableColumn fx:id="colName" prefWidth="110.0" text="Name" />
-                    <TableColumn fx:id="colGender" prefWidth="75.0" text="Gender" />
-                    <TableColumn fx:id="colUsername" prefWidth="100.0" text="username" />
-                    <TableColumn fx:id="colPassword" text="password" />
-                    <TableColumn fx:id="colSpecialization" prefWidth="120.0" text="Specialization" />
+                    <TableColumn fx:id="colDoctorId" prefWidth="100.0" text="Doctor ID" />
+                    <TableColumn fx:id="colName" prefWidth="133.0" text="Name" />
+                    <TableColumn fx:id="colGender" prefWidth="112.0" text="Gender" />
+                    <TableColumn fx:id="colUsername" prefWidth="97.0" text="username" />
+                    <TableColumn fx:id="colPassword" prefWidth="133.0" text="password" />
+                    <TableColumn fx:id="colSpecialization" prefWidth="184.0" text="Specialization" />
                 </columns>
             </TableView>
         </children></VBox>

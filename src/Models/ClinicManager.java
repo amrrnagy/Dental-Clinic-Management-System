@@ -53,7 +53,6 @@ public class ClinicManager {
         doctors.add(doc1);
         doctors.add(doc2);
 
-        // Add Patients
         Patient pat1 = new Patient("John", "Ashraf", Gender.MALE,
                 "010", "pat1", "ppass1");
         Patient pat2 = new Patient("Jane", "Nagy", Gender.FEMALE,

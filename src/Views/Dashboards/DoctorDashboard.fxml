@@ -1,46 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="315.0" prefWidth="544.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Dashboards.DoctorDashboardController">
+<AnchorPane prefHeight="496.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Dashboards.DoctorDashboardController">
 
-    <VBox alignment="TOP_CENTER" layoutX="34.0" layoutY="20.0" prefWidth="578.0" spacing="25" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.799999999999955" AnchorPane.topAnchor="20.0">
+    <HBox AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
-        <Label style="-fx-font-size: 28pt; -fx-font-weight: bold; -fx-text-fill: #00796b;" text="Doctor Dashboard" />
+        <VBox alignment="CENTER" prefHeight="506.0" prefWidth="285.0" style="-fx-background-color: #1976D2;" HBox.hgrow="NEVER">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
 
-        <GridPane alignment="CENTER" hgap="40" vgap="20">
-            <columnConstraints>
-                <ColumnConstraints halignment="CENTER" prefWidth="250" />
-                <ColumnConstraints halignment="CENTER" prefWidth="250" />
-            </columnConstraints>
+            <Label style="-fx-font-size: 24pt; -fx-font-weight: bold; -fx-text-fill: white;" text="THE" />
+            <Label style="-fx-font-size: 24pt; -fx-font-weight: bold; -fx-text-fill: #90CAF9;" text="CLINIC" />
 
-            <VBox alignment="CENTER" spacing="10" style="-fx-border-color: #00796b; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #e0f2f1;" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                <Label style="-fx-font-size: 16pt; -fx-font-weight: bold;" text="Prescription" />
-                <Text text="Issue new prescriptions for patients." />
-                <Button onAction="#handlePrescriptionView" prefWidth="200" style="-fx-background-color: #00897b; -fx-text-fill: white;" text="Manage Prescriptions" />
-            </VBox>
-         <VBox alignment="CENTER" spacing="10" style="-fx-border-color: #00796b; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #e0f2f1;">
-            <children>
-               <Label style="-fx-font-size: 16pt; -fx-font-weight: bold;" text="Appointments" />
-               <Text text="View all appointments." />
-               <Button onAction="#handleViewSchedule" prefWidth="200" style="-fx-background-color: #00897b; -fx-text-fill: white;" text="View Schedule" />
-            </children>
-         </VBox>
-            <rowConstraints>
-                <RowConstraints />
-            </rowConstraints>
-        </GridPane>
+            <Line endX="100.0" stroke="WHITE" strokeWidth="2.0">
+                <VBox.margin>
+                    <Insets bottom="20.0" top="20.0" />
+                </VBox.margin>
+            </Line>
 
-        <Region VBox.vgrow="ALWAYS" />
+            <Label style="-fx-font-size: 14pt; -fx-text-fill: white; -fx-opacity: 0.9;" text="Doctor Portal" />
+        </VBox>
 
-        <Button onAction="#handleLogout" prefWidth="150" style="-fx-background-color: #e57373; -fx-text-fill: white;" text="Log Out" />
-    </VBox>
+        <VBox alignment="TOP_CENTER" prefHeight="497.0" prefWidth="550.0" spacing="30" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+            <padding>
+                <Insets bottom="40" left="40" right="40" top="40" />
+            </padding>
+
+            <HBox alignment="CENTER_LEFT">
+                <VBox>
+                    <Label style="-fx-font-size: 26pt; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Doctor Dashboard" />
+                    <Label style="-fx-font-size: 11pt; -fx-text-fill: #757575;" text="Manage your schedule and patients" />
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" /> <Button onAction="#handleLogout" style="-fx-background-color: transparent; -fx-border-color: #e74c3c; -fx-text-fill: #e74c3c; -fx-cursor: hand; -fx-border-radius: 5;" text="Log Out" />
+            </HBox>
+
+            <GridPane alignment="CENTER" hgap="30" prefHeight="264.0" prefWidth="416.0" vgap="30">
+                <columnConstraints>
+                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="ALWAYS" />
+                </rowConstraints>
+
+                <VBox alignment="CENTER" fillWidth="false" prefHeight="150.0" prefWidth="294.0" spacing="15" style="-fx-background-color: #f7f9fc; -fx-border-color: #00897b; -fx-border-width: 0 0 0 4; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0); -fx-padding: 30;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label style="-fx-font-size: 16pt; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Appointments" />
+                    <Button onAction="#handleViewSchedule" prefWidth="180" style="-fx-background-color: #00897b; -fx-text-fill: white; -fx-cursor: hand;" text="View Schedule" />
+                </VBox>
+
+            </GridPane>
+
+                      <VBox alignment="CENTER" fillWidth="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="294.0" spacing="15" style="-fx-background-color: #f7f9fc; -fx-border-color: #3f51b5; -fx-border-width: 0 0 0 4; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0); -fx-padding: 30;">
+                 <Label style="-fx-font-size: 16pt; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Prescriptions" />
+                 <Button onAction="#handlePrescriptionView" prefWidth="180" style="-fx-background-color: #3f51b5; -fx-text-fill: white; -fx-cursor: hand;" text="Manage Prescriptions" />
+            <effect>
+               <Lighting>
+                  <bumpInput>
+                     <Shadow />
+                  </bumpInput>
+                  <light>
+                     <Light.Distant />
+                  </light>
+               </Lighting>
+            </effect>
+             </VBox>
+        </VBox>
+    </HBox>
 </AnchorPane>

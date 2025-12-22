@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="429.0" prefWidth="744.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.PrescriptionViewController">
+<VBox prefHeight="500.0" prefWidth="800.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.PrescriptionViewController">
 
     <HBox alignment="CENTER_LEFT" spacing="30.0">
         <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
@@ -18,13 +18,13 @@
     <Separator />
 
     <VBox prefHeight="374.0" prefWidth="660.0" VBox.vgrow="ALWAYS">
-        <TableView fx:id="tblPrescriptions" prefHeight="350.0" prefWidth="660.0">
+        <TableView fx:id="tblPrescriptions" prefHeight="394.0" prefWidth="760.0">
             <columns>
-                <TableColumn fx:id="colDate" prefWidth="120.0" text="Date Issued" />
-                <TableColumn fx:id="colMedication" prefWidth="110.0" text="Medication" />
-                <TableColumn fx:id="colDosage" prefWidth="100.0" text="Dosage" />
-                <TableColumn fx:id="colDoctor" prefWidth="140.0" text="Prescribing Doctor" />
-                <TableColumn fx:id="colInstructions" prefWidth="225.0" text="Instructions" />
+                <TableColumn fx:id="colDate" prefWidth="127.0" text="Date Issued" />
+                <TableColumn fx:id="colMedication" prefWidth="121.0" text="Medication" />
+                <TableColumn fx:id="colDosage" prefWidth="123.0" text="Dosage" />
+                <TableColumn fx:id="colDoctor" prefWidth="188.0" text="Prescribing Doctor" />
+                <TableColumn fx:id="colInstructions" prefWidth="200.0" text="Instructions" />
             </columns>
         </TableView>
     </VBox>

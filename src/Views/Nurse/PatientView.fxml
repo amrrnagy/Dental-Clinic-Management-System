@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="398.0" prefWidth="600.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.PatientViewController">
+<VBox prefHeight="460.0" prefWidth="780.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.PatientViewController">
 
     <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="560.0" spacing="30.0">
         <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
@@ -45,12 +45,12 @@
         <children>
             <TableView fx:id="tblPatients" prefHeight="255.0" prefWidth="560.0">
                 <columns>
-                    <TableColumn fx:id="colPatientId" prefWidth="79.0" text="Patient ID" />
-                    <TableColumn fx:id="colName" prefWidth="105.0" text="Name" />
-                    <TableColumn fx:id="colGender" text="Gender" />
-                    <TableColumn fx:id="colPhone" prefWidth="81.0" text="Phone" />
-                    <TableColumn fx:id="colUsername" prefWidth="101.0" text="username" />
-                    <TableColumn fx:id="colPassword" prefWidth="113.0" text="password" />
+                    <TableColumn fx:id="colPatientId" prefWidth="100.0" text="Patient ID" />
+                    <TableColumn fx:id="colName" prefWidth="145.0" text="Name" />
+                    <TableColumn fx:id="colGender" prefWidth="98.0" text="Gender" />
+                    <TableColumn fx:id="colPhone" prefWidth="116.0" text="Phone" />
+                    <TableColumn fx:id="colUsername" prefWidth="104.0" text="username" />
+                    <TableColumn fx:id="colPassword" prefWidth="176.0" text="password" />
                 </columns>
             </TableView>
         </children></VBox>

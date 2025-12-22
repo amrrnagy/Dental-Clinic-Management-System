@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="336.0" prefWidth="536.0" spacing="20" style="-fx-padding: 25;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.AddAppointmentController">
+<VBox prefHeight="336.0" prefWidth="650.0" spacing="20" style="-fx-padding: 25;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.AddAppointmentController">
 
     <HBox alignment="CENTER_LEFT" spacing="20">
         <Button onAction="#handleBack" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
@@ -28,13 +28,13 @@
         </columnConstraints>
 
         <Label text="Doctor:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <ComboBox fx:id="cmbDoctor" prefHeight="25.0" prefWidth="174.0" promptText="Select Doctor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <ComboBox fx:id="cmbDoctor" prefHeight="25.0" prefWidth="241.0" promptText="Select Doctor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
         <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <DatePicker fx:id="dpDate" promptText="Select Date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <DatePicker fx:id="dpDate" prefHeight="25.0" prefWidth="237.0" promptText="Select Date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
         <Label text="Time Slot:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-      <ComboBox fx:id="cmbSlots" prefHeight="25.0" prefWidth="174.0" promptText="Select Slots" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <ComboBox fx:id="cmbSlots" prefHeight="25.0" prefWidth="236.0" promptText="Select Slots" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <rowConstraints>
             <RowConstraints />
             <RowConstraints />

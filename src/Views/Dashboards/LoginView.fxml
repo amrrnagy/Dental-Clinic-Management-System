@@ -34,7 +34,7 @@
             <VBox maxWidth="350" spacing="15">
 
                 <VBox spacing="5">
-                    <Label style="-fx-font-weight: bold; -fx-text-fill: #555555;" text="Role" />
+                    <Label style="-fx-font-weight: bold; -fx-text-fill: #555555;" text="Who are U ?!" />
                     <ComboBox fx:id="cmbRole" prefWidth="400" promptText="Select your role" style="-fx-background-color: white; -fx-border-color: #E0E0E0; -fx-border-radius: 5; -fx-padding: 5;" />
                 </VBox>
 

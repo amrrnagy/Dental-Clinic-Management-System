@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="465.0" prefWidth="788.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.PatientAppointmentController">
+<VBox prefHeight="500.0" prefWidth="800.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Patient.PatientAppointmentController">
 
     <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Appointment List" />
 
@@ -37,10 +37,10 @@
 
     <TableView fx:id="tblAppointments" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="colAppointmentId" prefWidth="189.0" text="Appointment ID" />
-            <TableColumn fx:id="colDateTime" prefWidth="180.0" text="Date &amp; Time" />
-            <TableColumn fx:id="colDoctor" prefWidth="177.0" text="Doctor Name" />
-            <TableColumn fx:id="colStatus" prefWidth="188.0" text="Status" />
+            <TableColumn fx:id="colAppointmentId" prefWidth="203.0" text="Appointment ID" />
+            <TableColumn fx:id="colDateTime" prefWidth="177.0" text="Date &amp; Time" />
+            <TableColumn fx:id="colDoctor" prefWidth="197.0" text="Doctor Name" />
+            <TableColumn fx:id="colStatus" prefWidth="182.0" text="Status" />
         </columns>
     </TableView>
      <Button onAction="#handleReset" text="Reset" />

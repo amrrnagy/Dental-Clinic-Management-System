@@ -14,11 +14,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="450.0" prefWidth="688.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Dashboards.SignupDashboardController">
+<VBox prefHeight="450.0" prefWidth="688.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Dashboards.SignupDashboardController">
 
     <HBox alignment="CENTER_LEFT" spacing="20">
         <Button onAction="#handleBack" style="-fx-font-weight: bold; -fx-cursor: hand;" text="← Back to Login" />
-        <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Sign Up" />
+        <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Sign Up as a Patient" />
     </HBox>
 
     <Separator />

@@ -1,7 +1,5 @@
 package Models;
 
-import javafx.collections.ObservableList;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +86,8 @@ public class ClinicManager {
                 AppointmentSlot.SLOT_5_00_PM
         );
 
-        processPayment("PAT1", app1.getId(), 150, PaymentMethod.CASH);
-        processPayment("PAT2", app2.getId(), 150, PaymentMethod.CARD);
+        processPayment(pat1.getId(), app1.getId(), 150, PaymentMethod.CASH);
+        processPayment(pat2.getId(), app2.getId(), 150, PaymentMethod.CARD);
 
         PrescriptionItem item1 = new PrescriptionItem("Fenadone", "2mg", "Every 2 Hours", 4);
         Prescription pre1 = new Prescription(app1.getId(), pat1.getId(), doc1.getId(), item1);
@@ -124,7 +122,11 @@ public class ClinicManager {
         LocalDateTime dateTime = LocalDateTime.of(date, slot.getStartTime());
         LocalDateTime endTime = dateTime.plusHours(1);
 
-        if (findPatientById(patientId) == null || findDoctorById(doctorId) == null) {
+        // 1. Get objects once
+        Patient currentPatient = findPatientById(patientId);
+        Doctor currentDoctor = findDoctorById(doctorId);
+
+        if (currentPatient == null || currentDoctor == null) {
             return null;
         }
 
@@ -136,8 +138,6 @@ public class ClinicManager {
             Appointment newAppointment = new Appointment(patientId, doctorId, dateTime, slot);
             appointments.add(newAppointment);
 
-            Patient currentPatient = findPatientById(patientId);
-            Doctor currentDoctor = findDoctorById(doctorId);
             currentPatient.setBalance(currentPatient.getBalance() + currentDoctor.getConsultationFee());
 
             return newAppointment;
@@ -218,13 +218,25 @@ public class ClinicManager {
                 .anyMatch(p -> p.getAppointmentId().equals(appointmentId));
     }
 
-    public void processPayment(String patientId,String appointmentId, double amount, PaymentMethod method) {
-        this.payments.add(new Payment(patientId, appointmentId, amount, method));
+    public void processPayment(String patientId, String appointmentId, double amount, PaymentMethod method) {
 
         Patient currentPatient = findPatientById(patientId);
-        currentPatient.setBalance(currentPatient.getBalance() - amount);
-
         Appointment appointment = findAppointmentById(appointmentId);
+
+        // 2. VALIDATION: Check for nulls before doing anything else
+        if (currentPatient == null) {
+            System.out.println("Error: Patient not found for ID: " + patientId);
+            return;
+        }
+
+        if (appointment == null) {
+            System.out.println("Error: Appointment not found for ID: " + appointmentId);
+            return;
+        }
+
+        currentPatient.setBalance(currentPatient.getBalance() - amount);
         appointment.setStatus(AppointmentStatus.PAID);
+        this.payments.add(new Payment(patientId, appointmentId, amount, method));
+
     }
 }

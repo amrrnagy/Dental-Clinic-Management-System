@@ -38,16 +38,16 @@ public class Prescription {
     public String getDoctorId() {
         return doctorId;
     }
-    public LocalDateTime getIssuedDate() {
-        return issuedDate;
-    }
+
+    @SuppressWarnings("unused")
+    public LocalDateTime getIssuedDate() { return issuedDate; }
+
     public PrescriptionItem getItem() {
         return item;
     }
 
     @Override
     public String toString() {
-        // Format inferred from Prescription.class: "APrescription{id=%s, patientId=%s, doctorId=%s, date=%s, items=%d}"
         return id + ": " + patientId + ": " + issuedDate;
     }
 

@@ -23,18 +23,18 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        // Fill the role combobox
-        cmbRole.getItems().setAll(UserRole.values()); //
+        // Fill the roles combobox
+        cmbRole.getItems().setAll(UserRole.values());
     }
 
     @FXML
-    private void handleSignIn(ActionEvent event) { // [cite: 20]
+    private void handleSignIn(ActionEvent event) {
         UserRole selectedRole = cmbRole.getValue();
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
         if (selectedRole == null || username.isEmpty() || password.isEmpty()) {
-            lblErrorMessage.setText("Please fill in all fields."); // [cite: 19]
+            lblErrorMessage.setText("Please fill in all fields.");
             return;
         }
 

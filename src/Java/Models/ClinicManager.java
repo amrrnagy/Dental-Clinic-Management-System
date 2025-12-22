@@ -273,6 +273,6 @@ public class ClinicManager {
         // Update Patient's balance and save the payment
         currentPatient.setBalance(currentPatient.getBalance() - amount);
         appointment.setStatus(AppointmentStatus.PAID);
-        this.payments.add(new Payment(patientId, appointmentId, amount, method));
+        this.payments.add(new Payment(patientId, amount, method));
     }
 }

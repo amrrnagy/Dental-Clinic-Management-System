@@ -5,14 +5,13 @@ import java.time.LocalDateTime;
 public class Payment implements Payable{
     private final String paymentID;
     private final String patientId;
-    private final String appointmentId;
     private final double amount;
     private final PaymentMethod method;
     private final LocalDateTime dateTime;
 
     public static int nextId = 1;
 
-    public Payment(String patientId, String appointmentId, double amount, PaymentMethod method) {
+    public Payment(String patientId, double amount, PaymentMethod method) {
         if (patientId == null) throw new IllegalArgumentException("patientId required");
 
         LocalDateTime now = LocalDateTime.now();
@@ -23,7 +22,6 @@ public class Payment implements Payable{
                 nextId++);
 
         this.patientId = patientId;
-        this.appointmentId = appointmentId;
         this.amount = amount;
         this.method = method == null ? PaymentMethod.CASH : method;
         this.dateTime = now;
@@ -32,8 +30,6 @@ public class Payment implements Payable{
     // Getters
     public String getId() { return paymentID; }
     public String getPatientId() { return patientId; }
-    public String getAppointmentId() { return appointmentId; }
-    public double getAmount() { return amount; }
     public Patient getPayer() {
         return ClinicManager.getInstance().findPatientById(patientId);
     }

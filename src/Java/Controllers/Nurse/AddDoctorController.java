@@ -51,6 +51,8 @@ public class AddDoctorController {
             errorMessage = "Fees must be a number.";
         } else if (txtUsername.getText().trim().isEmpty()) {
             errorMessage = "Username is required.";
+        } else if (ClinicManager.getInstance().findDoctorByUser(txtUsername.getText()) != null) {
+            errorMessage = "Username is already used";
         } else if (txtPassword.getText().trim().isEmpty()) {
             errorMessage = "Password is required.";
         }

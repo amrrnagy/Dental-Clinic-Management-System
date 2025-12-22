@@ -53,8 +53,9 @@ public class AddPatientController  {
         }
         else if (txtUsername.getText().trim().isEmpty()) {
             errorMessage = "Username is required.";
-        }
-        else if (txtPassword.getText().trim().isEmpty()) {
+        } else if (ClinicManager.getInstance().findPatientByUser(txtUsername.getText()) != null) {
+            errorMessage = "Username is already used";
+        } else if (txtPassword.getText().trim().isEmpty()) {
             errorMessage = "Password is required.";
         }
 

@@ -102,9 +102,23 @@ public class ClinicManager {
                 .orElse(null);
     }
 
+    public Patient findPatientByUser(String username) {
+        return patients.stream()
+                .filter(p -> p.getUsername().equalsIgnoreCase(username))
+                .findFirst()
+                .orElse(null);
+    }
+
     public Doctor findDoctorById(String id) {
         return doctors.stream()
                 .filter(d -> d.getId().equalsIgnoreCase(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Doctor findDoctorByUser(String username) {
+        return doctors.stream()
+                .filter(p -> p.getUsername().equalsIgnoreCase(username))
                 .findFirst()
                 .orElse(null);
     }

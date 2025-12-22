@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PatientAppointmentController {
@@ -38,7 +39,6 @@ public class PatientAppointmentController {
         colDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         colDoctor.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        cmbStatusFilter.getItems().addAll("All Statuses", "SCHEDULED", "COMPLETED", "CANCELLED");
 
         // Custom mapping to show Doctor Names instead of IDs
         colDoctor.setCellValueFactory(cellData -> {
@@ -47,6 +47,7 @@ public class PatientAppointmentController {
             return new ReadOnlyStringWrapper(d != null ? d.getFullName() : "Unknown");
         });
 
+        setupFilterOptions();
         loadAppointments();
     }
 
@@ -62,9 +63,25 @@ public class PatientAppointmentController {
         tblAppointments.setItems(patientApps);
     }
 
+    private void setupFilterOptions() {
+        cmbStatusFilter.getItems().addAll("ALL", "SCHEDULED", "COMPLETED", "CANCELLED");
+        cmbStatusFilter.setValue("ALL");
+
+        cmbStatusFilter.getSelectionModel().selectedItemProperty().addListener((_, oldVal, newVal) -> {
+            if (newVal == null || newVal.equals("ALL")) {
+                tblAppointments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getAppointments()));
+            } else {
+                ObservableList<Appointment> filtered = ClinicManager.getInstance().getAppointments().stream()
+                        .filter(a -> a.getStatus().toString().equals(newVal))
+                        .collect(Collectors.toCollection(FXCollections::observableArrayList));
+                tblAppointments.setItems(filtered);
+            }
+        });
+    }
+
     @FXML
     private void handleReset() {
-        loadAppointments();
+        cmbStatusFilter.setValue("ALL");
     }
 
     @FXML
@@ -82,19 +99,31 @@ public class PatientAppointmentController {
         Appointment selectedAppointment = tblAppointments.getSelectionModel().getSelectedItem();
 
         if (selectedAppointment != null) {
-            tblAppointments.getItems().remove(selectedAppointment);
-            ClinicManager.getInstance().cancelAppointment(selectedAppointment);
+            if(ClinicManager.getInstance().cancelAppointment(selectedAppointment)) {
 
-            lblError.setText("Appointment " + selectedAppointment.toString() + " has been successfully cancelled.");
-            lblError.setStyle("-fx-text-fill: green;");
-            errorContainer.setVisible(true);
+                lblError.setText("Appointment " + selectedAppointment + " has been successfully cancelled.");
+                lblError.setStyle("-fx-text-fill: green;");
+                errorContainer.setVisible(true);
 
-            PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
-            visiblePause.setOnFinished(e -> {
-                lblError.setText("");
-                errorContainer.setVisible(false);
-            });
-            visiblePause.play();
+                PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+                visiblePause.setOnFinished(e -> {
+                    lblError.setText("");
+                    errorContainer.setVisible(false);
+                });
+                visiblePause.play();
+            }
+            else {
+                lblError.setText("Can't Cancel this Appointment.");
+                lblError.setStyle("-fx-text-fill: red;");
+                errorContainer.setVisible(true);
+
+                PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+                visiblePause.setOnFinished(e -> {
+                    lblError.setText("");
+                    errorContainer.setVisible(false);
+                });
+                visiblePause.play();
+            }
 
         } else {
             lblError.setText("No Appointment selected to cancel.");
@@ -112,7 +141,7 @@ public class PatientAppointmentController {
     }
 
     private void switchScene(ActionEvent event, String fxmlPath) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

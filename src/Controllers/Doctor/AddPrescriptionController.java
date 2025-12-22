@@ -126,10 +126,13 @@ public class AddPrescriptionController{
 
         if (newPrescription != null) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "Prescription added successfully!");
-            appointment.setStatus(AppointmentStatus.COMPLETED);
+
+            if(appointment.getStatus() == AppointmentStatus.SCHEDULED)
+                appointment.setStatus(AppointmentStatus.COMPLETED);
+
             navigateTo(event); // Go back
         } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to save prescription. Please try again.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Prescription already exists for this appointment");
         }
     }
 

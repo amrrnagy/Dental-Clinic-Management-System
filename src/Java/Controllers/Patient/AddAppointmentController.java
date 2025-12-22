@@ -23,7 +23,6 @@ public class AddAppointmentController  {
 
     @FXML private ComboBox<Doctor> cmbDoctor;
     @FXML private DatePicker dpDate;
-    @FXML private TextArea txtReason;
     @FXML private ComboBox<AppointmentSlot> cmbSlots;
     private final ClinicManager clinicManager = ClinicManager.getInstance();
     private static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -33,7 +32,6 @@ public class AddAppointmentController  {
 
         cmbDoctor.getItems().addAll(clinicManager.getDoctors());
 
-        // Set ComboBox display for Doctor
         cmbDoctor.setCellFactory(lv -> new ListCell<Doctor>() {
             @Override
             protected void updateItem(Doctor item, boolean empty) {
@@ -42,14 +40,10 @@ public class AddAppointmentController  {
             }
         });
 
-        // --- Add Listeners for Dynamic Slot Filtering ---
-        // Listener for Doctor selection change
         cmbDoctor.valueProperty().addListener((obs, oldVal, newVal) -> updateAvailableSlots());
 
-        // Listener for Date selection change
         dpDate.valueProperty().addListener((obs, oldVal, newVal) -> updateAvailableSlots());
 
-        // Set date picker minimum date to today (optional, but good practice)
         dpDate.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
@@ -58,24 +52,16 @@ public class AddAppointmentController  {
                 setDisable(empty || date.compareTo(today) < 0 ); // Disable past dates
             }
         });
-
-        // Initial setup for empty slots list
         cmbSlots.setDisable(true);
     }
 
-    /**
-     * Finds the available AppointmentSlots based on the selected Doctor and Date.
-     * Duration is now FIXED.
-     */
     private void updateAvailableSlots() {
         Doctor selectedDoctor = cmbDoctor.getValue();
         LocalDate selectedDate = dpDate.getValue();
-
         cmbSlots.getItems().clear();
         cmbSlots.getSelectionModel().clearSelection();
-        cmbSlots.setDisable(true); // Disable slots until valid doctor/date is picked
+        cmbSlots.setDisable(true);
 
-        // Ensure both a doctor and a date are selected
         if (selectedDoctor == null || selectedDate == null) {
             return;
         }
@@ -93,21 +79,16 @@ public class AddAppointmentController  {
         }
     }
 
-    /**
-     * Core logic to check all possible slots against the doctor's existing appointments.
-     */
     private List<AppointmentSlot> getFilteredSlots(Doctor doctor, LocalDate date) {
         List<AppointmentSlot> availableSlots = new ArrayList<>();
         String doctorId = doctor.getId();
 
-        // Iterate through all defined standard slots
         for (AppointmentSlot slot : AppointmentSlot.values()) {
             LocalTime startTime = slot.getStartTime();
 
             LocalDateTime startDateTime = LocalDateTime.of(date, startTime);
             LocalDateTime endDateTime = startDateTime.plusMinutes(60);
 
-            // Check if the doctor is available for this slot
             if (clinicManager.isDoctorAvailable(doctorId, startDateTime, endDateTime)) {
                 availableSlots.add(slot);
             }
@@ -117,7 +98,6 @@ public class AddAppointmentController  {
     }
 
 
-    // --- Existing handleScheduleAppointment method (Updated) ---
     @FXML
     private void handleScheduleAppointment() {
         Patient currentPatient = (Patient) ClinicManager.getInstance().getCurrentUser();
@@ -125,21 +105,18 @@ public class AddAppointmentController  {
         LocalDate date = dpDate.getValue();
         AppointmentSlot slot = cmbSlots.getValue();
 
-        // 1. Input Validation (Duration is now implicitly fixed and doesn't need field check)
         if (selectedDoctor == null || date == null || slot == null) {
             showAlert(Alert.AlertType.ERROR, "Missing Fields", "Please select a doctor, date, and a valid time slot.");
             return;
         }
 
-        // 2. Schedule using the Manager's Core Logic
         Appointment newAppointment = clinicManager.scheduleAppointment(
                 currentPatient.getId(),
                 selectedDoctor.getId(),
-                date, // Pass LocalDate
-                slot // Pass AppointmentSlot
+                date,
+                slot
         );
 
-        // 3. Handle Result
         if (newAppointment != null) {
             LocalDateTime startDateTime = LocalDateTime.of(date, slot.getStartTime());
             showAlert(Alert.AlertType.INFORMATION, "Success",
@@ -148,7 +125,6 @@ public class AddAppointmentController  {
                             startDateTime.format(DATETIME_FORMATTER) + " (" + "minutes)"
             );
         } else {
-            // Failure usually due to availability conflict or invalid data in ClinicManager
             showAlert(Alert.AlertType.WARNING, "Scheduling Conflict",
                     "The selected doctor is unavailable at that time or a system error occurred. Please re-check the schedule."
             );
@@ -171,28 +147,17 @@ public class AddAppointmentController  {
         alert.showAndWait();
     }
 
-    // -------------------------------------------------------------------
-    // --- NAVIGATION LOGIC ---
-    // -------------------------------------------------------------------
 
-    /**
-     * Handles the action to go back to the main dashboard.
-     */
     @FXML
     private void handleBack(ActionEvent event) {
         navigateTo(event, "/Views/Patient/PatientAppointment.fxml");
     }
 
-    /**
-     * Reusable method to switch the current scene to a new FXML view.
-     */
     private void navigateTo(ActionEvent event, String fxmlPath) {
         try {
-            // Load FXML relative to the classpath
             Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
             Scene scene = new Scene(view);
 
-            // Get the stage (window) from the source component
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();

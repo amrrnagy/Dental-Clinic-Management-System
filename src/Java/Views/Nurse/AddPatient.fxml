@@ -24,8 +24,8 @@
 
     <GridPane hgap="10" vgap="10">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0" prefWidth="167.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" prefWidth="471.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0" prefWidth="214.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" prefWidth="424.0" />
         </columnConstraints>
 
         <Label text="First Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />

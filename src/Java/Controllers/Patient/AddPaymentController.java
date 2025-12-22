@@ -26,10 +26,7 @@ public class AddPaymentController{
 
 
     public void initialize() {
-        // Populate ComboBoxes
         loadTable();
-
-        // Listener: When Appointment changes, update their fee
         cmbAppointment.valueProperty().addListener((obs, oldVal, newVal) -> updateFee(newVal));
 
         cmbMethod.getItems().addAll(PaymentMethod.values());

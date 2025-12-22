@@ -1,9 +1,6 @@
 package Controllers.Nurse;
 
-import Models.ClinicManager;
-import Models.Doctor;
-import Models.Gender;
-import Models.Specialization;
+import Models.*;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -15,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -32,17 +30,47 @@ public class DoctorViewController  {
     @FXML private TableColumn<Doctor, Specialization> colSpecialization;
     @FXML private TableColumn<Doctor, String> colUsername;
     @FXML private TableColumn<Doctor, String> colPassword;
+    @FXML private TextField txtSearchId;
     @FXML public Label lblError;
     @FXML private HBox errorContainer;
 
     public void initialize() {
         setupTableColumns();
-        tblDoctors.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getDoctors()));
-
+        refreshTableData();
         errorContainer.managedProperty().bind(errorContainer.visibleProperty());
         errorContainer.setVisible(false);
     }
+    private void refreshTableData() {
+        tblDoctors.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getDoctors()));
+    }
+    @FXML
+    private void handleSearch(ActionEvent event) {
+        String idToSearch = txtSearchId.getText().trim();
+        if (idToSearch.isEmpty()) {
+            refreshTableData();
+            return;
+        }
+        Doctor founddoctor = ClinicManager.getInstance().findDoctorById(idToSearch);
+        if (founddoctor != null) {
+            tblDoctors.setItems(FXCollections.observableArrayList(founddoctor));
+            lblError.setText("");
+            errorContainer.setVisible(false);
+        } else {
+            tblDoctors.setItems(FXCollections.observableArrayList());
 
+            lblError.setText("No doctor found with ID: " + idToSearch);
+            lblError.setStyle("-fx-text-fill: red;");
+            errorContainer.setVisible(true);
+            PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+            visiblePause.setOnFinished(e -> {
+                lblError.setText("");
+                errorContainer.setVisible(false);
+            });
+            visiblePause.play();
+//            refreshTableData();
+
+        }
+    }
     private void setupTableColumns() {
         colDoctorId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
@@ -52,8 +80,10 @@ public class DoctorViewController  {
         colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
     }
 
+
     @FXML
     private void handleAdd(ActionEvent event) {
+
         loadScene(event, "/Views/Nurse/AddDoctor.fxml");
     }
 

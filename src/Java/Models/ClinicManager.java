@@ -48,7 +48,7 @@ public class ClinicManager {
         // Add Doctors
         Doctor doc1 = new Doctor("Alice", "Hany", Gender.MALE,
                 "doc1", "dpass1", Specialization.GENERAL_DENTISTRY);
-        Doctor doc2 = new Doctor("Wesam", "Carter", Gender.FEMALE,
+        Doctor doc2 = new Doctor("karim", "Carter", Gender.FEMALE,
                 "doc2", "dpass2", Specialization.ORTHODONTICS);
         doctors.add(doc1);
         doctors.add(doc2);
@@ -88,7 +88,6 @@ public class ClinicManager {
                 AppointmentSlot.SLOT_5_00_PM
         );
 
-        // Initial Payment
         processPayment("PAT1", app1.getId(), 150, PaymentMethod.CASH);
         processPayment("PAT2", app2.getId(), 150, PaymentMethod.CARD);
 
@@ -97,18 +96,17 @@ public class ClinicManager {
         prescriptions.add(pre1);
     }
 
-    // Instance Methods
 
     public Patient findPatientById(String id) {
         return patients.stream()
-                .filter(p -> p.getId().equals(id))
+                .filter(p -> p.getId().equalsIgnoreCase(id))
                 .findFirst()
                 .orElse(null);
     }
 
     public Doctor findDoctorById(String id) {
         return doctors.stream()
-                .filter(d -> d.getId().equals(id))
+                .filter(d -> d.getId().equalsIgnoreCase(id))
                 .findFirst()
                 .orElse(null);
     }

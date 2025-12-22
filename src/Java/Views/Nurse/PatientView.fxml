@@ -4,55 +4,58 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="460.0" prefWidth="780.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.PatientViewController">
+<VBox prefHeight="500.0" prefWidth="850.0" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Nurse.PatientViewController">
 
-    <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="560.0" spacing="30.0">
-        <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
-        <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Patients" wrappingWidth="91.21875" />
+    <HBox alignment="CENTER_LEFT" spacing="20.0">
+        <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold; -fx-cursor: hand;" text="← Back to Dashboard" />
+        <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Patients Management" />
     </HBox>
-   <HBox alignment="CENTER" prefHeight="58.0" prefWidth="563.0" spacing="40.0">
-      <children>
-         <Label text="Add a Patient:">
-            <font>
-               <Font name="System Bold" size="12.0" />
-            </font>
-         </Label>
-         <Button mnemonicParsing="false" onAction="#handleAdd" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add" />
-         <Label text="Select a patient to Remove:">
-            <font>
-               <Font name="System Bold" size="12.0" />
-            </font>
-         </Label>
-         <Button layoutX="260.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRemove" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #af4c4c; -fx-text-fill: white;" text="Remove" />
-      </children>
-   </HBox>
-   <HBox fx:id="errorContainer" alignment="CENTER" prefHeight="21.0" prefWidth="582.0">
-      <children>
-         <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER">
-            <font>
-               <Font name="System Bold" size="12.0" />
-            </font>
-         </Label>
-      </children>
-   </HBox>
+
+    <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #f4f4f4; -fx-padding: 10; -fx-background-radius: 5;">
+
+        <Label style="-fx-font-weight: bold;" text="Search ID:" />
+        <TextField fx:id="txtSearchId" promptText="ex.PAT1" style="-fx-background-radius: 3;" />
+        <Button onAction="#handleSearch" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-cursor: hand;" text="Search" />
+
+        <Region HBox.hgrow="ALWAYS" />
+
+        <Button onAction="#handleAdd" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="+ Add Patient" />
+        <Button onAction="#handleRemove" style="-fx-background-color: #af4c4c; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="- Remove Selected" />
+    </HBox>
+
+    <HBox fx:id="errorContainer" alignment="CENTER" prefHeight="20.0">
+        <children>
+            <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Label>
+        </children>
+    </HBox>
 
     <VBox VBox.vgrow="ALWAYS">
         <children>
-            <TableView fx:id="tblPatients" prefHeight="255.0" prefWidth="560.0">
+            <TableView fx:id="tblPatients" prefHeight="255.0" prefWidth="560.0" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="colPatientId" prefWidth="100.0" text="Patient ID" />
-                    <TableColumn fx:id="colName" prefWidth="145.0" text="Name" />
-                    <TableColumn fx:id="colGender" prefWidth="98.0" text="Gender" />
-                    <TableColumn fx:id="colPhone" prefWidth="116.0" text="Phone" />
-                    <TableColumn fx:id="colUsername" prefWidth="104.0" text="username" />
-                    <TableColumn fx:id="colPassword" prefWidth="176.0" text="password" />
+                    <TableColumn fx:id="colName" prefWidth="150.0" text="Name" />
+                    <TableColumn fx:id="colGender" prefWidth="80.0" text="Gender" />
+                    <TableColumn fx:id="colPhone" prefWidth="120.0" text="Phone" />
+                    <TableColumn fx:id="colUsername" prefWidth="120.0" text="Username" />
+                    <TableColumn fx:id="colPassword" prefWidth="150.0" text="Password" />
                 </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
             </TableView>
-        </children></VBox>
+        </children>
+    </VBox>
 
 </VBox>

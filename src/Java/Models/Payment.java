@@ -9,7 +9,7 @@ public class Payment implements Payable{
     private final PaymentMethod method;
     private final LocalDateTime dateTime;
 
-    public static int nextId = 1;
+    public static int nextId = 2;
 
     public Payment(String patientId, double amount, PaymentMethod method) {
         if (patientId == null) throw new IllegalArgumentException("patientId required");

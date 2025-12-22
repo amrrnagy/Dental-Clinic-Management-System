@@ -42,7 +42,7 @@ public class PatientDashboardController {
                 .toList();
 
         if(patientAppointments.isEmpty()) {
-            showAlert(Alert.AlertType.INFORMATION, "No Appointments", "You have no unpaid appointments.");
+            showAlert();
         }
         else {
             switchScene(event, "/Views/Patient/AddPayment.fxml");
@@ -63,15 +63,15 @@ public class PatientDashboardController {
             stage.show();
         } catch (IOException e) {
             System.err.println("Error loading FXML: " + fxmlPath);
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
         }
     }
 
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
+    private void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("No Appointments");
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText("You have no unpaid appointments.");
         alert.showAndWait();
     }
 }

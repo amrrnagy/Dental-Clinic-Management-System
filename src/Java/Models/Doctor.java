@@ -5,18 +5,21 @@ public class Doctor extends Person implements Comparable<Doctor> {
     private final Specialization specialization;
     private int consultationFee;
 
+    // ID counter
     private static int nextId = 1;
 
     public Doctor(String firstName, String lastName, Gender gender,
                   String username, String password, Specialization specialization) {
 
-        super(firstName, lastName, gender, username, password, UserRole.DOCTOR);
-        this.id = "DOC" + nextId++;
+        super(firstName, lastName, gender, username, password);
+        this.id = "DOC" + nextId++; // ID format
         this.consultationFee = 150;
         this.specialization = specialization == null ? Specialization.OTHER : specialization;
     }
 
     public String getId() { return id; }
+
+    // Used when deleting a Doctor
     public static void minusNextID() {
         if(nextId > 1)
             nextId--;
@@ -24,7 +27,6 @@ public class Doctor extends Person implements Comparable<Doctor> {
 
 
     public Specialization getSpecialization() { return specialization; }
-
     public int getConsultationFee() { return consultationFee; }
     public void setConsultationFee(int consultationFee) { this.consultationFee = consultationFee; }
 

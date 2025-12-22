@@ -6,20 +6,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class PaymentViewController{
@@ -42,7 +38,7 @@ public class PaymentViewController{
         tblPayments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getPayments()));
 
         // Listener to filter table when a patient is selected
-        cmbPatient.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+        cmbPatient.getSelectionModel().selectedItemProperty().addListener((_, _, newVal) -> {
             if (newVal != null) {
                 filterPaymentsByPatient(newVal);
             }
@@ -83,7 +79,7 @@ public class PaymentViewController{
     }
 
     @FXML
-    private void handleReset(ActionEvent event) {
+    private void handleReset() {
         cmbPatient.getSelectionModel().clearSelection();
         tblPayments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getPayments()));
         lblBalance.setText("No Patient is selected");
@@ -97,7 +93,7 @@ public class PaymentViewController{
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }

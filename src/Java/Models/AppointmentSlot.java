@@ -2,6 +2,7 @@ package Models;
 
 import java.time.LocalTime;
 
+// Fixed slots for the Appointments
 public enum AppointmentSlot {
 
     SLOT_9_00AM(LocalTime.of(9, 0)),

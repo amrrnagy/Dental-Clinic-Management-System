@@ -44,7 +44,7 @@ public class DoctorViewController  {
         tblDoctors.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getDoctors()));
     }
     @FXML
-    private void handleSearch(ActionEvent event) {
+    private void handleSearch() {
         String idToSearch = txtSearchId.getText().trim();
         if (idToSearch.isEmpty()) {
             refreshTableData();
@@ -62,7 +62,7 @@ public class DoctorViewController  {
             lblError.setStyle("-fx-text-fill: red;");
             errorContainer.setVisible(true);
             PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
-            visiblePause.setOnFinished(e -> {
+            visiblePause.setOnFinished(_ -> {
                 lblError.setText("");
                 errorContainer.setVisible(false);
             });
@@ -88,7 +88,7 @@ public class DoctorViewController  {
     }
 
     @FXML
-    private void handleRemove(ActionEvent event) {
+    private void handleRemove() {
         Doctor selectedDoctor = tblDoctors.getSelectionModel().getSelectedItem();
 
         if (selectedDoctor != null) {
@@ -102,7 +102,7 @@ public class DoctorViewController  {
             errorContainer.setVisible(true);
 
             PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
-            visiblePause.setOnFinished(e -> {
+            visiblePause.setOnFinished(_ -> {
                 lblError.setText("");
                 errorContainer.setVisible(false);
             });
@@ -114,7 +114,7 @@ public class DoctorViewController  {
             errorContainer.setVisible(true);
 
             PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
-            visiblePause.setOnFinished(e -> {
+            visiblePause.setOnFinished(_ -> {
                 lblError.setText("");
                 errorContainer.setVisible(false);
             });
@@ -134,7 +134,7 @@ public class DoctorViewController  {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }

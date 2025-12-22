@@ -1,7 +1,6 @@
 package Models;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class Payment implements Payable{
     private final String paymentID;
@@ -30,12 +29,14 @@ public class Payment implements Payable{
         this.dateTime = now;
     }
 
+    // Getters
     public String getId() { return paymentID; }
     public String getPatientId() { return patientId; }
     public String getAppointmentId() { return appointmentId; }
     public double getAmount() { return amount; }
-    public PaymentMethod getMethod() { return method; }
-    public LocalDateTime getDateTime() { return dateTime; }
+    public Patient getPayer() {
+        return ClinicManager.getInstance().findPatientById(patientId);
+    }
 
     @Override
     public String toString() {
@@ -49,9 +50,4 @@ public class Payment implements Payable{
         if (!(o instanceof Payment payment)) return false;
         return paymentID.equals(payment.paymentID);
     }
-
-    public Patient getPayer() {
-        return ClinicManager.getInstance().findPatientById(patientId);
-    }
-
 }

@@ -15,32 +15,27 @@
         <Button onAction="#handleBackToDashboard" style="-fx-font-weight: bold;" text="← Back to Dashboard" />
         <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Payments" />
     </HBox>
-   <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="560.0" spacing="60.0">
-      <children>
-         <VBox prefHeight="26.0" prefWidth="166.0" spacing="20.0">
-            <children>
-                 <ComboBox fx:id="cmbPatient" prefHeight="26.0" prefWidth="213.0" promptText="Select Patient" />
-            </children>
-         </VBox>
-      </children>
-   </HBox>
+    <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="560.0" spacing="60.0">
+        <VBox prefHeight="26.0" prefWidth="166.0" spacing="20.0">
+            <ComboBox fx:id="cmbPatient" prefHeight="26.0" prefWidth="213.0" promptText="Select Patient"/>
+        </VBox>
+    </HBox>
 
     <Text style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Patient Balance:" />
     <Label fx:id="lblBalance" style="-fx-font-size: 16px;" text="No Patient is selected" />
 
     <VBox VBox.vgrow="ALWAYS">
-      <children>
-         <TableView fx:id="tblPayments" prefHeight="238.0" prefWidth="588.0">
-           <columns>
-             <TableColumn fx:id="colPaymentId" prefWidth="110.0" text="Payment ID" />
-             <TableColumn fx:id="colPatientId" prefWidth="106.0" text="Patient ID" />
-               <TableColumn fx:id="colAppointmentId" prefWidth="135.0" text="Appointment ID" />
-               <TableColumn fx:id="colAmount" prefWidth="120.0" text="Amount" />
-               <TableColumn fx:id="colMethod" prefWidth="96.0" text="Method" />
-               <TableColumn fx:id="colTime" prefWidth="152.0" text="Time" />
-           </columns>
-         </TableView>
-      </children></VBox>
+        <TableView fx:id="tblPayments" prefHeight="238.0" prefWidth="588.0">
+            <columns>
+                <TableColumn fx:id="colPaymentId" prefWidth="110.0" text="Payment ID"/>
+                <TableColumn fx:id="colPatientId" prefWidth="106.0" text="Patient ID"/>
+                <TableColumn fx:id="colAppointmentId" prefWidth="135.0" text="Appointment ID"/>
+                <TableColumn fx:id="colAmount" prefWidth="120.0" text="Amount"/>
+                <TableColumn fx:id="colMethod" prefWidth="96.0" text="Method"/>
+                <TableColumn fx:id="colTime" prefWidth="152.0" text="Time"/>
+            </columns>
+        </TableView>
+    </VBox>
    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleReset" text="Reset" />
 
 </VBox>

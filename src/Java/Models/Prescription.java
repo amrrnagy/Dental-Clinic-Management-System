@@ -3,6 +3,7 @@ package Models;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+// Prescriptions to be written by the Doctor for the Patient
 public class Prescription {
     private final String id;
     private final String appointmentId;

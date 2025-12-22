@@ -52,7 +52,7 @@
             </font>
         </Label>
 
-        <Button fx:id="btnAddPatient" onAction="#handleAddPatient" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Add New Patient" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+        <Button onAction="#handleAddPatient" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Add New Patient" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
 
         <rowConstraints>
             <RowConstraints minHeight="30.0" prefHeight="30.0" />

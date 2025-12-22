@@ -37,7 +37,6 @@ public class DoctorAppointmentController{
 
         setupTableColumns();
         setupFilterOptions();
-
         refreshTable();
     }
 
@@ -68,7 +67,6 @@ public class DoctorAppointmentController{
         });
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy - hh:mm a");
-
         colDateTime.setCellFactory(_ -> new TableCell<>() {
             @Override
             protected void updateItem(LocalDateTime item, boolean empty) {
@@ -87,7 +85,7 @@ public class DoctorAppointmentController{
         cmbStatusFilter.getItems().addAll("ALL", "SCHEDULED", "COMPLETED", "CANCELLED");
         cmbStatusFilter.setValue("ALL");
 
-        cmbStatusFilter.getSelectionModel().selectedItemProperty().addListener((_, oldVal, newVal) -> {
+        cmbStatusFilter.getSelectionModel().selectedItemProperty().addListener((_, _, newVal) -> {
             if (newVal == null || newVal.equals("ALL")) {
                 tblAppointments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getAppointments())
                         .stream().filter(a -> a.getDoctorId().equals(currentDoctor.getId()))
@@ -104,7 +102,7 @@ public class DoctorAppointmentController{
     }
 
     @FXML
-    private void handleReset(ActionEvent event) {
+    private void handleReset() {
         cmbStatusFilter.setValue("ALL");
     }
 
@@ -116,7 +114,7 @@ public class DoctorAppointmentController{
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }

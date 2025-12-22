@@ -1,12 +1,9 @@
 package Models;
 
-import java.time.LocalDateTime;
-
+// An interface for the Payment class
 public interface Payable {
 
     String getId();
-    double getAmount();
-    PaymentMethod getMethod();
-    LocalDateTime getDateTime();
-
+    String getPatientId();
+    Patient getPayer();
 }

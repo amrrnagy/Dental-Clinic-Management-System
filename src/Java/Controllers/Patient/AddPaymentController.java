@@ -27,7 +27,7 @@ public class AddPaymentController{
 
     public void initialize() {
         loadTable();
-        cmbAppointment.valueProperty().addListener((obs, oldVal, newVal) -> updateFee(newVal));
+        cmbAppointment.valueProperty().addListener((_, _, newVal) -> updateFee(newVal));
 
         cmbMethod.getItems().addAll(PaymentMethod.values());
         updateBalanceLabel();
@@ -64,7 +64,7 @@ public class AddPaymentController{
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Error: " + e.getMessage());
             }
         }
     }
@@ -93,7 +93,6 @@ public class AddPaymentController{
         }
 
         try {
-            // Call the core business logic
             clinicManager.processPayment(
                     currentPatient.getId(),
                     appointmentId,
@@ -113,21 +112,20 @@ public class AddPaymentController{
         }
     }
 
-    // --- Navigation and Utility ---
     @FXML
-    private void handleBackToDashboard(ActionEvent event) {
-        navigateTo(event, "/Views/Dashboards/PatientDashboard.fxml");
+    private void handleBack(ActionEvent event) {
+        navigateTo(event);
     }
 
-    private void navigateTo(ActionEvent event, String fxmlPath) {
+    private void navigateTo(ActionEvent event) {
         try {
-            Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
+            Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Dashboards/PatientDashboard.fxml")));
             Scene scene = new Scene(view);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
         }
     }
 

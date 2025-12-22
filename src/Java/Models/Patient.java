@@ -6,12 +6,13 @@ public class Patient extends Person implements Comparable<Patient> {
     private final  String medicalHistory;
     private double balance;
 
+    // ID counter
     private static int nextId = 1;
 
     public Patient(String firstName, String lastName, Gender gender, String phone,
                    String username, String password) {
-        super(firstName, lastName, gender, username, password, UserRole.PATIENT);
-        this.id = "PAT" + nextId++;
+        super(firstName, lastName, gender, username, password);
+        this.id = "PAT" + nextId++; // ID format
         this.phone = phone;
         this.medicalHistory = "";
         this.balance = 0.0;
@@ -20,17 +21,18 @@ public class Patient extends Person implements Comparable<Patient> {
     public String getId() {
         return id;
     }
+
+    // Used when deleting a Patient
     public static void minusNextID() {
         if(nextId > 1)
             nextId--;
     }
 
     public String getMedicalHistory() { return medicalHistory; }
-
     public double getBalance() { return balance; }
     public void setBalance(double balance) { this.balance = balance; }
-
     public String getPhone() { return phone; }
+
 
     public void applyPayment(double amount) {
         if (amount < 0) throw new IllegalArgumentException("Amount must be >= 0");

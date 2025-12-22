@@ -1,5 +1,6 @@
 package Models;
 
+// The content of the Prescription itself
 public record PrescriptionItem(String medicineName, String dose, String frequency, int days) {
     public PrescriptionItem {
 

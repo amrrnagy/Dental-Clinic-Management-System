@@ -23,29 +23,29 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        // Populate the role dropdown with values from the UserRole enum
-        cmbRole.getItems().setAll(UserRole.values()); //
+        // Fill the roles combobox
+        cmbRole.getItems().setAll(UserRole.values());
     }
 
     @FXML
-    private void handleSignIn(ActionEvent event) { // [cite: 20]
+    private void handleSignIn(ActionEvent event) {
         UserRole selectedRole = cmbRole.getValue();
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
         if (selectedRole == null || username.isEmpty() || password.isEmpty()) {
-            lblErrorMessage.setText("Please fill in all fields."); // [cite: 19]
+            lblErrorMessage.setText("Please fill in all fields.");
             return;
         }
 
-        // Logic to validate user against ClinicManager data
+        // Validate user
         Person user = validateLogin(selectedRole, username, password);
 
         if (user != null) {
             ClinicManager.getInstance().setCurrentUser(user); // Set the session user
             navigateToDashboard(event, selectedRole);
         } else {
-            lblErrorMessage.setText("Invalid credentials for " + selectedRole); // [cite: 19]
+            lblErrorMessage.setText("Invalid credentials for " + selectedRole);
         }
     }
 
@@ -64,7 +64,7 @@ public class LoginController {
                     .filter(p -> p.getUsername().equals(username) && p.getPassword().equals(password))
                     .findFirst().orElse(null);
         }
-        // Nurse check
+        // Check for Nurse
         else if (role == UserRole.NURSE) {
             return manager.getNurses().stream()
                     .filter(p -> p.getUsername().equals(username) && p.getPassword().equals(password))
@@ -72,7 +72,6 @@ public class LoginController {
         }
         return null;
     }
-
 
     @FXML
     private void handleSignUp(ActionEvent event) throws IOException {
@@ -82,13 +81,11 @@ public class LoginController {
         stage.show();
     }
 
-
-
     private void navigateToDashboard(ActionEvent event, UserRole role) {
         String fxmlFile = switch (role) {
-            case PATIENT -> "/Views/Dashboards/PatientDashboard.fxml"; // [cite: 21]
-            case DOCTOR -> "/Views/Dashboards/DoctorDashboard.fxml";  // [cite: 56]
-            case NURSE -> "/Views/Dashboards/NurseDashboard.fxml";   // [cite: 34]
+            case PATIENT -> "/Views/Dashboards/PatientDashboard.fxml";
+            case DOCTOR -> "/Views/Dashboards/DoctorDashboard.fxml";
+            case NURSE -> "/Views/Dashboards/NurseDashboard.fxml";
         };
 
         try {
@@ -98,7 +95,7 @@ public class LoginController {
             stage.show();
         } catch (IOException e) {
             lblErrorMessage.setText("Error loading dashboard.");
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }

@@ -1,9 +1,6 @@
 package Controllers.Nurse;
 
-import Models.ClinicManager;
-import Models.Doctor;
-import Models.Gender;
-import Models.Patient;
+import Models.*;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -64,7 +61,7 @@ public class AddPatientController  {
             lblError.setStyle("-fx-text-fill: red;");
 
             PauseTransition delay = new PauseTransition(Duration.seconds(3));
-            delay.setOnFinished(e -> lblError.setText(""));
+            delay.setOnFinished(_ -> lblError.setText(""));
             delay.play();
             return;
         }

@@ -24,9 +24,7 @@ public class NurseDashboardController {
     }
 
     @FXML
-    private void handleGoToAppointmentView(ActionEvent event) {
-        switchScene(event, "/Views/Nurse/AppointmentView.fxml");
-    }
+    private void handleGoToAppointmentView(ActionEvent event) { switchScene(event, "/Views/Nurse/AppointmentView.fxml"); }
 
     @FXML
     private void handleGoToPaymentView(ActionEvent event) {
@@ -35,8 +33,8 @@ public class NurseDashboardController {
 
     @FXML
     private void handleLogout(ActionEvent event) {
-        ClinicManager.getInstance().setCurrentUser(null); //
-        switchScene(event, "/Views/Dashboards/LoginView.fxml"); // [cite: 48]
+        ClinicManager.getInstance().setCurrentUser(null); // Reset the currentUser to null for next login
+        switchScene(event, "/Views/Dashboards/LoginView.fxml");
     }
 
     private void switchScene(ActionEvent event, String fxmlPath) {
@@ -46,7 +44,7 @@ public class NurseDashboardController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }

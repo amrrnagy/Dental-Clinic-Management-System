@@ -3,6 +3,7 @@ package Models;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+// Prescriptions to be written by the Doctor for the Patient
 public class Prescription {
     private final String id;
     private final String appointmentId;
@@ -37,16 +38,16 @@ public class Prescription {
     public String getDoctorId() {
         return doctorId;
     }
-    public LocalDateTime getIssuedDate() {
-        return issuedDate;
-    }
+
+    @SuppressWarnings("unused")
+    public LocalDateTime getIssuedDate() { return issuedDate; }
+
     public PrescriptionItem getItem() {
         return item;
     }
 
     @Override
     public String toString() {
-        // Format inferred from Prescription.class: "APrescription{id=%s, patientId=%s, doctorId=%s, date=%s, items=%d}"
         return id + ": " + patientId + ": " + issuedDate;
     }
 

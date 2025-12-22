@@ -25,10 +25,10 @@ public class AddPrescriptionController{
     private final ClinicManager clinicManager = ClinicManager.getInstance();
 
     public void initialize() {
-        // 1. Populate Patients
+        // Populate Patients
         cmbPatient.getItems().addAll(clinicManager.getPatients());
 
-        // 2. Populate Dosage/Freq/Days constants (if not done in FXML)
+        // Populate Dosages
         cmbDosage.getItems().addAll(
                 "5 mg", "10 mg", "20 mg", "25 mg", "50 mg", "100 mg", "250 mg", "500 mg", "1000 mg",
                 "2.5 ml", "5 ml", "10 ml", "1 tablet", "2 tablets", "1 capsule"
@@ -49,8 +49,8 @@ public class AddPrescriptionController{
 
         cmbDays.getItems().addAll(1, 3, 5, 7, 10, 14, 30);
 
-        // 3. Set Cell Factories for readable names
-        cmbPatient.setCellFactory(lv -> new ListCell<Patient>() {
+        // Convert the ids in the combobox to be readable
+        cmbPatient.setCellFactory(_ -> new ListCell<>() {
             @Override
             protected void updateItem(Patient item, boolean empty) {
                 super.updateItem(item, empty);
@@ -61,9 +61,10 @@ public class AddPrescriptionController{
         // Custom display for the Patient Selection Button
         cmbPatient.setButtonCell(cmbPatient.getCellFactory().call(null));
 
-        // 4. Listener: When patient changes, update their appointments
-        cmbPatient.valueProperty().addListener((obs, oldVal, newVal) -> updateAvailableAppointments(newVal));
+        // Listener: When patient changes, update their appointments
+        cmbPatient.valueProperty().addListener((_, _, newVal) -> updateAvailableAppointments(newVal));
 
+        // Disable the appointments combobox in the beginning
         cmbAppointment.setDisable(true);
     }
 
@@ -77,7 +78,6 @@ public class AddPrescriptionController{
         }
 
         // Filter appointments for this specific patient that don't have prescriptions yet
-        // (Assuming your ClinicManager or Patient model can provide this)
         var patientAppointments = clinicManager.getAppointments().stream()
                 .filter(a -> a.getPatientId().equals(selectedPatient.getId()))
                 .filter(a -> a.getDoctorId().equals(
@@ -96,7 +96,7 @@ public class AddPrescriptionController{
 
     @FXML
     private void handleAddPrescription(ActionEvent event) {
-        // 1. Get Values
+        // Get Values
         Patient patient = cmbPatient.getValue();
         Appointment appointment = cmbAppointment.getValue();
         String medication = txtMed.getText();
@@ -104,13 +104,13 @@ public class AddPrescriptionController{
         String freq = cmbFreq.getValue();
         Integer days = cmbDays.getValue();
 
-        // 2. Validation
+        // Validation
         if (patient == null || appointment == null || medication.isEmpty() || dosage == null || freq == null || days == null) {
             showAlert(Alert.AlertType.ERROR, "Form Incomplete", "Please fill in all required fields.");
             return;
         }
 
-        // 3. Create and Save Prescription
+        // Create and Save Prescription
         PrescriptionItem newPrescriptionItem = new PrescriptionItem(
                 medication,
                 dosage,
@@ -120,7 +120,7 @@ public class AddPrescriptionController{
         Prescription newPrescription = clinicManager.addPrescription(
                 appointment.getId(),
                 patient.getId(),
-                ((Doctor) clinicManager.getCurrentUser()).getId(),
+                ((Doctor) clinicManager.getCurrentUser()).getId(), // Current Doctor
                 newPrescriptionItem
         );
 
@@ -157,7 +157,7 @@ public class AddPrescriptionController{
             window.setScene(scene);
             window.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }

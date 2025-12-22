@@ -39,7 +39,7 @@
         <Label text="Username:" GridPane.rowIndex="5" />
         <TextField fx:id="txtUsername" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-        <Button fx:id="btnAddDoctor" onAction="#handleAddDoctor" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+        <Button onAction="#handleAddDoctor" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
         <ComboBox fx:id="cmbGender" prefHeight="26.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Label text="Gender:" GridPane.rowIndex="2" />
         <Label text="Password:" GridPane.rowIndex="6" />

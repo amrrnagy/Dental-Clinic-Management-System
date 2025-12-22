@@ -25,15 +25,13 @@
     </HBox>
 
     <Separator />
-   <HBox fx:id="errorContainer" alignment="CENTER" prefHeight="21.0" prefWidth="582.0">
-      <children>
-         <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER">
-            <font>
-               <Font name="System Bold" size="12.0" />
-            </font>
-         </Label>
-      </children>
-   </HBox>
+    <HBox fx:id="errorContainer" alignment="CENTER" prefHeight="21.0" prefWidth="582.0">
+        <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER">
+           <font>
+               <Font name="System Bold" size="12.0"/>
+           </font>
+        </Label>
+    </HBox>
 
     <TableView fx:id="tblAppointments" VBox.vgrow="ALWAYS">
         <columns>

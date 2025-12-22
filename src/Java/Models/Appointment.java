@@ -2,7 +2,8 @@ package Models;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
+
+// Appointments that are scheduled by a Patient and viewed by a Nurse/Doctor
 
 public class Appointment implements Comparable<Appointment> {
 
@@ -10,16 +11,17 @@ public class Appointment implements Comparable<Appointment> {
     private final String patientId;
     private final String doctorId;
     private final LocalDateTime dateTime;
-    private final AppointmentSlot slot;
     private AppointmentStatus status;
 
+    // ID count
     public static int nextId = 1;
 
-    public Appointment(String patientId, String doctorId, LocalDateTime dateTime, AppointmentSlot slot) {
+    public Appointment(String patientId, String doctorId, LocalDateTime dateTime) {
         if (patientId == null || doctorId == null || dateTime == null) {
             throw new IllegalArgumentException("patientId, doctorId and dateTime are required");
         }
 
+        // ID format
         this.id = String.format("APT-%d-%02d-%03d",
                 dateTime.getYear(),
                 dateTime.getMonthValue(),
@@ -28,14 +30,12 @@ public class Appointment implements Comparable<Appointment> {
         this.patientId = patientId;
         this.doctorId = doctorId;
         this.dateTime = dateTime;
-        this.slot = slot;
         this.status = AppointmentStatus.SCHEDULED;
     }
 
     public String getId() { return id; }
     public String getPatientId() { return patientId; }
     public String getDoctorId() { return doctorId; }
-    public AppointmentSlot getSlot() { return slot; }
 
     public LocalDateTime getDateTime() { return dateTime; }
 
@@ -54,7 +54,7 @@ public class Appointment implements Comparable<Appointment> {
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, hh:mm a");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy - hh:mm a");
         return this.dateTime.format(formatter);
     }
 

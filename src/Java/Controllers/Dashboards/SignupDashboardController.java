@@ -82,7 +82,7 @@ public class SignupDashboardController {
 
         ClinicManager.getInstance().addPatient(newPatient);
 
-        showAlert(Alert.AlertType.INFORMATION, "Registration Successful",
+        showAlert(
                 "Patient " + newPatient.getUsername() + " has been registered successfully.");
 
         handleBack(event);
@@ -104,13 +104,13 @@ public class SignupDashboardController {
         lblError.setText(message);
         lblError.setStyle("-fx-text-fill: red;");
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        delay.setOnFinished(e -> lblError.setText(""));
+        delay.setOnFinished(_ -> lblError.setText(""));
         delay.play();
     }
 
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Registration Successful");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

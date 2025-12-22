@@ -79,7 +79,7 @@ public class AppointmentViewController{
         cmbStatusFilter.getItems().addAll("ALL", "SCHEDULED", "COMPLETED", "CANCELLED");
         cmbStatusFilter.setValue("ALL");
 
-        cmbStatusFilter.getSelectionModel().selectedItemProperty().addListener((_, oldVal, newVal) -> {
+        cmbStatusFilter.getSelectionModel().selectedItemProperty().addListener((_, _, newVal) -> {
             if (newVal == null || newVal.equals("ALL")) {
                 tblAppointments.setItems(FXCollections.observableArrayList(ClinicManager.getInstance().getAppointments()));
             } else {
@@ -92,7 +92,7 @@ public class AppointmentViewController{
     }
 
     @FXML
-    private void handleReset(ActionEvent event) {
+    private void handleReset() {
         cmbStatusFilter.setValue("ALL");
     }
 
@@ -104,7 +104,7 @@ public class AppointmentViewController{
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }

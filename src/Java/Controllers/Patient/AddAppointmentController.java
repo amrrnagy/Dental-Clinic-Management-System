@@ -32,7 +32,7 @@ public class AddAppointmentController  {
 
         cmbDoctor.getItems().addAll(clinicManager.getDoctors());
 
-        cmbDoctor.setCellFactory(lv -> new ListCell<Doctor>() {
+        cmbDoctor.setCellFactory(_ -> new ListCell<>() {
             @Override
             protected void updateItem(Doctor item, boolean empty) {
                 super.updateItem(item, empty);
@@ -40,16 +40,15 @@ public class AddAppointmentController  {
             }
         });
 
-        cmbDoctor.valueProperty().addListener((obs, oldVal, newVal) -> updateAvailableSlots());
+        cmbDoctor.valueProperty().addListener((_, _, _) -> updateAvailableSlots());
+        dpDate.valueProperty().addListener((_, _, _) -> updateAvailableSlots());
 
-        dpDate.valueProperty().addListener((obs, oldVal, newVal) -> updateAvailableSlots());
-
-        dpDate.setDayCellFactory(picker -> new DateCell() {
+        dpDate.setDayCellFactory(_ -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 LocalDate today = LocalDate.now();
-                setDisable(empty || date.compareTo(today) < 0 ); // Disable past dates
+                setDisable(empty || date.isBefore(today)); // Disable past dates
             }
         });
         cmbSlots.setDisable(true);
@@ -99,7 +98,7 @@ public class AddAppointmentController  {
 
 
     @FXML
-    private void handleScheduleAppointment() {
+    private void handleScheduleAppointment(ActionEvent event) {
         Patient currentPatient = (Patient) ClinicManager.getInstance().getCurrentUser();
         Doctor selectedDoctor = cmbDoctor.getValue();
         LocalDate date = dpDate.getValue();
@@ -121,9 +120,11 @@ public class AddAppointmentController  {
             LocalDateTime startDateTime = LocalDateTime.of(date, slot.getStartTime());
             showAlert(Alert.AlertType.INFORMATION, "Success",
                     "Appointment successfully scheduled for " + currentPatient.getFullName() +
-                            " with " + selectedDoctor.getFullName() + " at " +
-                            startDateTime.format(DATETIME_FORMATTER) + " (" + "minutes)"
+                            " with Dr: " + selectedDoctor.getFullName() + " at " +
+                            startDateTime.format(DATETIME_FORMATTER)
             );
+            handleBack(event);
+
         } else {
             showAlert(Alert.AlertType.WARNING, "Scheduling Conflict",
                     "The selected doctor is unavailable at that time or a system error occurred. Please re-check the schedule."
@@ -131,13 +132,6 @@ public class AddAppointmentController  {
         }
     }
 
-
-    private void clearForm() {
-        cmbDoctor.getSelectionModel().clearSelection();
-        dpDate.setValue(null);
-        cmbSlots.getSelectionModel().clearSelection();
-        cmbSlots.setDisable(true); // Disable slots until new selections are made
-    }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
@@ -150,20 +144,20 @@ public class AddAppointmentController  {
 
     @FXML
     private void handleBack(ActionEvent event) {
-        navigateTo(event, "/Views/Patient/PatientAppointment.fxml");
+        navigateTo(event);
     }
 
-    private void navigateTo(ActionEvent event, String fxmlPath) {
+    private void navigateTo(ActionEvent event) {
         try {
-            Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
+            Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Patient/PatientAppointment.fxml")));
             Scene scene = new Scene(view);
 
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Could not load FXML file: " + fxmlPath);
+            System.err.println("Error: " + e.getMessage());
+            System.err.println("Could not load FXML file: " + "/Views/Patient/PatientAppointment.fxml");
         }
     }
 }

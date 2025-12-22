@@ -1,5 +1,6 @@
 package Models;
 
+// Doctors' specializations (Other if none is selected)
 public enum Specialization {
     GENERAL_DENTISTRY,
     ORTHODONTICS,

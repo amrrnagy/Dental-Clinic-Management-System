@@ -1,5 +1,6 @@
 package Controllers.Dashboards;
 
+import Models.Appointment;
 import Models.AppointmentStatus;
 import Models.ClinicManager;
 import Models.Patient;
@@ -12,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class PatientDashboardController {
@@ -33,7 +35,7 @@ public class PatientDashboardController {
         ClinicManager clinicManager = ClinicManager.getInstance();
         Patient currentPatient = (Patient) clinicManager.getCurrentUser();
 
-        var patientAppointments = clinicManager.getAppointments().stream()
+        List<Appointment> patientAppointments = clinicManager.getAppointments().stream()
                 .filter(a -> a.getPatientId().equals(currentPatient.getId()))
                 .filter(a -> a.getPatientId().equals(
                         ((Patient) clinicManager.getCurrentUser()).getId()

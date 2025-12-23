@@ -74,11 +74,17 @@ public class LoginController {
     }
 
     @FXML
-    private void handleSignUp(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Dashboards/SignupDashboard.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+    private void handleSignUp(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Views/Dashboards/SignupDashboard.fxml")));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            lblErrorMessage.setText("Error loading dashboard.");
+            System.err.println("Error: " + e.getMessage());
+        }
+
     }
 
     private void navigateToDashboard(ActionEvent event, UserRole role) {

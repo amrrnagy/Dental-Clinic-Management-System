@@ -40,6 +40,7 @@ public class AddPaymentController{
                         ((Patient) clinicManager.getCurrentUser()).getId()
                 ))
                 .filter(a -> !a.getStatus().equals(AppointmentStatus.PAID))
+                .filter(a -> !a.getStatus().equals(AppointmentStatus.CANCELLED))
                 .toList();
 
         if(patientAppointments.isEmpty())

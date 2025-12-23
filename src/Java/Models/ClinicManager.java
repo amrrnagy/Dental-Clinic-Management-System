@@ -223,6 +223,11 @@ public class ClinicManager {
     public boolean cancelAppointment (Appointment appointment) {
         if(appointment.getStatus().equals(AppointmentStatus.SCHEDULED)) {
             appointment.setStatus(AppointmentStatus.CANCELLED);
+
+            // Readjust the balance
+            Patient thisPatient = findPatientById(appointment.getPatientId());
+            Doctor thisDoctor = findDoctorById(appointment.getDoctorId());
+            thisPatient.setBalance(thisPatient.getBalance() - thisDoctor.getConsultationFee());
             return true;
         }
         else

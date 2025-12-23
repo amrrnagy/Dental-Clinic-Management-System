@@ -53,7 +53,7 @@ public class ClinicManager {
         // Add Doctors
         Doctor doc1 = new Doctor("Amr", "Nagy", Gender.MALE,
                 "amr", "amr", Specialization.GENERAL_DENTISTRY);
-        Doctor doc2 = new Doctor("Mohamed", "Ashraf", Gender.FEMALE,
+        Doctor doc2 = new Doctor("Mohamed", "Ashraf", Gender.MALE,
                 "ashraf", "ashraf", Specialization.ORTHODONTICS);
         doctors.add(doc1);
         doctors.add(doc2);

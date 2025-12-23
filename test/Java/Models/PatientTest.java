@@ -45,7 +45,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
         @Test
         void testConstructorAndIDGeneration() {
-            // 1. Check ID generation for the first patient (created in setUp)
+            // 1. Check ID generation for the first patient
             assertEquals("PAT1", patient.getId(), "First patient ID should be PAT1");
             assertEquals("Amr", patient.getFirstName());
             assertEquals(0.0, patient.getBalance(), "Initial balance should be 0.0");

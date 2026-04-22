@@ -1,30 +1,48 @@
-### IntelliJ IDEA ###
+# Ignore all compiled output and binaries
+target/
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+bin/
+*.class
+*.jar
+*.war
+*.zip
+*.tar.gz
+
+# --- IntelliJ IDEA ---
+.idea/
+*.iml
+*.iws
+*.ipr
 .kotlin
 
-### Eclipse ###
-.apt_generated
+# --- Eclipse ---
+.metadata/
+.tmp/
+*.tmp
+*.bak
+*.swp
+.settings/
 .classpath
-.factorypath
 .project
-.settings
+.factorypath
 .springBeans
 .sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+.apt_generated
 
-### NetBeans ###
+# --- NetBeans ---
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
+# --- VS Code ---
 .vscode/
 
-### Mac OS ###
+# --- Operating System Files ---
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Log files ---
+*.log

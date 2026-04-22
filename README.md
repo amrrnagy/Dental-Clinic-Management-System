@@ -47,6 +47,3 @@ mvn javafx:run
 
   - `src/main/java`: Contains the core logic, divided into `model`, `view`, and `controller` packages.
   - `src/main/resources`: Contains `.fxml` layouts, images, and `.css` stylesheets.
-
-Contributions are welcome\! Please fork the repository and create a pull request for any features or bug fixes.
-```
